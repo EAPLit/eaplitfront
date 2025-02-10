@@ -1,6 +1,6 @@
 
 
-export default const LessonList = () => {
+export default const TaskBar = () => {
     return (
         <div>
 
