@@ -1,9 +1,11 @@
 
 
-export default const TaskTypes = () => {
+const TaskTypes = () => {
     return (
         <div>
 
         </div>
     );
-}
+};
+
+export default TaskTypes;

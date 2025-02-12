@@ -1,9 +1,11 @@
 
 
-export default const ProjectDesign = () => {
+const ProjectDesign = () => {
     return (
         <div>
 
         </div>
     );
-}
+};
+
+export default ProjectDesign;

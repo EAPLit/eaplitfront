@@ -1,9 +1,11 @@
 
 
-export default const TextDisplay = () => {
+const TextDisplay = () => {
     return (
         <div>
 
         </div>
     );
-}
+};
+
+export default TextDisplay;

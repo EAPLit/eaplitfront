@@ -1,8 +1,10 @@
 
-export default const MyLearningHead = () => {
+const MyLearningHead = () => {
     return (
         <div>
 
         </div>
     );
-}
+};
+
+export default MyLearningHead;

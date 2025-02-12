@@ -1,9 +1,11 @@
 
 
-export default const MyLearning = () => {
+const MyLearning = () => {
     return (
         <div>
 
         </div>
     );
-}
+};
+
+export default MyLearning;

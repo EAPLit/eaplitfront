@@ -1,9 +1,11 @@
 
 
-export default const ProjectTitle = () => {
+const ProjectTitle = () => {
     return (
         <div>
 
         </div>
     );
-}
+};
+
+export default ProjectTitle;
