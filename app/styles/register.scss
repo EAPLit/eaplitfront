@@ -1,4 +1,4 @@
-.login-form {
+.register-form {
     @apply flex flex-grow justify-center items-center;
 }
 
@@ -9,7 +9,7 @@
     @apply bg-slate-700 rounded-lg;
 }
 
-.login-heading {
+.register-heading {
     @apply text-4xl text-center mb-3;
 }
 
@@ -20,7 +20,7 @@
 
 .input-label {
     @apply pr-3 lg:text-right;
-    @apply w-32 text-2xl;
+    @apply w-52 text-2xl;
 }
 
 .input-item {
@@ -39,6 +39,6 @@
     @apply pt-5 text-center;
 }
 
-.to-registration {
+.to-login {
     @apply hover:underline hover:cursor-pointer;
 }

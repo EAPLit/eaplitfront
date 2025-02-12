@@ -1,41 +1,39 @@
-
+import "../styles/register.scss";
 
 const Register = () => {
     return (
-        <div>
-            <form aria-labelledby="register-heading">
-                <h1 id="register-heading">Register</h1>
+        <div className='register-form'>
+            <form className="form" aria-labelledby="register-heading">
+                <h1 className="register-heading" id="register-heading">Register</h1>
                 <section aria-label="Register Panel">
-                    <div>
-                        <label htmlFor="your-name">Name</label>
-                        <input id="your-name" type="text" placeholder="Your name" />
+                    <div className="input-area">
+                        <label className="input-label" htmlFor="your-name">Name</label>
+                        <input className="input-item" id="your-name" type="text" placeholder="Your name" />
                     </div>
-                    <div>
-                        <label htmlFor="username">Username</label>
-                        <input id="username" type="text" placeholder="Username" />
+                    <div className="input-area">
+                        <label className="input-label" htmlFor="username">Username</label>
+                        <input className="input-item" id="username" type="text" placeholder="Username" />
                     </div>
-                    <div>
-                        <label htmlFor="email">Email</label>
-                        <input id="email" type="email" placeholder="email" />
+                    <div className="input-area">
+                        <label className="input-label" htmlFor="email">Email</label>
+                        <input className="input-item" id="email" type="email" placeholder="email" />
                     </div>
-                    <div>
-                        <label htmlFor="password">Password</label>
-                        <input id="password" type="password" placeholder="password" />
+                    <div className="input-area">
+                        <label className="input-label" htmlFor="password">Password</label>
+                        <input className="input-item" id="password" type="password" placeholder="password" />
                     </div>
-                    <div>
-                        <label htmlFor="confirm-password">Confirm password</label>
-                        <input id="confirm-password" type="password" placeholder="confirm password" />
+                    <div className="input-area">
+                        <label className="input-label" htmlFor="confirm-password">Confirm password</label>
+                        <input className="input-item" id="confirm-password" type="password" placeholder="confirm password" />
                     </div>
-                    <div>
-                        <button type="submit">Register</button>
+                    <div className="submit-area">
+                        <button className="submit-button" type="submit">Register</button>
+                    </div>
+                    <div className="form-bottom">
+                        <p className="to-login">To login</p>
                     </div>
                 </section>
             </form>
-            <section aria-label="Back to login">
-                <div>
-                    <p>To login</p>
-                </div>
-            </section>
 
         </div>
     );
