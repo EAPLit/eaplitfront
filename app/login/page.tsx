@@ -6,11 +6,11 @@ const Login = () => {
             <form className="form" aria-labelledby="login-heading">
                 <h1 className="login-heading" id="login-heading">Login</h1>
                 <section aria-label="Login Panel">
-                    <div class="input-area">
+                    <div className="input-area">
                         <label className="input-label" htmlFor="email">Email</label>
                         <input className="input-item" id="email" type="email" placeholder="Your email" />
                     </div>
-                    <div class="input-area">
+                    <div className="input-area">
                         <label className="input-label" htmlFor="password">Password</label>
                         <input className="input-item" id="password" type="password" placeholder="Your password" />
                     </div>
