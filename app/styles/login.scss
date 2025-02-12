@@ -1,0 +1,44 @@
+.login-form {
+    @apply flex flex-grow justify-center items-center;
+}
+
+.form {
+    @apply flex flex-col;
+    @apply w-11/12 lg:w-1/2;
+    @apply p-5;
+    @apply bg-slate-700 rounded-lg;
+}
+
+.login-heading {
+    @apply text-4xl text-center mb-3;
+}
+
+.input-area {
+    @apply flex flex-col lg:flex-row justify-between;
+    @apply pt-5;
+}
+
+.input-label {
+    @apply pr-3 lg:text-right;
+    @apply w-32 text-2xl;
+}
+
+.input-item {
+    @apply h-16 flex-grow text-2xl rounded-lg;
+}
+
+.submit-area {
+    @apply pt-5 text-center;
+}
+
+.submit-button {
+    @apply border p-3 rounded-lg hover:bg-slate-50 hover:text-black;
+}
+
+.form-bottom {
+    @apply pt-5 text-center;
+}
+
+.to-registration {
+    @apply hover:underline hover:cursor-pointer
+}

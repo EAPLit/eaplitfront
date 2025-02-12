@@ -30,7 +30,6 @@ export default function Home() {
         className="navigation"
         aria-label="navigation"
       >
-        <Navbar />
       </section>
 
       <section 
