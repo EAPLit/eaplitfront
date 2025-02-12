@@ -24,49 +24,50 @@ export default function Home() {
 
   return (
     <div>
-      <div 
+      <section 
         className="navigation"
-        data-testid="navigation"
+        aria-label="navigation"
       >
 
-      </div>
+      </section>
 
-      <div 
+      <section 
         className="header"
-        data-testid="header"
+        aria-label="header"
       >
         
-      </div>
+      </section>
 
-      <div 
+      <section 
         className="promo-first"
-        data-testid="promo-first"
+        aria-label="promo-first"
       >
         
-      </div>
+      </section>
 
-      <div 
+      <section 
         className="promo-second"
-        data-testid="promo-second"
+        aria-label="promo-second"
       >
         
-      </div>
-      <div 
+      </section>
+      <section 
         className="promo-third"
-        data-testid="promo-third"
+        aria-label="promo-third"
       >
         
-      </div>
+      </section>
 
-      <div 
+      <section 
         className="promo-fourth"
-        data-testid="promo-fourth"
+        aria-label="promo-fourth"
       >
         
-      </div>
+      </section>
 
-      <div
+      <section
         className="auth-buttons"
+        aria-label="auth-buttons"
       >
         <div>
           <button
@@ -84,7 +85,7 @@ export default function Home() {
             Register
           </button>
         </div>
-      </div>
+      </section>
     </div>
   );
 }

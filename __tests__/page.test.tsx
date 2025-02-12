@@ -30,12 +30,12 @@ describe("Landing Page", () => {
     })
 
     it("should render the required sections of the landing page", () => {
-        expect(screen.getByTestId('navigation')).toBeInTheDocument();
-        expect(screen.getByTestId('header')).toBeInTheDocument();
-        expect(screen.getByTestId('promo-first')).toBeInTheDocument();
-        expect(screen.getByTestId('promo-second')).toBeInTheDocument();
-        expect(screen.getByTestId('promo-third')).toBeInTheDocument();
-        expect(screen.getByTestId('promo-fourth')).toBeInTheDocument();
+        expect(screen.getByLabelText('navigation')).toBeInTheDocument();
+        expect(screen.getByLabelText('header')).toBeInTheDocument();
+        expect(screen.getByLabelText('promo-first')).toBeInTheDocument();
+        expect(screen.getByLabelText('promo-second')).toBeInTheDocument();
+        expect(screen.getByLabelText('promo-third')).toBeInTheDocument();
+        expect(screen.getByLabelText('promo-fourth')).toBeInTheDocument();
     });
 
     it("should call authOnAppLoad on mount", async () => {
