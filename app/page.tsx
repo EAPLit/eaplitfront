@@ -13,7 +13,42 @@ export default function Home() {
 
   return (
     <div>
-      <p>Welcome to the home page</p>
+      <div 
+        className="navigation"
+        data-testid="navigation"
+      >
+
+      </div>
+      <div 
+        className="header"
+        data-testid="header"
+      >
+        
+      </div>
+      <div 
+        className="promo-first"
+        data-testid="promo-first"
+      >
+        
+      </div>
+      <div 
+        className="promo-second"
+        data-testid="promo-second"
+      >
+        
+      </div>
+      <div 
+        className="promo-third"
+        data-testid="promo-third"
+      >
+        
+      </div>
+      <div 
+        className="promo-fourth"
+        data-testid="promo-fourth"
+      >
+        
+      </div>
     </div>
   );
 }
