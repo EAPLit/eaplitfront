@@ -1,0 +1,35 @@
+
+.navigation {
+    @apply sm:h-10 md:h-14 lg:h-20 xl:h-24;
+  }
+  
+  .header {
+    @apply sm:h-20 md:h-32 lg:h-40 xl:h-48;
+  }
+  
+  .promo-first {
+    @apply sm:h-20 md:h-32 lg:h-40 xl:h-48;
+  }
+  
+  .promo-second {
+    @apply sm:h-20 md:h-32 lg:h-40 xl:h-48;
+  }
+  
+  .promo-third {
+    @apply sm:h-20 md:h-32 lg:h-40 xl:h-48;
+  }
+  
+  .promo-fourth {
+    @apply sm:h-20 md:h-32 lg:h-40 xl:h-48;
+  }
+  
+  .auth-buttons {
+    @apply flex flex-row justify-center;
+  }
+  
+  .a-button {
+    @apply w-32 sm:w-32 md:w-36 lg:w-60 xl:w-60;
+    @apply p-3 m-3 rounded-md;
+    @apply bg-slate-500 hover:bg-slate-200 hover:text-black;
+  }
+  

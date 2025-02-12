@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { authOnAppLoad } from '@services/auth';
 import { useRouter } from 'next/navigation';
 import Navbar from './components/Navbar';
+import "./styles/home.scss";
 
 export default function Home() {
 
