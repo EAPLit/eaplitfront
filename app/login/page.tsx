@@ -1,4 +1,3 @@
-import Navbar from '../components/Navbar';
 import '../styles/login.scss';
 
 const Login = () => {
