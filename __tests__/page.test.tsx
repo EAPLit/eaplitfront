@@ -3,6 +3,7 @@ import { render, screen, waitFor, cleanup } from '@testing-library/react';
 import Home from '../app/page';
 import userEvent from '@testing-library/user-event';
 import { useRouter } from 'next/navigation';
+import type { Mock } from 'vitest';
 
 // Mock the authOnAppLoad function
 vi.mock('@services/auth', () => ({
@@ -16,11 +17,11 @@ vi.mock("next/navigation", () => ({
 }));
 
 describe("Landing Page", () => {
-    let mockPush: vi.Mock;
+    let mockPush: Mock;
 
     beforeEach(() => {
         mockPush = vi.fn();
-        (useRouter as vi.Mock).mockReturnValue({ push: mockPush });
+        (useRouter as Mock).mockReturnValue({ push: mockPush });
         render(<Home />);
     });
 
