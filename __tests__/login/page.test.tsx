@@ -24,6 +24,7 @@ describe("Login Page", () => {
 
     it("should render the required sections of the login page", () => {
         expect(screen.getByRole("form", { name: /login/i })).toBeInTheDocument();
+        expect(screen.getByLabelText("Login Panel")).toBeInTheDocument();
         expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
         expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
         expect(screen.getByRole("button", { name: /login/i })).toBeInTheDocument();
