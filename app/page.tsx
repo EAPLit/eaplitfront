@@ -2,6 +2,7 @@
 import { useEffect } from 'react';
 import { authOnAppLoad } from '@services/auth';
 import { useRouter } from 'next/navigation';
+import Navbar from './components/Navbar';
 
 export default function Home() {
 
@@ -28,7 +29,7 @@ export default function Home() {
         className="navigation"
         aria-label="navigation"
       >
-
+        <Navbar />
       </section>
 
       <section 
@@ -69,17 +70,17 @@ export default function Home() {
         className="auth-buttons"
         aria-label="auth-buttons"
       >
-        <div>
+        <div className="button-item">
           <button
-            className="login-button"
+            className="a-button"
             onClick={handleLoginClick}
           >
             Login
           </button>
         </div>
-        <div>
+        <div className="button-item">
           <button 
-            className="register-button"
+            className="a-button"
             onClick={handleRegisterClick}
           >
             Register

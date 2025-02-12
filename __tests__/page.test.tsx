@@ -66,5 +66,6 @@ describe("Landing Page", () => {
         await waitFor(() => {
             expect(mockPush).toHaveBeenCalledWith("/register");
         });
-    })
+    });
+
 });
