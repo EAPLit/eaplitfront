@@ -1,6 +1,6 @@
 import { expect, describe, it, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, waitFor, cleanup } from '@testing-library/react';
-import MyLearning from '../../app/mylearning/page';
+
 import userEvent from '@testing-library/user-event';
 import { useRouter } from 'next/navigation';
 import type { Mock } from 'vitest';
@@ -10,17 +10,19 @@ vi.mock('next/navigation', () => ({
 }));
 
 // Mock the components that get rendered in this page
-vi.mock('../../components/MyLearningHead', () => ({
+vi.mock('../../app/components/MyLearningHead', () => ({
     default: () => <div data-testid="mylearning-head" />
 }));
 
-vi.mock('../../components/ProjectsList', () => ({
+vi.mock('../../app/components/ProjectsList', () => ({
     default: () => <div data-testid="projects-list" />
 }));
 
-vi.mock('../../components/AdminGuide', () => ({
+vi.mock('../../app/components/AdminGuide', () => ({
     default: () => <div data-testid="admin-guide" />
 }));
+
+import MyLearning from '../../app/mylearning/page';
 
 describe("My Learning Page", () => {
     let mockPush: Mock;
