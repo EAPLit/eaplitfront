@@ -1,9 +1,11 @@
 
 
-export default const ProjectManager = () => {
+const ProjectManager = () => {
     return (
         <div>
 
         </div>
     );
-}
+};
+
+export default ProjectManager;

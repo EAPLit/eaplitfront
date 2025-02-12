@@ -1,9 +1,11 @@
 
 
-export default const LessonDesignHead = () => {
+const LessonDesignHead = () => {
     return (
         <div>
 
         </div>
     );
-}
+};
+
+export default LessonDesignHead;

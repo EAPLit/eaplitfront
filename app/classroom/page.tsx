@@ -1,9 +1,11 @@
 
 
-export default const Classroom = () => {
+const Classroom = () => {
     return (
         <div>
 
         </div>
     );
-}
+};
+
+export default Classroom;

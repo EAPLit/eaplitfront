@@ -1,9 +1,11 @@
 
 
-export default const AdminGuide = () => {
+const AdminGuide = () => {
     return (
         <div>
 
         </div>
     );
-}
+};
+
+export default AdminGuide;

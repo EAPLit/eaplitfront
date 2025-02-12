@@ -1,9 +1,11 @@
 
 
-export default const TaskFlow = () => {
+const TaskFlow = () => {
     return (
         <div>
 
         </div>
     );
-}
+};
+
+export default TaskFlow;

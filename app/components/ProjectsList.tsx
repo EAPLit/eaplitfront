@@ -1,9 +1,11 @@
 
 
-export default const ProjectsList = () => {
+const ProjectsList = () => {
     return (
         <div>
 
         </div>
     );
-}
+};
+
+export default ProjectsList;

@@ -1,9 +1,11 @@
 
 
-export default const ActivitySection = () => {
+const ActivitySection = () => {
     return (
         <div>
 
         </div>
     );
-}
+};
+
+export default ActivitySection;

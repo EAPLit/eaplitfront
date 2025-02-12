@@ -1,9 +1,11 @@
 
 
-export default const UploadText = () => {
+const UploadText = () => {
     return (
         <div>
 
         </div>
     );
-}
+};
+
+export default UploadText;
