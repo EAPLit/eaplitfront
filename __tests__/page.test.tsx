@@ -16,7 +16,11 @@ vi.mock("next/navigation", () => ({
 }));
 
 describe("Landing Page", () => {
+    let mockPush: vi.Mock;
+
     beforeEach(() => {
+        mockPush = vi.fn();
+        (useRouter as vi.Mock).mockReturnValue({ push: mockPush });
         render(<Home />);
     });
 
@@ -40,17 +44,26 @@ describe("Landing Page", () => {
     });
 
     it("should render a login and a registration button", () => {
-        expect(screen.getByRole("button", { name: '/login/i' })).toBeInTheDocument();
-        expect(screen.getByRole("button", { name: '/register/i' })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: /login/i })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: /register/i })).toBeInTheDocument();
     });
 
     it("should navigate to the login page when the login button is clicked", async () => {
-        const mockPush = vi.fn();
-        (useRouter as vi.Mock).mockReturnvalue({ push: mockPush });
 
         const loginButton = screen.getByRole("button", { name: /login/i });
         await userEvent.click(loginButton);
 
-        expect(mockPush).toHaveBeenCalledWith("/login");
+        await waitFor(() => {
+            expect(mockPush).toHaveBeenCalledWith("/login");
+        });
     });
+
+    it("should navigate to the register page when the registration button is clicked", async () => {
+        const registerButton = screen.getByRole("button", {name: /register/i });
+        await userEvent.click(registerButton);
+
+        await waitFor(() => {
+            expect(mockPush).toHaveBeenCalledWith("/register");
+        });
+    })
 });
