@@ -1,6 +1,26 @@
+"use client";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/app/context/AuthContext";
 import "../styles/register.scss";
 
-const Register = () => {
+const Register: React.FC = () => {
+
+    const [name, setName] = useState<string>("");
+    const [username, setUsername] = useState<string>("");
+    const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+
+    const router = useRouter();
+    const { register, token, loading } = useAuth();
+
+    useEffect(() => {
+        if (token) {
+            router.push('/mylearning');
+        }
+    }, [token, router]);
+
+
     return (
         <div className='register-form'>
             <form className="form" aria-labelledby="register-heading">
