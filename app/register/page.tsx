@@ -13,13 +13,14 @@ const Register: React.FC = () => {
     const [confirmPassword, setConfirmPassword] = useState<string>("");
 
     const router = useRouter();
-    const { register, token, loading } = useAuth();
+    const { register, user, loading } = useAuth();
 
+    // Listens to see if the user is registered and re-routes if so.
     useEffect(() => {
-        if (token) {
+        if (user) {
             router.push('/mylearning');
         }
-    }, [token, router]);
+    }, [user, router]);
 
     const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -30,7 +31,6 @@ const Register: React.FC = () => {
             console.error("Registration failed:", error);
         }
     }
-
 
     return (
         <div className='register-form'>

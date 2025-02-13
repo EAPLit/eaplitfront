@@ -34,10 +34,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
 
     const register = async (name: string, username:string, email: string, password: string) => {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const token = await getIdToken(userCredential.user);
-        setUser(userCredential.user);
-        setToken(token);
+        // Do not set any tokens here.
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            setUser(userCredential.user);
+        } catch (error: any) {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.error(`Error during registration ${errorCode} : ${errorMessage}`);
+            throw new Error("Registration failed.");
+        }
     }
 
     const handleLogout = async () => {
