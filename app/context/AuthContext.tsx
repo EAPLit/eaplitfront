@@ -1,6 +1,6 @@
 "use client";
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { User, onIdTokenChanged, getIdToken, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { User, onIdTokenChanged, getIdToken, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth } from "../firebase/clientApp";
 
 interface AuthContextProps {
@@ -8,6 +8,7 @@ interface AuthContextProps {
     loading: boolean;
     token: string | null;
     login: (email: string, password: string) => Promise<void>;
+    register: (name: string, username: string, email: string, password: string) => Promise<void>
     handleLogout: () => Promise<void>;
 }
 
@@ -16,6 +17,7 @@ const AuthContext = createContext<AuthContextProps>({
     loading: true,
     token: null,
     login: async () => {},
+    register: async () => {},
     handleLogout: async () => {}
 });
 
@@ -30,6 +32,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setUser(userCredential.user);
         setToken(token);
     };
+
+    const register = async (name: string, username:string, email: string, password: string) => {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const token = await getIdToken(userCredential.user);
+        setUser(userCredential.user);
+        setToken(token);
+    }
 
     const handleLogout = async () => {
         await signOut(auth);
@@ -54,7 +63,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }, []);
 
     return (
-        <AuthContext.Provider value={{ user, loading, token, login, handleLogout }}>
+        <AuthContext.Provider value={{ user, loading, token, login, register, handleLogout }}>
             {children}
         </AuthContext.Provider>
     );
