@@ -11,14 +11,8 @@ const Login: React.FC = () => {
 
     const router = useRouter();
     const { login, loading: firebaseLoading, user } = useAuth();
-    const { loading: useFetchLoading, success, error, refetch } = useFetch(
-        '/auth/login',
-        {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ uid: user?.uid })
-        },
-        []
+    const { loading: useFetchLoading, success, error, sendRequest } = useFetch(
+        '/auth/login'
     );
 
     useEffect(() => {
@@ -41,7 +35,13 @@ const Login: React.FC = () => {
 
         // Then get details from my database
         try {
-            await refetch()
+            await sendRequest(
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ uid: user?.uid })
+                }
+            )
         } catch (error) {
             console.error("Login with my database failed: ", error);
         }

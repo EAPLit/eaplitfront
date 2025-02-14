@@ -15,14 +15,8 @@ const Register: React.FC = () => {
 
     const router = useRouter();
     const { register, user, loading: firebaseLoading, deleteUserFromFirebase } = useAuth();
-    const { loading: useFetchLoading, success, error, refetch} = useFetch<void>(
+    const { loading: useFetchLoading, success, error, sendRequest} = useFetch<void>(
         '/auth/register',
-        {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ uid: user?.uid, name: name, username: username, email: email }),
-        },
-        []
     );
 
     // Listens to see if the user is registered and re-routes if so.
@@ -30,7 +24,7 @@ const Register: React.FC = () => {
         if (!firebaseLoading && !useFetchLoading && user) {
             router.push('/mylearning');
         }
-    }, [user, firebaseLoading, router]);
+    }, [user, firebaseLoading, useFetchLoading, router]);
 
     const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -47,7 +41,13 @@ const Register: React.FC = () => {
         // Then register with me
         // If registration fails, then delete the user from firebase
         try {
-            await refetch();
+            await sendRequest(
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ uid: user?.uid, name: name, username: username, email: email }),
+                }
+            );
         } catch (error) {
             deleteUserFromFirebase();
             console.error("Registration failed with my database", error);

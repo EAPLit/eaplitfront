@@ -1,17 +1,17 @@
 import { useState, useEffect, useCallback } from 'react';
 
-function useFetch<T>(url: string, options?: RequestInit, dependencies: any[] = []) {
+function useFetch<T>(url: string, options?: RequestInit) {
     const [data, setData] = useState<T | null>(null);
     const [success, setSuccess] = useState<boolean | null>(null);
     const [message, setMessage] = useState<string | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
+    const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
-    const fetchData = useCallback(async () => {
+    const fetchData = useCallback(async (overrideOptions?: RequestInit) => {
         setLoading(true);
         setError(null);
         try {
-            const response = await fetch(url, options);
+            const response = await fetch(url, { ...options, ...overrideOptions });
             if (!response.ok) throw new Error(`Failed to fetch ${response.statusText}`);
             const result = await response.json();
 
@@ -29,13 +29,9 @@ function useFetch<T>(url: string, options?: RequestInit, dependencies: any[] = [
         } finally {
             setLoading(false);
         }
-    }, [url, JSON.stringify(options), ...dependencies]);
+    }, [url, options]);
 
-    useEffect(() => {
-        fetchData();
-    }, [fetchData]);
-
-    return { data, loading, success, message, error, refetch: fetchData };
+    return { data, loading, success, message, error, sendRequest: fetchData };
 }
 
 export default useFetch;

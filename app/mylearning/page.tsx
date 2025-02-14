@@ -1,3 +1,5 @@
+"use client"
+
 import MyLearningHead from '../components/MyLearningHead';
 import ProjectsList from '../components/ProjectsList';
 import AdminGuide from '../components/AdminGuide';
