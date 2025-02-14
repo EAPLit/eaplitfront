@@ -1,8 +1,9 @@
 import { expect, describe, it, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, waitFor, cleanup } from '@testing-library/react';
-
 import userEvent from '@testing-library/user-event';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/app/context/AuthContext';
+import { useError } from '@/app/context/ErrorContext';
 import type { Mock } from 'vitest';
 
 vi.mock('next/navigation', () => ({
@@ -20,6 +21,22 @@ vi.mock('../../app/components/ProjectsList', () => ({
 
 vi.mock('../../app/components/AdminGuide', () => ({
     default: () => <div data-testid="admin-guide" />
+}));
+
+vi.mock('@/app/context/ErrorContext', () => ({
+    useError: () => ({
+        error: null,
+        showError: vi.fn(),
+        clearError: vi.fn(),
+    }),
+}));
+
+vi.mock('@/app/context/AuthContext', () => ({
+    useAuth: () => ({
+        login: vi.fn(),
+        loading: false,
+        user: null,
+    }),
 }));
 
 import MyLearning from '../../app/mylearning/page';

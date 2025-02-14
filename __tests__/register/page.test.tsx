@@ -3,10 +3,28 @@ import { render, screen, waitFor, cleanup } from '@testing-library/react';
 import Register from '../../app/register/page';
 import userEvent from '@testing-library/user-event';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/app/context/AuthContext';
+import { useError } from '@/app/context/ErrorContext';
 import type { Mock } from 'vitest';
 
 vi.mock('next/navigation', () => ({
     useRouter: vi.fn(),
+}));
+
+vi.mock('@/app/context/ErrorContext', () => ({
+    useError: () => ({
+        error: null,
+        showError: vi.fn(),
+        clearError: vi.fn(),
+    }),
+}));
+
+vi.mock('@/app/context/AuthContext', () => ({
+    useAuth: () => ({
+        login: vi.fn(),
+        loading: false,
+        user: null,
+    }),
 }));
 
 describe("Register Page", () => {
@@ -30,6 +48,6 @@ describe("Register Page", () => {
         expect(screen.getByLabelText("Password")).toBeInTheDocument();
         expect(screen.getByLabelText("Confirm password")).toBeInTheDocument();
         expect(screen.getByRole("button", { name: /register/i })).toBeInTheDocument();
-        expect(screen.getByLabelText("Back to login")).toBeInTheDocument();
+        expect(screen.getByText("To login")).toBeInTheDocument();
     });
 });

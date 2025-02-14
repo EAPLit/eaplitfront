@@ -3,6 +3,8 @@ import { render, screen, waitFor, cleanup } from '@testing-library/react';
 import Home from '../app/page';
 import userEvent from '@testing-library/user-event';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/app/context/AuthContext';
+import { useError } from '@/app/context/ErrorContext';
 import type { Mock } from 'vitest';
 
 // Mock the authOnAppLoad function
@@ -14,6 +16,22 @@ import { authOnAppLoad } from '@services/auth';
 // Mock the next/navigation
 vi.mock("next/navigation", () => ({
     useRouter: vi.fn(),
+}));
+
+vi.mock('@/app/context/ErrorContext', () => ({
+    useError: () => ({
+        error: null,
+        showError: vi.fn(),
+        clearError: vi.fn(),
+    }),
+}));
+
+vi.mock('@/app/context/AuthContext', () => ({
+    useAuth: () => ({
+        login: vi.fn(),
+        loading: false,
+        user: null,
+    }),
 }));
 
 describe("Landing Page", () => {
