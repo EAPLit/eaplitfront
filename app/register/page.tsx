@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/context/AuthContext";
+import useFetch from "../api/useFetch";
+import { User } from "../types/authTypes";
 import "../styles/register.scss";
 
 const Register: React.FC = () => {
@@ -13,20 +15,32 @@ const Register: React.FC = () => {
     const [confirmPassword, setConfirmPassword] = useState<string>("");
 
     const router = useRouter();
-    const { register, user, loading } = useAuth();
+    const { register, user, loading: firebaseLoading } = useAuth();
+    const { data, loading: useFetchLoading, success, message, error, refetch} = useFetch<void>(
+        '/auth/register',
+        {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ uid: user?.uid, name, username, email }),
+        },
+        []
+    );
 
     // Listens to see if the user is registered and re-routes if so.
     useEffect(() => {
-        if (user) {
+        if (!firebaseLoading && user) {
             router.push('/mylearning');
         }
-    }, [user, router]);
+    }, [user, firebaseLoading, router]);
 
     const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        // Add verification here
+
         try {
-            await register(name, username, email, password);
-            router.push('/login');
+            await register(username, email, password);
+
         } catch (error) {
             console.error("Registration failed:", error);
         }

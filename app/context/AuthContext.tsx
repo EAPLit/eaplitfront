@@ -1,6 +1,8 @@
 "use client";
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { User, onIdTokenChanged, getIdToken, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "firebase/auth";
+import { User, onIdTokenChanged, getIdToken, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, onAuthStateChanged, signOut } from "firebase/auth";
+import { connectAuthEmulator } from "firebase/auth";
+//firebase emulators:start --only auth
 import { auth } from "../firebase/clientApp";
 
 interface AuthContextProps {
@@ -8,7 +10,7 @@ interface AuthContextProps {
     loading: boolean;
     token: string | null;
     login: (email: string, password: string) => Promise<void>;
-    register: (name: string, username: string, email: string, password: string) => Promise<void>
+    register: (username: string, email: string, password: string) => Promise<void>
     handleLogout: () => Promise<void>;
 }
 
@@ -33,10 +35,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setToken(token);
     };
 
-    const register = async (name: string, username:string, email: string, password: string) => {
+    const register = async (username:string, email: string, password: string) => {
         // Do not set any tokens here.
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            await updateProfile(userCredential.user, {
+                displayName: username
+            });
             setUser(userCredential.user);
         } catch (error: any) {
             const errorCode = error.code;
