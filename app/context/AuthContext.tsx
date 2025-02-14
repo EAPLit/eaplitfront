@@ -1,6 +1,6 @@
 "use client";
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { User, onIdTokenChanged, getIdToken, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, onAuthStateChanged, signOut } from "firebase/auth";
+import { User, onIdTokenChanged, getIdToken, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, deleteUser, signOut } from "firebase/auth";
 import { connectAuthEmulator } from "firebase/auth";
 //firebase emulators:start --only auth
 import { auth } from "../firebase/clientApp";
@@ -11,6 +11,7 @@ interface AuthContextProps {
     token: string | null;
     login: (email: string, password: string) => Promise<void>;
     register: (username: string, email: string, password: string) => Promise<void>
+    deleteUserFromFirebase: () => Promise<void>;
     handleLogout: () => Promise<void>;
 }
 
@@ -20,6 +21,7 @@ const AuthContext = createContext<AuthContextProps>({
     token: null,
     login: async () => {},
     register: async () => {},
+    deleteUserFromFirebase: async () => {},
     handleLogout: async () => {}
 });
 
@@ -51,6 +53,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
     }
 
+    const deleteUserFromFirebase = async () => {
+        if (auth.currentUser) {
+            try {
+                await deleteUser(auth.currentUser); // delete's the firebase user
+                await signOut(auth); // ensure the user is logged out
+            } catch (deleteError) {
+                console.error("Failed to delete the firebase user: ", deleteError);
+            }
+        }
+    }
+
     const handleLogout = async () => {
         await signOut(auth);
         setUser(null);
@@ -74,7 +87,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }, []);
 
     return (
-        <AuthContext.Provider value={{ user, loading, token, login, register, handleLogout }}>
+        <AuthContext.Provider value={{ user, loading, token, login, register, deleteUserFromFirebase, handleLogout }}>
             {children}
         </AuthContext.Provider>
     );
