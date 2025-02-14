@@ -54,6 +54,10 @@ const Register: React.FC = () => {
         }
     }
 
+    const handleDirectToLogin = () => {
+        router.push('/login');
+    }
+
     return (
         <div className='register-form'>
             <form 
@@ -122,7 +126,7 @@ const Register: React.FC = () => {
                         <button className="submit-button" type="submit">Register</button>
                     </div>
                     <div className="form-bottom">
-                        <p className="to-login">To login</p>
+                        <p className="to-login" onClick={handleDirectToLogin}>To login</p>
                     </div>
                 </section>
             </form>
