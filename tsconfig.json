@@ -21,7 +21,9 @@
     "types": ["vitest"],
     "paths": {
       "@/*": ["./*"],
-      "@services/*": ["./services/*"]
+      "@services/*": ["./services/*"],
+      "@context/*": ["./context/*"],
+      "@components/*": ["./components/*"]
     }
   },
   "include": ["next-env.d.ts", 
