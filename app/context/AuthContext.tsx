@@ -12,7 +12,7 @@ interface AuthContextProps {
     login: (email: string, password: string) => Promise<void>;
     register: (username: string, email: string, password: string) => Promise<void>
     deleteUserFromFirebase: () => Promise<void>;
-    handleLogout: () => Promise<void>;
+    logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextProps>({
@@ -22,7 +22,7 @@ const AuthContext = createContext<AuthContextProps>({
     login: async () => {},
     register: async () => {},
     deleteUserFromFirebase: async () => {},
-    handleLogout: async () => {}
+    logout: async () => {}
 });
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -64,7 +64,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
     }
 
-    const handleLogout = async () => {
+    const logout = async () => {
         await signOut(auth);
         setUser(null);
         setToken(null);
@@ -87,7 +87,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }, []);
 
     return (
-        <AuthContext.Provider value={{ user, loading, token, login, register, deleteUserFromFirebase, handleLogout }}>
+        <AuthContext.Provider value={{ user, loading, token, login, register, deleteUserFromFirebase, logout }}>
             {children}
         </AuthContext.Provider>
     );

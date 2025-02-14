@@ -47,6 +47,10 @@ const Login: React.FC = () => {
         }
     }
 
+    const handleToRegistration = () => {
+        router.push("/register");
+    }
+
     return (
         <div className="login-form">
             <form className="form" aria-labelledby="login-heading" onSubmit={handleLogin}>
@@ -78,7 +82,7 @@ const Login: React.FC = () => {
                         <button className="submit-button" type="submit">Login</button>
                     </div>
                     <div className="form-bottom">
-                        <p className="to-registration">To registration</p>
+                        <p className="to-registration" onClick={handleToRegistration}>To registration</p>
                     </div>
                 </section>
             </form>
