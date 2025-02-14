@@ -38,13 +38,15 @@ const Register: React.FC = () => {
 
         // Add verification here
 
+        // First register with firebase
         try {
             await register(username, email, password);
-
         } catch (error) {
             console.error("Registration failed with firebase:", error);
         }
 
+        // Then register with me
+        // If registration fails, then delete the user from firebase
         try {
             await refetch();
         } catch (error) {
@@ -125,7 +127,21 @@ const Register: React.FC = () => {
                     </div>
                 </section>
             </form>
-
+            {
+                firebaseLoading || useFetchLoading ? (
+                    <div><p>Registering...</p></div>
+                ) : null
+            }
+            {
+                success === false ? (
+                    <div><p>There was an error registering you. Please try again</p></div>
+                ): null
+            }
+            {
+                error ? (
+                    <div><p>{error}</p></div>
+                ) : null
+            }
         </div>
     );
 };
