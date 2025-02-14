@@ -6,14 +6,8 @@ import { useAuth } from '@/app/context/AuthContext';
 
 const Navbar = () => {
 
-    const { logout, user } = useAuth();
+    const { logout } = useAuth();
     const router = useRouter();
-    
-    useEffect(() => {
-        if (!user) {
-            router.push('/login');
-        }
-    }, [user, router]);
 
     const handleLogout = async () => {
         try {

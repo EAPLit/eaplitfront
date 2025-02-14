@@ -1,11 +1,12 @@
 "use client"
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { authOnAppLoad } from '@services/auth';
 import { useRouter } from 'next/navigation';
+import { useAuth } from './context/AuthContext';
 import "./styles/home.scss";
 
 export default function Home() {
-
+  const { user, loading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
@@ -14,6 +15,12 @@ export default function Home() {
     }
     getAuthCredentialsOnAppLoad();
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      router.push("/mylearning");
+    }
+  }, [user, router]);
 
   const handleLoginClick = () => {
     router.push('/login');

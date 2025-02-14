@@ -72,14 +72,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     useEffect(() => {
         const unsubscribe = onIdTokenChanged(auth, async (user) => {
-            setUser(user);
-            setLoading(false);
+            console.log("Auth state changed. User:", user); // 🔍 Debug
             if (user) {
+                setUser(user);
                 const token = await getIdToken(user);
                 setToken(token);
             } else {
+                setUser(null);
                 setToken(null);
+                console.log("No user, token set to null");
             }
+            setLoading(false);
         });
         return () => {
             unsubscribe();
