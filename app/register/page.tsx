@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/context/AuthContext";
 import useFetch from "../api/useFetch";
-import { User } from "../types/authTypes";
 import "../styles/register.scss";
 
 const Register: React.FC = () => {
@@ -16,12 +15,12 @@ const Register: React.FC = () => {
 
     const router = useRouter();
     const { register, user, loading: firebaseLoading, deleteUserFromFirebase } = useAuth();
-    const { loading: useFetchLoading, success, message, error, refetch} = useFetch<void>(
+    const { loading: useFetchLoading, success, error, refetch} = useFetch<void>(
         '/auth/register',
         {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ uid: user?.uid, name, username, email }),
+            body: JSON.stringify({ uid: user?.uid, name: name, username: username, email: email }),
         },
         []
     );
