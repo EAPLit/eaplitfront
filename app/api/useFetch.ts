@@ -11,7 +11,7 @@ function useFetch<T>(url: string, options?: RequestInit) {
         setLoading(true);
         setError(null);
         try {
-            const response = await fetch(url, { ...options, ...overrideOptions });
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}${url}`, { ...options, ...overrideOptions });
             if (!response.ok) throw new Error(`Failed to fetch ${response.statusText}`);
             const result = await response.json();
 
