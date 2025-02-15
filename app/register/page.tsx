@@ -22,7 +22,7 @@ const Register: React.FC = () => {
     // Listens to see if the user is registered and re-routes if so.
     useEffect(() => {
         if (!firebaseLoading && !useFetchLoading && user) {
-            router.push('/mylearning');
+            router.push('/verify');
         }
     }, [user, firebaseLoading, useFetchLoading, router]);
 
