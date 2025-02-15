@@ -1,11 +1,11 @@
 "use client";
-
+import React, { Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useAuth } from '../context/AuthContext';
 import { useState } from 'react';
 import "../styles/register.scss";
 
-const PasswordReset = () => {
+const ResetPassword = () => {
 
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
@@ -73,4 +73,10 @@ const PasswordReset = () => {
     );
 };
 
-export default PasswordReset;
+export default function ResetPasswordPage() {
+    return (
+        <Suspense fallback={<div>Loading ... </div>}>
+            <ResetPassword />
+        </Suspense>
+    );
+};
