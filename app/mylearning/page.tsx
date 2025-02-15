@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/context/AuthContext";
 
 const MyLearning = () => {
-    const { user, loading, token } = useAuth();
+    const { user, loading } = useAuth();
     const router = useRouter();
 
     // Protect this page by ensuring the user is logged in; if not, redirect to the login page.

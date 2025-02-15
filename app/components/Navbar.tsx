@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useRouter } from "next/navigation";
 import { useAuth } from '@/app/context/AuthContext';
 
@@ -12,6 +12,7 @@ const Navbar = () => {
     const handleLogout = async () => {
         try {
              await logout();
+             router.push('/');
         } catch (error) {
             console.error("Logout failed:", error);
         }

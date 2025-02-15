@@ -1,9 +1,9 @@
 "use client";
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { User, onIdTokenChanged, getIdToken, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, deleteUser, signOut } from "firebase/auth";
-import { connectAuthEmulator } from "firebase/auth";
 //firebase emulators:start --only auth
 import { auth } from "../firebase/clientApp";
+import { FirebaseError } from "firebase/app";
 
 interface AuthContextProps {
     user: User | null;
@@ -45,11 +45,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 displayName: username
             });
             setUser(userCredential.user);
-        } catch (error: any) {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.error(`Error during registration ${errorCode} : ${errorMessage}`);
-            throw new Error("Registration failed.");
+        } catch (error: unknown) {
+            if (error instanceof FirebaseError) {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.error(`Error during registration ${errorCode} : ${errorMessage}`);
+                throw new Error("Registration failed.");
+            } else {
+                console.error("An unknown error occurred during registration");
+                throw new Error("Registration failed.");
+            }
         }
     }
 
