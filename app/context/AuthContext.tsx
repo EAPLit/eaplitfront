@@ -1,6 +1,6 @@
 "use client";
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { User, onIdTokenChanged, getIdToken, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, deleteUser, signOut } from "firebase/auth";
+import { User, onIdTokenChanged, getIdToken, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendEmailVerification, deleteUser, signOut } from "firebase/auth";
 //firebase emulators:start --only auth
 import { auth } from "../firebase/clientApp";
 import { FirebaseError } from "firebase/app";
@@ -11,6 +11,7 @@ interface AuthContextProps {
     token: string | null;
     login: (email: string, password: string) => Promise<void>;
     register: (username: string, email: string, password: string) => Promise<void>
+    verifyEmail: () => Promise<void>;
     deleteUserFromFirebase: () => Promise<void>;
     logout: () => Promise<void>;
 }
@@ -21,6 +22,7 @@ const AuthContext = createContext<AuthContextProps>({
     token: null,
     login: async () => {},
     register: async () => {},
+    verifyEmail: async () => {},
     deleteUserFromFirebase: async () => {},
     logout: async () => {}
 });
@@ -54,6 +56,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             } else {
                 console.error("An unknown error occurred during registration");
                 throw new Error("Registration failed.");
+            }
+        }
+    }
+
+    const verifyEmail = async () => {
+        console.log("I am about to send an email verification with: ", auth.currentUser);
+        if (auth.currentUser) {
+            try {
+                console.log("Sending email verification to:", auth.currentUser);
+                await sendEmailVerification(auth.currentUser);
+            } catch (error: unknown) {
+                if (error instanceof FirebaseError) {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.error(`Error sending email verification ${errorCode} : ${errorMessage}`);
+                    throw new Error("Send email verification link failed.");
+                } else {
+                    console.error(`Error sending an email verification link during registration`);
+                    throw new Error("Send email verification link failed.");
+                }
+                
             }
         }
     }
@@ -95,7 +118,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }, []);
 
     return (
-        <AuthContext.Provider value={{ user, loading, token, login, register, deleteUserFromFirebase, logout }}>
+        <AuthContext.Provider value={{ user, loading, token, login, register, verifyEmail, deleteUserFromFirebase, logout }}>
             {children}
         </AuthContext.Provider>
     );

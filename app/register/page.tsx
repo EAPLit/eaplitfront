@@ -14,7 +14,7 @@ const Register: React.FC = () => {
     const [confirmPassword, setConfirmPassword] = useState<string>("");
 
     const router = useRouter();
-    const { register, user, loading: firebaseLoading, deleteUserFromFirebase } = useAuth();
+    const { register, user, loading: firebaseLoading, verifyEmail, deleteUserFromFirebase } = useAuth();
     const { loading: useFetchLoading, success, error, sendRequest} = useFetch<void>(
         '/auth/register',
     );
@@ -51,6 +51,13 @@ const Register: React.FC = () => {
         } catch (error) {
             deleteUserFromFirebase();
             console.error("Registration failed with my database", error);
+        }
+
+        // If all goes well, send an email verification from firebase to the user's provided email
+        try {
+            await verifyEmail();
+        } catch (error) {
+            console.error("Verifying email by sending a verification link through firebase failed.");
         }
     }
 
