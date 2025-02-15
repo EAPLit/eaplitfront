@@ -1,17 +1,34 @@
 "use client";
 
-import { useRouter } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { useAuth } from '../context/AuthContext';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import "../styles/register.scss";
 
 const PasswordReset = () => {
 
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
+    const searchParams = useSearchParams();
+    const router = useRouter();
+    const { resetPassword } = useAuth();
 
-    const handlePasswordReset = () => {
+    const oobCode = searchParams.get("oobCode");
 
+
+    const handlePasswordReset = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!oobCode) {
+            console.error("Big error with oobCode again!");
+            return;
+        }
+
+        try {
+            await resetPassword(oobCode, password);
+            setTimeout(() => router.push("/login"), 1000); // redirect to login
+        } catch (error) {
+            console.error("There was another great big fat error again!");
+        }
     };
 
     // TODO Add password validation
