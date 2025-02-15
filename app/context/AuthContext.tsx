@@ -37,10 +37,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const [token, setToken] = useState<string | null>(null);
 
     const login = async (email: string, password: string) => {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        const token = await getIdToken(userCredential.user);
-        setUser(userCredential.user);
-        setToken(token);
+        console.log("I am now logging in.")
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            const token = await getIdToken(userCredential.user);
+            setUser(userCredential.user);
+            setToken(token);
+        } catch (error) {
+            throw error;
+        }
     };
 
     const register = async (username:string, email: string, password: string) => {

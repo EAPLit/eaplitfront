@@ -7,7 +7,6 @@ import useFormValidation from "../hooks/useFormValidation";
 import FormField from "../componentsHTML/FormField";
 import { useError } from "../context/ErrorContext";
 import { useErrorHandler } from "../hooks/useErrorHandler";
-import { FirebaseError } from "firebase/app";
 import "../styles/register.scss";
 
 const Register: React.FC = () => {
@@ -81,7 +80,7 @@ const Register: React.FC = () => {
             return;
         }
 
-        // Then register with me
+        // Then register with me using useFetch hook
         // If registration fails, then delete the user from firebase
         await sendRequest(
             {

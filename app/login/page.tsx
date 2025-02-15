@@ -6,20 +6,23 @@ import useFetch from "../api/useFetch";
 import { useError } from "../context/ErrorContext";
 import useFormValidation from "../hooks/useFormValidation";
 import FormField from "../componentsHTML/FormField";
+import { useErrorHandler } from "../hooks/useErrorHandler";
 import '../styles/login.scss';
 
 const Login: React.FC = () => {
-    const { error: handledError, showError, clearError } = useError();
+    const { error: handledError, clearError } = useError();
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 
     const router = useRouter();
     const { login, loading: firebaseLoading, user } = useAuth();
-    const { loading: useFetchLoading, success, error, sendRequest } = useFetch(
+    const { loading: useFetchLoading, success, error: errorFromFetch, sendRequest } = useFetch(
         '/auth/login'
     );
 
     const { formErrors, isValid } = useFormValidation({email, password}, "login");
+
+    const handleError = useErrorHandler();
 
     // Track if a field has been touched by the user
     const [touched, setTouched] = useState({
@@ -33,6 +36,14 @@ const Login: React.FC = () => {
         }
     }, [user, firebaseLoading, useFetchLoading, router]);
 
+    // This useEffect listen to see if there is any change in
+    // errorFromFetch and handles the error accordingly
+    useEffect(() => {
+        if (errorFromFetch) {
+            handleError(errorFromFetch, "Error fetching details from our database.");
+        }
+    }, [errorFromFetch]);
+
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         clearError();
@@ -44,25 +55,18 @@ const Login: React.FC = () => {
         try {
             await login(email, password);
         } catch (err) {
-            console.error("Login with firebase failed: ", err, ". [firebase]: ", error);
-            showError(`Login failed: ${err}. [firebase]: ${error}`); // The error from firebase is passed to my error handler here.
-            showError(`Login failed: ${err}. [firebase]: ${error}`, true); // Shows the error message in a toast.
+            handleError(err, "Error logging in! Please try again.");
+            return;
         }
 
         // Then get details from my database
-        try {
-            await sendRequest(
-                {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ uid: user?.uid })
-                }
-            )
-        } catch (err) {
-            console.error("Login with my database failed: ", error);
-            showError("Login failed: " + err); // This sets the value of handledError
-            showError("Login failed: " + err, true); // This provides a toast readout of the error.
-        }
+        await sendRequest(
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ uid: user?.uid })
+            }
+        )
     }
 
     const handleForgotPassword = () => {
