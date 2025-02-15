@@ -12,7 +12,6 @@ interface AuthContextProps {
     login: (email: string, password: string) => Promise<void>;
     register: (username: string, email: string, password: string) => Promise<void>
     verifyEmail: () => Promise<void>;
-    confirmEmailVerification: (oobCode: string) => Promise<void>;
     resetPassword: (email: string) => Promise<void>;
     deleteUserFromFirebase: () => Promise<void>;
     logout: () => Promise<void>;
@@ -25,7 +24,6 @@ const AuthContext = createContext<AuthContextProps>({
     login: async () => {},
     register: async () => {},
     verifyEmail: async () => {},
-    confirmEmailVerification: async () => {},
     resetPassword: async () => {},
     deleteUserFromFirebase: async () => {},
     logout: async () => {}
@@ -68,7 +66,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (auth.currentUser) {
             try {
                 const actionCodeSettings = {
-                    url: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/verify`,
+                    url: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/verify-email`,
                     handleCodeInApp: true,
                 }
                 await sendEmailVerification(auth.currentUser, actionCodeSettings);
@@ -83,15 +81,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                     throw new Error("Send email verification link failed.");
                 } 
             }
-        }
-    }
-
-    const confirmEmailVerification = async (oobCode: string) => {
-        try {
-            await applyActionCode(auth, oobCode);
-        } catch (error) {
-            console.error(`Error confirming email verification code`);
-            throw new Error("Error confirming email verification code")
         }
     }
 
@@ -136,7 +125,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }, []);
 
     return (
-        <AuthContext.Provider value={{ user, loading, token, login, register, verifyEmail, confirmEmailVerification, resetPassword, deleteUserFromFirebase, logout }}>
+        <AuthContext.Provider value={{ user, loading, token, login, register, verifyEmail, resetPassword, deleteUserFromFirebase, logout }}>
             {children}
         </AuthContext.Provider>
     );
