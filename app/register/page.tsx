@@ -20,7 +20,18 @@ const Register: React.FC = () => {
     );
 
     // Listens to see if the user is registered and re-routes if so.
+    // Sends a verification email if the user is registered.
     useEffect(() => {
+
+        const verifyUserEmail = async () => {
+            try {
+                await verifyEmail();
+            } catch (error) {
+                console.error("Error verifying email:", error);
+            }
+        };
+        verifyUserEmail();
+
         if (!firebaseLoading && !useFetchLoading && user) {
             router.push('/verify-notify');
         }
@@ -51,13 +62,6 @@ const Register: React.FC = () => {
         } catch (error) {
             deleteUserFromFirebase();
             console.error("Registration failed with my database", error);
-        }
-
-        // If all goes well, send an email verification from firebase to the user's provided email
-        try {
-            await verifyEmail();
-        } catch (error) {
-            console.error("Verifying email by sending a verification link through firebase failed:", error);
         }
     }
 
