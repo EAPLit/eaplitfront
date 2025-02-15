@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/context/AuthContext";
 import useFetch from "../api/useFetch";
 import useRegisterValidation from "../hooks/useRegisterValidation";
+import FormField from "../componentsHTML/FormField";
 import "../styles/register.scss";
 
 const Register: React.FC = () => {
@@ -97,84 +98,72 @@ const Register: React.FC = () => {
             >
                 <h1 className="register-heading" id="register-heading">Register</h1>
                 <section aria-label="Register Panel">
-                    <div className="input-area">
-                        <label className="input-label" htmlFor="your-name">Name</label>
-                        <input 
-                            className="input-item" 
-                            id="your-name" 
-                            type="text" 
-                            placeholder="Your name" 
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            onBlur={() => handleBlur("name")}
-                        />
-                        {touched.name && formErrors.name && <p className="error-text">{formErrors.name}</p>}
-                    </div>
-                    <div className="input-area">
-                        <label className="input-label" htmlFor="username">Username</label>
-                        <input 
-                            className="input-item" 
-                            id="username" 
-                            type="text" 
-                            placeholder="Username" 
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            onBlur={() => handleBlur("username")}
-                        />
-                        {touched.username && formErrors.username && <p className="error-text">{formErrors.username}</p>}
-                    </div>
-                    <div className="input-area">
-                        <label className="input-label" htmlFor="email">Email</label>
-                        <input 
-                            className="input-item" 
-                            id="email" 
-                            type="email" 
-                            placeholder="email" 
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            onBlur={() => handleBlur("email")}
-                        />
-                        {touched.email && formErrors.email && <p className="error-text">{formErrors.email}</p>}
-                    </div>
-                    <div className="input-area">
-                        <label className="input-label" htmlFor="email">Confirm email</label>
-                        <input 
-                            className="input-item" 
-                            id="email" 
-                            type="email" 
-                            placeholder="confirm email" 
-                            value={confirmEmail}
-                            onChange={(e) => setConfirmEmail(e.target.value)}
-                            onBlur={() => handleBlur("confirmEmail")}
-                        />
-                        {touched.confirmEmail && formErrors.confirmEmail && <p className="error-text">{formErrors.confirmEmail}</p>}
-                    </div>
-                    <div className="input-area">
-                        <label className="input-label" htmlFor="password">Password</label>
-                        <input 
-                            className="input-item" 
-                            id="password" 
-                            type="password" 
-                            placeholder="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            onBlur={() => handleBlur("password")}
-                        />
-                        {touched.password && formErrors.password && <p className="error-text">{formErrors.password}</p>}
-                    </div>
-                    <div className="input-area">
-                        <label className="input-label" htmlFor="confirm-password">Confirm password</label>
-                        <input 
-                            className="input-item" 
-                            id="confirm-password" 
-                            type="password" 
-                            placeholder="confirm password"
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                            onBlur={() => handleBlur("confirmPassword")}
-                        />
-                        {touched.confirmPassword && formErrors.confirmPassword && <p className="error-text">{formErrors.confirmPassword}</p>}
-                    </div>
+                    <FormField 
+                        id="your-name"
+                        label="Name"
+                        type="text"
+                        placeholder="Your name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        onBlur={() => handleBlur("name")}
+                        touched={touched.name}
+                        error={formErrors.name}
+                    />
+                    <FormField 
+                        id="username"
+                        label="Username"
+                        type="text"
+                        placeholder="Username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        onBlur={() => handleBlur("username")}
+                        touched={touched.username}
+                        error={formErrors.username}
+                    />
+                    <FormField 
+                        id="email"
+                        label="Email"
+                        type="email"
+                        placeholder="Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        onBlur={() => handleBlur("email")}
+                        touched={touched.email}
+                        error={formErrors.email}
+                    />
+                    <FormField 
+                        id="confirmEmail"
+                        label="Confirm email"
+                        type="email"
+                        placeholder="Confirm email"
+                        value={confirmEmail}
+                        onChange={(e) => setEmail(e.target.value)}
+                        onBlur={() => handleBlur("confirmEmail")}
+                        touched={touched.confirmEmail}
+                        error={formErrors.confirmEmail}
+                    />
+                    <FormField 
+                        id="password"
+                        label="Password"
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        onBlur={() => handleBlur("password")}
+                        touched={touched.password}
+                        error={formErrors.password}
+                    />
+                    <FormField 
+                        id="confirm-password"
+                        label="Confirm password"
+                        type="password"
+                        placeholder="Confirm password"
+                        value={confirmPassword}
+                        onChange={(e) => setPassword(e.target.value)}
+                        onBlur={() => handleBlur("confirmPassword")}
+                        touched={touched.confirmPassword}
+                        error={formErrors.confirmPassword}
+                    />
                     <div className="submit-area">
                         <button className="submit-button" type="submit">Register</button>
                     </div>
