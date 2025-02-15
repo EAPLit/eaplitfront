@@ -18,7 +18,7 @@ const useRegisterValidation = (
     confirmPassword: string
 ) => {
     const [formErrors, setFormErrors] = useState<ValidationErrors>({});
-    const [isValid, setIsValid] = useState(false);
+    const [isValid, setIsValid] = useState<boolean>(false);
 
     useEffect(() => {
         const validateForm = () => {
