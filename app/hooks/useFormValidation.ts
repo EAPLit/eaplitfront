@@ -9,7 +9,7 @@ interface ValidationErrors {
     confirmPassword?: string;
 }
 
-type ValidationType = "login" | "register" | "resetPassword";
+type ValidationType = "login" | "register" | "resetPassword" | "forgotPassword";
 
 const useFormValidation = (
     formValues: Record<string, string>,
@@ -82,6 +82,14 @@ const useFormValidation = (
                         newErrors.confirmPassword = "Password do not match.";
                     }
 
+                    break;
+                case "forgotPassword":
+                    // Email validation
+                    if (!formValues.email) {
+                        newErrors.email = "Email is required";
+                    } else if (!/\S+@\S+\.\S+/.test(formValues.email)) {
+                        newErrors.email = "Email is invalid.";
+                    }
                     break;
             }
 
