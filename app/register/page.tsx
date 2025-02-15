@@ -5,6 +5,9 @@ import { useAuth } from "@/app/context/AuthContext";
 import useFetch from "../api/useFetch";
 import useFormValidation from "../hooks/useFormValidation";
 import FormField from "../componentsHTML/FormField";
+import { useError } from "../context/ErrorContext";
+import { useErrorHandler } from "../hooks/useErrorHandler";
+import { FirebaseError } from "firebase/app";
 import "../styles/register.scss";
 
 const Register: React.FC = () => {
@@ -18,9 +21,12 @@ const Register: React.FC = () => {
 
     const router = useRouter();
     const { register, user, loading: firebaseLoading, verifyEmail, deleteUserFromFirebase } = useAuth();
-    const { loading: useFetchLoading, success, error, sendRequest} = useFetch<void>(
+    const { loading: useFetchLoading, success, error: errorFromFetch, sendRequest} = useFetch<void>(
         '/auth/register',
     );
+
+    const { error: errorInGlobalContext, clearError } = useError(); // For passing errors to global state
+    const handleError = useErrorHandler(); // For handling and displaying the error
 
     const { formErrors, isValid } = useFormValidation({name, username, email, confirmEmail, password, confirmPassword}, "register");
 
@@ -37,7 +43,7 @@ const Register: React.FC = () => {
     // Listens to see if the user is registered and re-routes if so.
     // Sends a verification email if the user is registered.
     useEffect(() => {
-
+        clearError();
         const verifyUserEmail = async () => {
             try {
                 await verifyEmail();
@@ -52,6 +58,15 @@ const Register: React.FC = () => {
         }
     }, [user, firebaseLoading, useFetchLoading, router, verifyEmail]);
 
+    // This useEffect listens to see if errorFromFetch changes
+    // If it does, the error is handled with handleError
+    useEffect(() => {
+        if (errorFromFetch) {
+            deleteUserFromFirebase();
+            handleError(errorFromFetch, "Failed to insert your details into our database!");
+        }
+    }, [errorFromFetch]);
+
     const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -61,24 +76,20 @@ const Register: React.FC = () => {
         // First register with firebase
         try {
             await register(username, email, password);
-        } catch (error) {
-            console.error("Registration failed with firebase:", error);
+        } catch (error: unknown) {
+            handleError(error, "Failed to create account. Please check your details and try again.");
+            return;
         }
 
         // Then register with me
         // If registration fails, then delete the user from firebase
-        try {
-            await sendRequest(
-                {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ uid: user?.uid, name: name, username: username, email: email }),
-                }
-            );
-        } catch (error) {
-            deleteUserFromFirebase();
-            console.error("Registration failed with my database", error);
-        }
+        await sendRequest(
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ uid: user?.uid, name: name, username: username, email: email }),
+            }
+        );
     }
 
     const handleDirectToLogin = () => {
@@ -183,8 +194,8 @@ const Register: React.FC = () => {
                 ): null
             }
             {
-                error ? (
-                    <div><p>{error}</p></div>
+                errorInGlobalContext ? (
+                    <div><p>{errorInGlobalContext}</p></div>
                 ) : null
             }
         </div>
