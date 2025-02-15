@@ -12,7 +12,7 @@ interface AuthContextProps {
     login: (email: string, password: string) => Promise<void>;
     register: (username: string, email: string, password: string) => Promise<void>
     verifyEmail: () => Promise<void>;
-    resetPassword: (email: string) => Promise<void>;
+    sendPasswordChangeRequestEmail: (email: string) => Promise<void>;
     deleteUserFromFirebase: () => Promise<void>;
     logout: () => Promise<void>;
 }
@@ -24,7 +24,7 @@ const AuthContext = createContext<AuthContextProps>({
     login: async () => {},
     register: async () => {},
     verifyEmail: async () => {},
-    resetPassword: async () => {},
+    sendPasswordChangeRequestEmail: async () => {},
     deleteUserFromFirebase: async () => {},
     logout: async () => {}
 });
@@ -67,7 +67,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             try {
                 const actionCodeSettings = {
                     url: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/verify-email`,
-                    handleCodeInApp: true,
+                    handleCodeInApp: false,
                 }
                 await sendEmailVerification(auth.currentUser, actionCodeSettings);
             } catch (error: unknown) {
@@ -84,9 +84,42 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
     }
 
-    const resetPassword = async (email:string) => {
-        sendPasswordResetEmail(auth, email);
+    const sendPasswordChangeRequestEmail = async (email: string) => {
+        try {
+            const actionCodeSettings = {
+                url: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/resetpassword`,
+                handleCodeInApp: false
+            }
+            sendPasswordResetEmail(auth, email, actionCodeSettings);
+        } catch (error: unknown) {
+            if (error instanceof FirebaseError) {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.error(`Error sending password reset email: ${errorCode} : ${errorMessage}`);
+                throw new Error("Error sending password reset email.");
+            } else {
+                console.error("Error sending password reset email.");
+                throw new Error("Error sending password reset email.");
+            }
+        }
     }
+
+    // const resetPassword = async (email:string) => {
+    //     try {
+            
+    //     } catch (error: unknown) {
+    //         if (error instanceof FirebaseError) {
+    //             const errorCode = error.code;
+    //             const errorMessage = error.message;
+    //             console.error(`Error sending password reset email: ${errorCode} : ${errorMessage}`);
+    //             throw new Error("Error sending password reset email.");
+    //         } else {
+    //             console.error("Error sending password reset email.");
+    //             throw new Error("Error sending password reset email.");
+    //         }
+    //     }
+        
+    // }
 
     const deleteUserFromFirebase = async () => {
         if (auth.currentUser) {
@@ -125,7 +158,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }, []);
 
     return (
-        <AuthContext.Provider value={{ user, loading, token, login, register, verifyEmail, resetPassword, deleteUserFromFirebase, logout }}>
+        <AuthContext.Provider value={{ user, loading, token, login, register, verifyEmail, sendPasswordChangeRequestEmail, deleteUserFromFirebase, logout }}>
             {children}
         </AuthContext.Provider>
     );
