@@ -113,9 +113,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
 
     const logout = async () => {
-        await signOut(auth);
-        setUser(null);
-        setToken(null);
+        try {
+            await signOut(auth);
+            setUser(null);
+            setToken(null);
+        } catch (error) {
+            throw error;
+        }
+        
     };
 
     useEffect(() => {
