@@ -1,6 +1,6 @@
 "use client";
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { User, onIdTokenChanged, getIdToken, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendEmailVerification, deleteUser, signOut } from "firebase/auth";
+import { User, onIdTokenChanged, getIdToken, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendEmailVerification, sendPasswordResetEmail, deleteUser, signOut } from "firebase/auth";
 //firebase emulators:start --only auth
 import { auth } from "../firebase/clientApp";
 import { FirebaseError } from "firebase/app";
@@ -12,6 +12,7 @@ interface AuthContextProps {
     login: (email: string, password: string) => Promise<void>;
     register: (username: string, email: string, password: string) => Promise<void>
     verifyEmail: () => Promise<void>;
+    resetPassword: (email: string) => Promise<void>;
     deleteUserFromFirebase: () => Promise<void>;
     logout: () => Promise<void>;
 }
@@ -23,6 +24,7 @@ const AuthContext = createContext<AuthContextProps>({
     login: async () => {},
     register: async () => {},
     verifyEmail: async () => {},
+    resetPassword: async () => {},
     deleteUserFromFirebase: async () => {},
     logout: async () => {}
 });
@@ -63,7 +65,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const verifyEmail = async () => {
         if (auth.currentUser) {
             try {
-                await sendEmailVerification(auth.currentUser);
+                const actionCodeSettings = {
+                    url: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/verify`,
+                    handleCodeInApp: true,
+                }
+                await sendEmailVerification(auth.currentUser, actionCodeSettings);
             } catch (error: unknown) {
                 if (error instanceof FirebaseError) {
                     const errorCode = error.code;
@@ -77,6 +83,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 
             }
         }
+    }
+
+    const resetPassword = async (email:string) => {
+        sendPasswordResetEmail(auth, email);
     }
 
     const deleteUserFromFirebase = async () => {
@@ -116,7 +126,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }, []);
 
     return (
-        <AuthContext.Provider value={{ user, loading, token, login, register, verifyEmail, deleteUserFromFirebase, logout }}>
+        <AuthContext.Provider value={{ user, loading, token, login, register, verifyEmail, resetPassword, deleteUserFromFirebase, logout }}>
             {children}
         </AuthContext.Provider>
     );
