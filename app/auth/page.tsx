@@ -5,6 +5,8 @@ import { useAuth } from '../context/AuthContext';
 import { useState } from 'react';
 import FormField from '../componentsHTML/FormField';
 import useFormValidation from '../hooks/useFormValidation';
+import { useError } from '../context/ErrorContext';
+import { useErrorHandler } from '../hooks/useErrorHandler';
 import "../styles/register.scss";
 
 const AuthAndVerifications = () => {
@@ -16,6 +18,8 @@ const AuthAndVerifications = () => {
     const { resetPassword } = useAuth();
 
     const { formErrors, isValid } = useFormValidation({password, confirmPassword}, "resetPassword");
+    const { error: globalContextError, clearError } = useError();
+    const handleError = useErrorHandler();
 
     // Track if the user touches the input fields
     const [touched, setTouched] = useState({
@@ -33,8 +37,10 @@ const AuthAndVerifications = () => {
 
     const handlePasswordReset = async (e: React.FormEvent) => {
         e.preventDefault();
+        clearError();
         if (!oobCode) {
-            console.error("Big error with oobCode again!");
+            handleError(new Error("Missing oobCode in password reset process."), "There was a fatal error. Re-routing..." )
+            setTimeout(() => router.push("/forgot-password"), 1000);
             return;
         }
 
@@ -45,7 +51,8 @@ const AuthAndVerifications = () => {
             await resetPassword(oobCode, password);
             setTimeout(() => router.push("/login"), 1000); // redirect to login
         } catch (error) {
-            console.error("There was another great big fat error again!:", error);
+            handleError(error, "There was an error resetting your password. Please try again.");
+            setTimeout(() => router.push("/forgot-password"), 1000);
         }
     };
 
@@ -106,6 +113,11 @@ const AuthAndVerifications = () => {
                         </div>
                     </section>
                 </form>
+                {
+                    globalContextError ? (
+                        <div><p>{globalContextError}</p></div>
+                    ) : null
+                }
             </div>
         );
     }

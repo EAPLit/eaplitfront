@@ -96,15 +96,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         try {
             await confirmPasswordReset(auth, oobCode, newPassword);
         } catch (error: unknown) {
-            if (error instanceof FirebaseError) {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.error(`Error sending password reset email: ${errorCode} : ${errorMessage}`);
-                throw new Error("Error sending password reset email.");
-            } else {
-                console.error("Error sending password reset email.");
-                throw new Error("Error sending password reset email.");
-            }
+            throw error;
         }
         
     }
@@ -114,8 +106,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             try {
                 await deleteUser(auth.currentUser); // delete's the firebase user
                 await signOut(auth); // ensure the user is logged out
-            } catch (deleteError) {
-                console.error("Failed to delete the firebase user: ", deleteError);
+            } catch (deleteError: unknown) {
+                throw deleteError;
             }
         }
     }
