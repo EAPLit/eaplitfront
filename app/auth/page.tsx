@@ -113,7 +113,7 @@ const AuthAndVerifications = () => {
     if(!mode) {
         handleReRoute();
         return (
-            <div><p>It's not clear what happened here. Redirecting to the login page. Have a nice day...</p></div>
+            <div><p>It is not clear what happened here. Redirecting to the login page. Have a nice day...</p></div>
         );
     }
 };
