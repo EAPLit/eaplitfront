@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import { User, onIdTokenChanged, getIdToken, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendEmailVerification, sendPasswordResetEmail, confirmPasswordReset, deleteUser, signOut } from "firebase/auth";
 //firebase emulators:start --only auth
 import { auth } from "../firebase/clientApp";
-import { FirebaseError } from "firebase/app";
+
 
 interface AuthContextProps {
     user: User | null;

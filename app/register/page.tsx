@@ -7,6 +7,7 @@ import useFormValidation from "../hooks/useFormValidation";
 import FormField from "../componentsHTML/FormField";
 import { useError } from "../context/ErrorContext";
 import { useErrorHandler } from "../hooks/useErrorHandler";
+import ErrorMessage from "../componentsHTML/ErrorMessage";
 import "../styles/register.scss";
 
 const Register: React.FC = () => {
@@ -24,7 +25,7 @@ const Register: React.FC = () => {
         '/auth/register',
     );
 
-    const { error: errorInGlobalContext, clearError } = useError(); // For passing errors to global state
+    const { clearError } = useError(); // For passing errors to global state
     const handleError = useErrorHandler(); // For handling and displaying the error
 
     const { formErrors, isValid } = useFormValidation({name, username, email, confirmEmail, password, confirmPassword}, "register");
@@ -192,11 +193,7 @@ const Register: React.FC = () => {
                     <div><p>There was an error registering you. Please try again</p></div>
                 ): null
             }
-            {
-                errorInGlobalContext ? (
-                    <div><p>{errorInGlobalContext}</p></div>
-                ) : null
-            }
+            <ErrorMessage />
         </div>
     );
 };

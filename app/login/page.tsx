@@ -7,10 +7,10 @@ import { useError } from "../context/ErrorContext";
 import useFormValidation from "../hooks/useFormValidation";
 import FormField from "../componentsHTML/FormField";
 import { useErrorHandler } from "../hooks/useErrorHandler";
+import ErrorMessage from "../componentsHTML/ErrorMessage";
 import '../styles/login.scss';
 
 const Login: React.FC = () => {
-    const { error: handledError, clearError } = useError();
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 
@@ -19,6 +19,7 @@ const Login: React.FC = () => {
     const { loading: useFetchLoading, success, error: errorFromFetch, sendRequest } = useFetch(
         '/auth/login'
     );
+    const { clearError } = useError();
 
     const { formErrors, isValid } = useFormValidation({email, password}, "login");
 
@@ -127,11 +128,7 @@ const Login: React.FC = () => {
                     <div><p>There was an error logging in. Please try again.</p></div>
                 ) : null
             }
-            {
-                handledError ? (
-                    <div><p>{handledError}</p></div>
-                ) : null
-            }
+            <ErrorMessage />
         </div>
     );
 };

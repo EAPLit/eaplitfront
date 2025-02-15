@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useError } from "../context/ErrorContext";
-import "./errorcomponent.scss";
+import "./errormessage.scss";
 
 const ErrorMessage: React.FC = () => {
     const  { error } = useError();

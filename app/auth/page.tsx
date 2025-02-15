@@ -7,6 +7,7 @@ import FormField from '../componentsHTML/FormField';
 import useFormValidation from '../hooks/useFormValidation';
 import { useError } from '../context/ErrorContext';
 import { useErrorHandler } from '../hooks/useErrorHandler';
+import ErrorMessage from '../componentsHTML/ErrorMessage';
 import "../styles/register.scss";
 
 const AuthAndVerifications = () => {
@@ -18,7 +19,7 @@ const AuthAndVerifications = () => {
     const { resetPassword } = useAuth();
 
     const { formErrors, isValid } = useFormValidation({password, confirmPassword}, "resetPassword");
-    const { error: globalContextError, clearError } = useError();
+    const { clearError } = useError();
     const handleError = useErrorHandler();
 
     // Track if the user touches the input fields
@@ -113,11 +114,7 @@ const AuthAndVerifications = () => {
                         </div>
                     </section>
                 </form>
-                {
-                    globalContextError ? (
-                        <div><p>{globalContextError}</p></div>
-                    ) : null
-                }
+                <ErrorMessage />
             </div>
         );
     }

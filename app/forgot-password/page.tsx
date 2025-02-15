@@ -7,6 +7,7 @@ import useFormValidation from '../hooks/useFormValidation';
 import FormField from '../componentsHTML/FormField';
 import { useError } from '../context/ErrorContext';
 import { useErrorHandler } from '../hooks/useErrorHandler';
+import ErrorMessage from '../componentsHTML/ErrorMessage';
 import "../styles/register.scss";
 
 const ForgotPassword = () => {
@@ -14,7 +15,7 @@ const ForgotPassword = () => {
     const router = useRouter();
     const { sendPasswordChangeRequestEmail } = useAuth();
     const { formErrors, isValid } = useFormValidation({email}, "forgotPassword");
-    const { error: globalContextError, clearError } = useError();
+    const { clearError } = useError();
     const handleError = useErrorHandler();
 
     const [touched, setTouched] = useState({
@@ -27,6 +28,7 @@ const ForgotPassword = () => {
 
     const sendVerificationEmail = async (e: React.FormEvent) => {
         e.preventDefault();
+        clearError();
         
         // Ensure form is valid before sending
         if (!isValid) return;
@@ -69,11 +71,7 @@ const ForgotPassword = () => {
                     <p className="to-login" onClick={handleDirectToLogin}>To login</p>
                 </div>
             </form>
-            {
-                globalContextError ? (
-                    <div><p>{globalContextError}</p></div>
-                ) : null
-            }
+            <ErrorMessage />
             
 
         </div>
