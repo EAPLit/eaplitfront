@@ -27,7 +27,7 @@ const Login: React.FC = () => {
         e.preventDefault();
         clearError();
 
-        // Add verification here
+        // Add validation here
 
         // First login with firebase
         try {
@@ -52,6 +52,10 @@ const Login: React.FC = () => {
             showError("Login failed: " + err); // This sets the value of handledError
             showError("Login failed: " + err, true); // This provides a toast readout of the error.
         }
+    }
+
+    const handleForgotPassword = () => {
+        router.push("/forgot-password");
     }
 
     const handleToRegistration = () => {
@@ -84,6 +88,9 @@ const Login: React.FC = () => {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
+                    </div>
+                    <div className="forgot-password-area">
+                        <p onClick={handleForgotPassword}>Forgot password</p>
                     </div>
                     <div className="submit-area">
                         <button className="submit-button" type="submit">Login</button>
