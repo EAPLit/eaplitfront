@@ -5,13 +5,19 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '../context/AuthContext';
 import useFormValidation from '../hooks/useFormValidation';
 import FormField from '../componentsHTML/FormField';
+import { useError } from '../context/ErrorContext';
+import { useErrorHandler } from '../hooks/useErrorHandler';
+import ErrorMessage from '../componentsHTML/ErrorMessage';
 import "../styles/register.scss";
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState<string>("");
     const router = useRouter();
     const { sendPasswordChangeRequestEmail } = useAuth();
-    const { formErrors, isValid } = useFormValidation({email}, "login");
+    const { formErrors, isValid } = useFormValidation({email}, "forgotPassword");
+    const { clearError } = useError();
+    const handleError = useErrorHandler();
+
     const [touched, setTouched] = useState({
         email: false
     });
@@ -22,13 +28,15 @@ const ForgotPassword = () => {
 
     const sendVerificationEmail = async (e: React.FormEvent) => {
         e.preventDefault();
+        clearError();
+        
         // Ensure form is valid before sending
         if (!isValid) return;
-        
+
         try {
             await sendPasswordChangeRequestEmail(email);
         } catch (error) {
-            console.error("Big fat error!", error);
+            handleError(error, "There was an error. Please check your email and try again.")
         }
     };
 
@@ -63,6 +71,7 @@ const ForgotPassword = () => {
                     <p className="to-login" onClick={handleDirectToLogin}>To login</p>
                 </div>
             </form>
+            <ErrorMessage />
             
 
         </div>

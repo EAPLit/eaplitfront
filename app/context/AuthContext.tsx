@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import { User, onIdTokenChanged, getIdToken, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendEmailVerification, sendPasswordResetEmail, confirmPasswordReset, deleteUser, signOut } from "firebase/auth";
 //firebase emulators:start --only auth
 import { auth } from "../firebase/clientApp";
-import { FirebaseError } from "firebase/app";
+
 
 interface AuthContextProps {
     user: User | null;
@@ -37,10 +37,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const [token, setToken] = useState<string | null>(null);
 
     const login = async (email: string, password: string) => {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        const token = await getIdToken(userCredential.user);
-        setUser(userCredential.user);
-        setToken(token);
+        console.log("I am now logging in.")
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            const token = await getIdToken(userCredential.user);
+            setUser(userCredential.user);
+            setToken(token);
+        } catch (error) {
+            throw error;
+        }
     };
 
     const register = async (username:string, email: string, password: string) => {
@@ -54,21 +59,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             setUser(userCredential.user);
             console.log("Everything is set for the user:", userCredential.user);
         } catch (error: unknown) {
-            if (error instanceof FirebaseError) {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.error(`Error during registration ${errorCode} : ${errorMessage}`);
-                throw new Error("Registration failed.");
-            } else {
-                console.error("An unknown error occurred during registration");
-                throw new Error("Registration failed.");
-            }
+            throw error;
         }
     }
 
     const verifyEmail = async () => {
-        console.log("I am not about the verify the email.");
-        console.log("The user in verifyEmail is: ", auth.currentUser);
         if (auth.currentUser) {
             try {
                 const actionCodeSettings = {
@@ -78,15 +73,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 await sendEmailVerification(auth.currentUser, actionCodeSettings);
                 console.log("I have just sent an email regarding: ", actionCodeSettings);
             } catch (error: unknown) {
-                if (error instanceof FirebaseError) {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    console.error(`Error sending email verification ${errorCode} : ${errorMessage}`);
-                    throw new Error("Send email verification link failed.");
-                } else {
-                    console.error(`Error sending an email verification link during registration`);
-                    throw new Error("Send email verification link failed.");
-                } 
+                throw error;
             }
         } else {
             console.log("It seems the email verification was not sent. I wonder why!");
@@ -97,19 +84,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         try {
             const actionCodeSettings = {
                 url: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/auth`,
-                handleCodeInApp: false
+                handleCodeInApp: true
             }
-            sendPasswordResetEmail(auth, email, actionCodeSettings);
+            await sendPasswordResetEmail(auth, email, actionCodeSettings);
         } catch (error: unknown) {
-            if (error instanceof FirebaseError) {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.error(`Error sending password reset email: ${errorCode} : ${errorMessage}`);
-                throw new Error("Error sending password reset email.");
-            } else {
-                console.error("Error sending password reset email.");
-                throw new Error("Error sending password reset email.");
-            }
+            throw error;
         }
     }
 
@@ -117,15 +96,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         try {
             await confirmPasswordReset(auth, oobCode, newPassword);
         } catch (error: unknown) {
-            if (error instanceof FirebaseError) {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.error(`Error sending password reset email: ${errorCode} : ${errorMessage}`);
-                throw new Error("Error sending password reset email.");
-            } else {
-                console.error("Error sending password reset email.");
-                throw new Error("Error sending password reset email.");
-            }
+            throw error;
         }
         
     }
@@ -135,16 +106,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             try {
                 await deleteUser(auth.currentUser); // delete's the firebase user
                 await signOut(auth); // ensure the user is logged out
-            } catch (deleteError) {
-                console.error("Failed to delete the firebase user: ", deleteError);
+            } catch (deleteError: unknown) {
+                throw deleteError;
             }
         }
     }
 
     const logout = async () => {
-        await signOut(auth);
-        setUser(null);
-        setToken(null);
+        try {
+            await signOut(auth);
+            setUser(null);
+            setToken(null);
+        } catch (error) {
+            throw error;
+        }
+        
     };
 
     useEffect(() => {
