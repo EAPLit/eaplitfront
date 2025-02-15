@@ -137,7 +137,7 @@ const Register: React.FC = () => {
                         type="email"
                         placeholder="Confirm email"
                         value={confirmEmail}
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={(e) => setConfirmEmail(e.target.value)}
                         onBlur={() => handleBlur("confirmEmail")}
                         touched={touched.confirmEmail}
                         error={formErrors.confirmEmail}
@@ -159,7 +159,7 @@ const Register: React.FC = () => {
                         type="password"
                         placeholder="Confirm password"
                         value={confirmPassword}
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
                         onBlur={() => handleBlur("confirmPassword")}
                         touched={touched.confirmPassword}
                         error={formErrors.confirmPassword}
