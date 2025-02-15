@@ -10,6 +10,7 @@ const Register: React.FC = () => {
     const [name, setName] = useState<string>("");
     const [username, setUsername] = useState<string>("");
     const [email, setEmail] = useState<string>("");
+    const [confirmEmail, setConfirmEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
 
@@ -108,6 +109,17 @@ const Register: React.FC = () => {
                             type="email" 
                             placeholder="email" 
                             value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </div>
+                    <div className="input-area">
+                        <label className="input-label" htmlFor="email">Confirm email</label>
+                        <input 
+                            className="input-item" 
+                            id="email" 
+                            type="email" 
+                            placeholder="confirm email" 
+                            value={confirmEmail}
                             onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
