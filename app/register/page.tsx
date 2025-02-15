@@ -35,7 +35,7 @@ const Register: React.FC = () => {
         if (!firebaseLoading && !useFetchLoading && user) {
             router.push('/verify-notify');
         }
-    }, [user, firebaseLoading, useFetchLoading, router]);
+    }, [user, firebaseLoading, useFetchLoading, router, verifyEmail]);
 
     const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
