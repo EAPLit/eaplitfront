@@ -9,7 +9,7 @@ interface ValidationErrors {
     confirmPassword?: string;
 }
 
-type ValidationType = "login" | "register";
+type ValidationType = "login" | "register" | "resetPassword";
 
 const useFormValidation = (
     formValues: Record<string, string>,
@@ -68,6 +68,20 @@ const useFormValidation = (
                     } else if (formValues.password.length < 6) {
                         newErrors.password = "Password must be at least 6 characters long.";
                     }
+                    break;
+                case "resetPassword":
+                    // Password validation
+                    if (!formValues.password) {
+                        newErrors.password = "Password is required";
+                    } else if (formValues.password.length < 6) {
+                        newErrors.password = "Password must be at least 6 characters long.";
+                    }
+
+                    // Confirm password validation
+                    if (formValues.password !== formValues.confirmPassword) {
+                        newErrors.confirmPassword = "Password do not match.";
+                    }
+
                     break;
             }
 

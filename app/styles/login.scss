@@ -13,20 +13,6 @@
     @apply text-4xl text-center mb-3;
 }
 
-.input-area {
-    @apply flex flex-col lg:flex-row justify-between lg:items-center;
-    @apply pt-5;
-}
-
-.input-label {
-    @apply pr-3 lg:text-right;
-    @apply w-32 text-2xl;
-}
-
-.input-item {
-    @apply h-16 flex-grow text-2xl rounded-lg p-3 text-black;
-}
-
 .submit-area {
     @apply pt-5 text-center;
 }

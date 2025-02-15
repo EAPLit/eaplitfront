@@ -3,6 +3,8 @@ import React, { Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useAuth } from '../context/AuthContext';
 import { useState } from 'react';
+import FormField from '../componentsHTML/FormField';
+import useFormValidation from '../hooks/useFormValidation';
 import "../styles/register.scss";
 
 const AuthAndVerifications = () => {
@@ -13,8 +15,17 @@ const AuthAndVerifications = () => {
     const router = useRouter();
     const { resetPassword } = useAuth();
 
+    const { formErrors, isValid } = useFormValidation({password, confirmPassword}, "resetPassword");
+
+    // Track if the user touches the input fields
+    const [touched, setTouched] = useState({
+        password: false,
+        confirmPassword: false
+    });
+
     const oobCode = searchParams.get("oobCode");
     const mode = searchParams.get("mode");
+    //const mode = "resetPassword";
 
     const handleToLogin = () => {
         router.push('/login');
@@ -27,6 +38,9 @@ const AuthAndVerifications = () => {
             return;
         }
 
+        // Prevent submitting the form if it is not valid.
+        if (!isValid) return;
+
         try {
             await resetPassword(oobCode, password);
             setTimeout(() => router.push("/login"), 1000); // redirect to login
@@ -35,7 +49,16 @@ const AuthAndVerifications = () => {
         }
     };
 
-    // TODO Add password validation
+    const handleBlur = (field: string) => {
+        setTouched((prev) => ({...prev, [field]: true }));
+    }
+
+    // Redirects to the login page after 2 seconds.
+    const handleReRoute = () => {
+        setTimeout(() => {
+            router.push('/login');
+        }, 2000);
+    }
 
     if (mode === "verifyEmail") {
         return (
@@ -56,34 +79,41 @@ const AuthAndVerifications = () => {
                 >
                     <h1 className="register-heading" id="register-heading">Reset your password</h1>
                     <section aria-label="Register Panel">
-                        <div className="input-area">
-                            <label className="input-label" htmlFor="password">New Password</label>
-                            <input 
-                                className="input-item" 
-                                id="password" 
-                                type="password" 
-                                placeholder="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
-                        </div>
-                        <div className="input-area">
-                            <label className="input-label" htmlFor="confirm-password">Confirm new password</label>
-                            <input 
-                                className="input-item" 
-                                id="confirm-password" 
-                                type="password" 
-                                placeholder="confirm password"
-                                value={confirmPassword}
-                                onChange={(e) => setConfirmPassword(e.target.value)}
-                            />
-                        </div>
+                        <FormField 
+                            id="password"
+                            label="Password"
+                            type="password"
+                            placeholder="Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            onBlur={() => handleBlur("password")}
+                            touched={touched.password}
+                            error={formErrors.password}
+                        />
+                        <FormField 
+                            id="confirm-password"
+                            label="Confirm password"
+                            type="password"
+                            placeholder="Confirm password"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            onBlur={() => handleBlur("confirmPassword")}
+                            touched={touched.confirmPassword}
+                            error={formErrors.confirmPassword}
+                        />
                         <div className="submit-area">
                             <button className="submit-button" type="submit">Reset</button>
                         </div>
                     </section>
                 </form>
             </div>
+        );
+    }
+
+    if(!mode) {
+        handleReRoute();
+        return (
+            <div><p>It's not clear what happened here. Redirecting to the login page. Have a nice day...</p></div>
         );
     }
 };
