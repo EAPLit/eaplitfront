@@ -84,19 +84,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         try {
             const actionCodeSettings = {
                 url: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/auth`,
-                handleCodeInApp: false
+                handleCodeInApp: true
             }
-            sendPasswordResetEmail(auth, email, actionCodeSettings);
+            await sendPasswordResetEmail(auth, email, actionCodeSettings);
         } catch (error: unknown) {
-            if (error instanceof FirebaseError) {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.error(`Error sending password reset email: ${errorCode} : ${errorMessage}`);
-                throw new Error("Error sending password reset email.");
-            } else {
-                console.error("Error sending password reset email.");
-                throw new Error("Error sending password reset email.");
-            }
+            throw error;
         }
     }
 
