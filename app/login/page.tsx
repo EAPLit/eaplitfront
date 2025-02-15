@@ -4,6 +4,8 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/context/AuthContext";
 import useFetch from "../api/useFetch";
 import { useError } from "../context/ErrorContext";
+import useFormValidation from "../hooks/useFormValidation";
+import FormField from "../componentsHTML/FormField";
 import '../styles/login.scss';
 
 const Login: React.FC = () => {
@@ -17,6 +19,14 @@ const Login: React.FC = () => {
         '/auth/login'
     );
 
+    const { formErrors, isValid } = useFormValidation({email, password}, "login");
+
+    // Track if a field has been touched by the user
+    const [touched, setTouched] = useState({
+        email: false,
+        password: false
+    });
+
     useEffect(() => {
         if (!firebaseLoading && !useFetchLoading && user) {
             router.push('/mylearning');
@@ -27,7 +37,8 @@ const Login: React.FC = () => {
         e.preventDefault();
         clearError();
 
-        // Add validation here
+        // Check that the form is valid here and do nothing if not valid.
+        if (!isValid) return;
 
         // First login with firebase
         try {
@@ -62,33 +73,37 @@ const Login: React.FC = () => {
         router.push("/register");
     }
 
+    const handleBlur = (field: string) => {
+        setTouched((prev) => ({ ...prev, [field]: true }));
+    }
+
     return (
         <div className="login-form">
             <form className="form" aria-labelledby="login-heading" onSubmit={handleLogin}>
                 <h1 className="login-heading" id="login-heading">Login</h1>
                 <section aria-label="Login Panel">
-                    <div className="input-area">
-                        <label className="input-label" htmlFor="email">Email</label>
-                        <input
-                            className="input-item" 
-                            id="email"
-                            type="email" 
-                            placeholder="Your email" 
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)} 
-                        />
-                    </div>
-                    <div className="input-area">
-                        <label className="input-label" htmlFor="password">Password</label>
-                        <input
-                            className="input-item"
-                            id="password"
-                            type="password"
-                            placeholder="Your password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                    </div>
+                    <FormField
+                        id="email"
+                        label="Email"
+                        type="email"
+                        placeholder="Your email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        onBlur={() => handleBlur("email")}
+                        touched={touched.email}
+                        error={formErrors.email}
+                    />
+                    <FormField
+                        id="password"
+                        label="Password"
+                        type="password"
+                        placeholder="Your password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        onBlur={() => handleBlur("password")}
+                        touched={touched.password}
+                        error={formErrors.password}
+                    />
                     <div className="submit-area">
                         <button className="submit-button" type="submit">Login</button>
                     </div>
