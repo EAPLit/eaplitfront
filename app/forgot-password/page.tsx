@@ -23,8 +23,8 @@ const ForgotPassword = () => {
     const sendVerificationEmail = async (e: React.FormEvent) => {
         e.preventDefault();
         // Ensure form is valid before sending
-        //if (!isValid) return;
-        console.log("HA! Sending!");
+        if (!isValid) return;
+        
         try {
             await sendPasswordChangeRequestEmail(email);
         } catch (error) {
