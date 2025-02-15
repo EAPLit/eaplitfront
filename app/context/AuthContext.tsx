@@ -45,12 +45,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     const register = async (username:string, email: string, password: string) => {
         // Do not set any tokens here.
+        console.log("I am now registering");
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             await updateProfile(userCredential.user, {
                 displayName: username
             });
             setUser(userCredential.user);
+            console.log("Everything is set for the user:", userCredential.user);
         } catch (error: unknown) {
             if (error instanceof FirebaseError) {
                 const errorCode = error.code;
@@ -65,13 +67,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
 
     const verifyEmail = async () => {
+        console.log("I am not about the verify the email.");
+        console.log("The user in verifyEmail is: ", auth.currentUser);
         if (auth.currentUser) {
             try {
                 const actionCodeSettings = {
                     url: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/verify-email`,
-                    handleCodeInApp: false,
+                    handleCodeInApp: true,
                 }
                 await sendEmailVerification(auth.currentUser, actionCodeSettings);
+                console.log("I have just sent an email regarding: ", actionCodeSettings);
             } catch (error: unknown) {
                 if (error instanceof FirebaseError) {
                     const errorCode = error.code;
@@ -83,6 +88,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                     throw new Error("Send email verification link failed.");
                 } 
             }
+        } else {
+            console.log("It seems the email verification was not sent. I wonder why!");
         }
     }
 
