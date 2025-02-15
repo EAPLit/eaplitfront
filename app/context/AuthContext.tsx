@@ -54,21 +54,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             setUser(userCredential.user);
             console.log("Everything is set for the user:", userCredential.user);
         } catch (error: unknown) {
-            if (error instanceof FirebaseError) {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.error(`Error during registration ${errorCode} : ${errorMessage}`);
-                throw new Error("Registration failed.");
-            } else {
-                console.error("An unknown error occurred during registration");
-                throw new Error("Registration failed.");
-            }
+            throw error;
         }
     }
 
     const verifyEmail = async () => {
-        console.log("I am not about the verify the email.");
-        console.log("The user in verifyEmail is: ", auth.currentUser);
         if (auth.currentUser) {
             try {
                 const actionCodeSettings = {
@@ -78,15 +68,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 await sendEmailVerification(auth.currentUser, actionCodeSettings);
                 console.log("I have just sent an email regarding: ", actionCodeSettings);
             } catch (error: unknown) {
-                if (error instanceof FirebaseError) {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    console.error(`Error sending email verification ${errorCode} : ${errorMessage}`);
-                    throw new Error("Send email verification link failed.");
-                } else {
-                    console.error(`Error sending an email verification link during registration`);
-                    throw new Error("Send email verification link failed.");
-                } 
+                throw error;
             }
         } else {
             console.log("It seems the email verification was not sent. I wonder why!");

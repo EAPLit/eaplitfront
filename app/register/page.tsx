@@ -48,7 +48,7 @@ const Register: React.FC = () => {
             try {
                 await verifyEmail();
             } catch (error) {
-                console.error("Error verifying email:", error);
+                handleError(error, "Error sending email verification.");
             }
         };
         verifyUserEmail();
