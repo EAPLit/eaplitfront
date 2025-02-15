@@ -79,10 +79,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 } else {
                     console.error(`Error sending an email verification link during registration`);
                     throw new Error("Send email verification link failed.");
-                }
-                
+                } 
             }
         }
+    }
+
+    const confirmEmailVerification = async () => {
+        
     }
 
     const resetPassword = async (email:string) => {

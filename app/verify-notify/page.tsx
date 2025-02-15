@@ -1,3 +1,4 @@
+// This page is used to notify the user to verify their email after registering
 "use client";
 
 import { useRouter } from "next/navigation";
@@ -5,7 +6,6 @@ import { useEffect } from 'react';
 import { useAuth } from "../context/AuthContext";
 
 const Verify = () => {
-    
     const { logout } = useAuth();
     const router = useRouter();
     const handleToLogin = () => {
@@ -21,6 +21,7 @@ const Verify = () => {
             }
         }
         handleLogout();
+
     }, []);
 
     return (
