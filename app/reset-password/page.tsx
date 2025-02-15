@@ -27,7 +27,7 @@ const PasswordReset = () => {
             await resetPassword(oobCode, password);
             setTimeout(() => router.push("/login"), 1000); // redirect to login
         } catch (error) {
-            console.error("There was another great big fat error again!");
+            console.error("There was another great big fat error again!:", error);
         }
     };
 

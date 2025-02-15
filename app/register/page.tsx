@@ -57,7 +57,7 @@ const Register: React.FC = () => {
         try {
             await verifyEmail();
         } catch (error) {
-            console.error("Verifying email by sending a verification link through firebase failed.");
+            console.error("Verifying email by sending a verification link through firebase failed:", error);
         }
     }
 

@@ -19,7 +19,7 @@ const ForgotPassword = () => {
         try {
             await sendPasswordChangeRequestEmail(email);
         } catch (error) {
-            console.error("Big fat error!");
+            console.error("Big fat error!", error);
         }
     };
 
