@@ -23,6 +23,16 @@ const Register: React.FC = () => {
 
     const { formErrors, isValid } = useRegisterValidation(name, username, email, confirmEmail, password, confirmPassword);
 
+    // Track if a field has been touched by the user
+    const [touched, setTouched] = useState({
+        name: false,
+        username: false,
+        email: false,
+        confirmEmail: false,
+        password: false,
+        confirmPassword: false
+    });
+
     // Listens to see if the user is registered and re-routes if so.
     // Sends a verification email if the user is registered.
     useEffect(() => {
@@ -74,6 +84,10 @@ const Register: React.FC = () => {
         router.push('/login');
     }
 
+    const handleBlur = (field: string) => {
+        setTouched((prev) => ({...prev, [field]: true }));
+    }
+
     return (
         <div className='register-form'>
             <form 
@@ -92,8 +106,9 @@ const Register: React.FC = () => {
                             placeholder="Your name" 
                             value={name}
                             onChange={(e) => setName(e.target.value)}
+                            onBlur={() => handleBlur("name")}
                         />
-                        {formErrors.name && <p className="error-text">{formErrors.name}</p>}
+                        {touched.name && formErrors.name && <p className="error-text">{formErrors.name}</p>}
                     </div>
                     <div className="input-area">
                         <label className="input-label" htmlFor="username">Username</label>
@@ -104,8 +119,9 @@ const Register: React.FC = () => {
                             placeholder="Username" 
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
+                            onBlur={() => handleBlur("username")}
                         />
-                        {formErrors.username && <p className="error-text">{formErrors.username}</p>}
+                        {touched.username && formErrors.username && <p className="error-text">{formErrors.username}</p>}
                     </div>
                     <div className="input-area">
                         <label className="input-label" htmlFor="email">Email</label>
@@ -116,8 +132,9 @@ const Register: React.FC = () => {
                             placeholder="email" 
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            onBlur={() => handleBlur("email")}
                         />
-                        {formErrors.email && <p className="error-text">{formErrors.email}</p>}
+                        {touched.email && formErrors.email && <p className="error-text">{formErrors.email}</p>}
                     </div>
                     <div className="input-area">
                         <label className="input-label" htmlFor="email">Confirm email</label>
@@ -128,8 +145,9 @@ const Register: React.FC = () => {
                             placeholder="confirm email" 
                             value={confirmEmail}
                             onChange={(e) => setConfirmEmail(e.target.value)}
+                            onBlur={() => handleBlur("confirmEmail")}
                         />
-                        {formErrors.confirmEmail && <p className="error-text">{formErrors.confirmEmail}</p>}
+                        {touched.confirmEmail && formErrors.confirmEmail && <p className="error-text">{formErrors.confirmEmail}</p>}
                     </div>
                     <div className="input-area">
                         <label className="input-label" htmlFor="password">Password</label>
@@ -140,8 +158,9 @@ const Register: React.FC = () => {
                             placeholder="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                            onBlur={() => handleBlur("password")}
                         />
-                        {formErrors.password && <p className="error-text">{formErrors.password}</p>}
+                        {touched.password && formErrors.password && <p className="error-text">{formErrors.password}</p>}
                     </div>
                     <div className="input-area">
                         <label className="input-label" htmlFor="confirm-password">Confirm password</label>
@@ -152,8 +171,9 @@ const Register: React.FC = () => {
                             placeholder="confirm password"
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
+                            onBlur={() => handleBlur("confirmPassword")}
                         />
-                        {formErrors.confirmPassword && <p className="error-text">{formErrors.confirmPassword}</p>}
+                        {touched.confirmPassword && formErrors.confirmPassword && <p className="error-text">{formErrors.confirmPassword}</p>}
                     </div>
                     <div className="submit-area">
                         <button className="submit-button" type="submit">Register</button>
