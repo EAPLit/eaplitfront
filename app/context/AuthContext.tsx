@@ -72,7 +72,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (auth.currentUser) {
             try {
                 const actionCodeSettings = {
-                    url: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/verify-email`,
+                    url: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/auth`,
                     handleCodeInApp: true,
                 }
                 await sendEmailVerification(auth.currentUser, actionCodeSettings);
@@ -96,7 +96,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const sendPasswordChangeRequestEmail = async (email: string) => {
         try {
             const actionCodeSettings = {
-                url: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/reset-password`,
+                url: `${process.env.NEXT_PUBLIC_FRONTEND_URL}/auth`,
                 handleCodeInApp: false
             }
             sendPasswordResetEmail(auth, email, actionCodeSettings);
