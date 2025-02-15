@@ -21,7 +21,7 @@ const Register: React.FC = () => {
 
     const router = useRouter();
     const { register, user, loading: firebaseLoading, verifyEmail, deleteUserFromFirebase } = useAuth();
-    const { loading: useFetchLoading, success, error: errorFromFetch, sendRequest} = useFetch<void>(
+    const { loading: useFetchLoading, success, sendRequest} = useFetch<void>(
         '/auth/register',
     );
 
@@ -40,36 +40,33 @@ const Register: React.FC = () => {
         confirmPassword: false
     });
 
+    // This state is set to true once both firebase and my database have been successfully updated
+    const [fullyRegistered, setFullyRegistered] = useState<boolean>(false);
+
     // Listens to see if the user is registered and re-routes if so.
     // Sends a verification email if the user is registered.
     useEffect(() => {
-        clearError();
         const verifyUserEmail = async () => {
-            try {
-                await verifyEmail();
-            } catch (error) {
-                handleError(error, "Error sending email verification.");
+            if (fullyRegistered) {
+                try {
+                    await verifyEmail();
+                } catch (error) {
+                    handleError(error, "Error sending email verification.");
+                }
+                router.push('/verify-notify');
             }
+            
         };
         verifyUserEmail();
 
-        if (!firebaseLoading && !useFetchLoading && user) {
-            router.push('/verify-notify');
-        }
-    }, [user, firebaseLoading, useFetchLoading, router, verifyEmail]);
-
-    // This useEffect listens to see if errorFromFetch changes
-    // If it does, the error is handled with handleError
-    useEffect(() => {
-        if (errorFromFetch) {
-            deleteUserFromFirebase();
-            handleError(errorFromFetch, "Failed to insert your details into our database!");
-        }
-    }, [errorFromFetch]);
+        // if (!firebaseLoading && !useFetchLoading && user) {
+        //     router.push('/verify-notify');
+        // }
+    }, [user, firebaseLoading, useFetchLoading, router, verifyEmail, handleError, fullyRegistered]);
 
     const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
-
+        clearError();
         // useRegisterValidation to ensure the form is valid
         if (!isValid) return;
 
@@ -90,6 +87,15 @@ const Register: React.FC = () => {
                 body: JSON.stringify({ uid: user?.uid, name: name, username: username, email: email }),
             }
         );
+
+        // Was the sendRequest successful?
+        // success comes from the useFetch hook and is true or false or null
+        if (success) {
+            setFullyRegistered(true);
+        } else {
+            deleteUserFromFirebase();
+            handleError(new Error("Database registration failed."), "Failed to insert your details into our database");
+        }
     }
 
     const handleDirectToLogin = () => {
@@ -187,11 +193,6 @@ const Register: React.FC = () => {
                 firebaseLoading || useFetchLoading ? (
                     <div><p>Registering...</p></div>
                 ) : null
-            }
-            {
-                success === false ? (
-                    <div><p>There was an error registering you. Please try again</p></div>
-                ): null
             }
             <ErrorMessage />
         </div>

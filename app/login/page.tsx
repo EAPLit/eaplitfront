@@ -43,7 +43,7 @@ const Login: React.FC = () => {
         if (errorFromFetch) {
             handleError(errorFromFetch, "Error fetching details from our database.");
         }
-    }, [errorFromFetch]);
+    }, [errorFromFetch, handleError]);
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
