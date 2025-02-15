@@ -89,14 +89,12 @@ const Login: React.FC = () => {
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
-                    <div className="forgot-password-area">
-                        <p onClick={handleForgotPassword}>Forgot password</p>
-                    </div>
                     <div className="submit-area">
                         <button className="submit-button" type="submit">Login</button>
                     </div>
                     <div className="form-bottom">
                         <p className="to-registration" onClick={handleToRegistration}>To registration</p>
+                        <p onClick={handleForgotPassword}>Forgot password</p>
                     </div>
                 </section>
             </form>

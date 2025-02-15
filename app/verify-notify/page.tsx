@@ -22,7 +22,7 @@ const Verify = () => {
         }
         handleLogout();
 
-    }, []);
+    }, [logout]);
 
     return (
         <div>

@@ -1,11 +1,11 @@
 "use client";
-
+import React, { Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useAuth } from '../context/AuthContext';
 import { useState } from 'react';
 import "../styles/register.scss";
 
-const PasswordReset = () => {
+const ResetPassword = () => {
 
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
@@ -27,7 +27,7 @@ const PasswordReset = () => {
             await resetPassword(oobCode, password);
             setTimeout(() => router.push("/login"), 1000); // redirect to login
         } catch (error) {
-            console.error("There was another great big fat error again!");
+            console.error("There was another great big fat error again!:", error);
         }
     };
 
@@ -73,4 +73,10 @@ const PasswordReset = () => {
     );
 };
 
-export default PasswordReset;
+export default function ResetPasswordPage() {
+    return (
+        <Suspense fallback={<div>Loading ... </div>}>
+            <ResetPassword />
+        </Suspense>
+    );
+};
