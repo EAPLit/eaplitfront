@@ -11,11 +11,12 @@ const VerifyEmail = () => {
     const [message, setMessage] = useState<string>("Verifying...");
     const [verified, setVerified] = useState<boolean>(true);
     const router = useRouter();
+    const { confirmEmailVerification } = useAuth();
 
     useEffect(() => {
         const oobCode = searchParams.get("oobCode");
         if (oobCode) {
-
+            confirmEmailVerification(oobCode);
         } else {
             setMessage("Invalid verification link. Please try again");
             setVerified(false);

@@ -1,6 +1,6 @@
 "use client";
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { User, onIdTokenChanged, getIdToken, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendEmailVerification, sendPasswordResetEmail, deleteUser, signOut } from "firebase/auth";
+import { User, onIdTokenChanged, getIdToken, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendEmailVerification, sendPasswordResetEmail, applyActionCode, deleteUser, signOut } from "firebase/auth";
 //firebase emulators:start --only auth
 import { auth } from "../firebase/clientApp";
 import { FirebaseError } from "firebase/app";
@@ -12,6 +12,7 @@ interface AuthContextProps {
     login: (email: string, password: string) => Promise<void>;
     register: (username: string, email: string, password: string) => Promise<void>
     verifyEmail: () => Promise<void>;
+    confirmEmailVerification: (oobCode: string) => Promise<void>;
     resetPassword: (email: string) => Promise<void>;
     deleteUserFromFirebase: () => Promise<void>;
     logout: () => Promise<void>;
@@ -24,6 +25,7 @@ const AuthContext = createContext<AuthContextProps>({
     login: async () => {},
     register: async () => {},
     verifyEmail: async () => {},
+    confirmEmailVerification: async () => {},
     resetPassword: async () => {},
     deleteUserFromFirebase: async () => {},
     logout: async () => {}
@@ -84,8 +86,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
     }
 
-    const confirmEmailVerification = async () => {
-        
+    const confirmEmailVerification = async (oobCode: string) => {
+        try {
+            await applyActionCode(auth, oobCode);
+        } catch (error) {
+            console.error(`Error confirming email verification code`);
+            throw new Error("Error confirming email verification code")
+        }
     }
 
     const resetPassword = async (email:string) => {
@@ -129,7 +136,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }, []);
 
     return (
-        <AuthContext.Provider value={{ user, loading, token, login, register, verifyEmail, resetPassword, deleteUserFromFirebase, logout }}>
+        <AuthContext.Provider value={{ user, loading, token, login, register, verifyEmail, confirmEmailVerification, resetPassword, deleteUserFromFirebase, logout }}>
             {children}
         </AuthContext.Provider>
     );
