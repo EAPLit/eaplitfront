@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/context/AuthContext";
 import useFetch from "../api/useFetch";
 import { useError } from "../context/ErrorContext";
-import useLoginValidation from "../hooks/useLoginValidation";
+import useFormValidation from "../hooks/useFormValidation";
 import FormField from "../componentsHTML/FormField";
 import '../styles/login.scss';
 
@@ -19,7 +19,7 @@ const Login: React.FC = () => {
         '/auth/login'
     );
 
-    const { formErrors, isValid } = useLoginValidation(email, password);
+    const { formErrors, isValid } = useFormValidation({email, password}, "login");
 
     // Track if a field has been touched by the user
     const [touched, setTouched] = useState({

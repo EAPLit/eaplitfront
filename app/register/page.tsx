@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/context/AuthContext";
 import useFetch from "../api/useFetch";
-import useRegisterValidation from "../hooks/useRegisterValidation";
+import useFormValidation from "../hooks/useFormValidation";
 import FormField from "../componentsHTML/FormField";
 import "../styles/register.scss";
 
@@ -22,7 +22,7 @@ const Register: React.FC = () => {
         '/auth/register',
     );
 
-    const { formErrors, isValid } = useRegisterValidation(name, username, email, confirmEmail, password, confirmPassword);
+    const { formErrors, isValid } = useFormValidation({name, username, email, confirmEmail, password, confirmPassword}, "register");
 
     // Track if a field has been touched by the user
     const [touched, setTouched] = useState({

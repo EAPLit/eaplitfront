@@ -1,42 +1,46 @@
-import { useState, useEffect } from "react";
+/**
+ * Unused hook, but kept here for reference!
+ */
 
-interface LoginValidationErrors {
-    email?: string;
-    password?: string;
-}
+// import { useState, useEffect } from "react";
 
-const useLoginValidation = (
-    email: string,
-    password: string
-) => {
-    const [formErrors, setFormErrors] = useState<LoginValidationErrors>({});
-    const [isValid, setIsValid] = useState<boolean>(false);
+// interface LoginValidationErrors {
+//     email?: string;
+//     password?: string;
+// }
 
-    useEffect(() => {
-        const validateForm = () => {
-            const newErrors: LoginValidationErrors = {};
+// const useLoginValidation = (
+//     email: string,
+//     password: string
+// ) => {
+//     const [formErrors, setFormErrors] = useState<LoginValidationErrors>({});
+//     const [isValid, setIsValid] = useState<boolean>(false);
 
-            // email validation
-            if (!email) {
-                newErrors.email = "Email is required";
-            } else if (!/\S+@\S+\.\S+/.test(email)) {
-                newErrors.email = "Email is invalid.";
-            }
+//     useEffect(() => {
+//         const validateForm = () => {
+//             const newErrors: LoginValidationErrors = {};
 
-            // password validation
-            if (!password) {
-                newErrors.password = "Password is required";
-            } else if (password.length < 6) {
-                newErrors.password = "Password must be at least 6 characters long.";
-            }
+//             // email validation
+//             if (!email) {
+//                 newErrors.email = "Email is required";
+//             } else if (!/\S+@\S+\.\S+/.test(email)) {
+//                 newErrors.email = "Email is invalid.";
+//             }
 
-            setFormErrors(newErrors);
-            setIsValid(Object.keys(newErrors).length === 0);
-        };
-        validateForm();
-    }, [email, password]);
+//             // password validation
+//             if (!password) {
+//                 newErrors.password = "Password is required";
+//             } else if (password.length < 6) {
+//                 newErrors.password = "Password must be at least 6 characters long.";
+//             }
 
-    return { formErrors, isValid };
-};
+//             setFormErrors(newErrors);
+//             setIsValid(Object.keys(newErrors).length === 0);
+//         };
+//         validateForm();
+//     }, [email, password]);
 
-export default useLoginValidation;
+//     return { formErrors, isValid };
+// };
+
+// export default useLoginValidation;
