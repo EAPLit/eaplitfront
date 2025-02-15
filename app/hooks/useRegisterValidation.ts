@@ -59,6 +59,8 @@ const useRegisterValidation = (
         };
         validateForm();
     }, [name, username, email, confirmEmail, password, confirmPassword]);
+
+    return { formErrors, isValid };
 };
 
 export default useRegisterValidation;

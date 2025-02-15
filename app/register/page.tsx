@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/context/AuthContext";
 import useFetch from "../api/useFetch";
+import useRegisterValidation from "../hooks/useRegisterValidation";
 import "../styles/register.scss";
 
 const Register: React.FC = () => {
@@ -19,6 +20,8 @@ const Register: React.FC = () => {
     const { loading: useFetchLoading, success, error, sendRequest} = useFetch<void>(
         '/auth/register',
     );
+
+    const { formErrors, isValid } = useRegisterValidation(name, username, email, confirmEmail, password, confirmPassword);
 
     // Listens to see if the user is registered and re-routes if so.
     // Sends a verification email if the user is registered.
@@ -41,7 +44,8 @@ const Register: React.FC = () => {
     const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        // Add verification here
+        // useRegisterValidation to ensure the form is valid
+        if (!isValid) return;
 
         // First register with firebase
         try {
@@ -89,6 +93,7 @@ const Register: React.FC = () => {
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                         />
+                        {formErrors.name && <p className="error-text">{formErrors.name}</p>}
                     </div>
                     <div className="input-area">
                         <label className="input-label" htmlFor="username">Username</label>
@@ -100,6 +105,7 @@ const Register: React.FC = () => {
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                         />
+                        {formErrors.username && <p className="error-text">{formErrors.username}</p>}
                     </div>
                     <div className="input-area">
                         <label className="input-label" htmlFor="email">Email</label>
@@ -111,6 +117,7 @@ const Register: React.FC = () => {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
+                        {formErrors.email && <p className="error-text">{formErrors.email}</p>}
                     </div>
                     <div className="input-area">
                         <label className="input-label" htmlFor="email">Confirm email</label>
@@ -120,8 +127,9 @@ const Register: React.FC = () => {
                             type="email" 
                             placeholder="confirm email" 
                             value={confirmEmail}
-                            onChange={(e) => setEmail(e.target.value)}
+                            onChange={(e) => setConfirmEmail(e.target.value)}
                         />
+                        {formErrors.confirmEmail && <p className="error-text">{formErrors.confirmEmail}</p>}
                     </div>
                     <div className="input-area">
                         <label className="input-label" htmlFor="password">Password</label>
@@ -133,6 +141,7 @@ const Register: React.FC = () => {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
+                        {formErrors.password && <p className="error-text">{formErrors.password}</p>}
                     </div>
                     <div className="input-area">
                         <label className="input-label" htmlFor="confirm-password">Confirm password</label>
@@ -144,6 +153,7 @@ const Register: React.FC = () => {
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                         />
+                        {formErrors.confirmPassword && <p className="error-text">{formErrors.confirmPassword}</p>}
                     </div>
                     <div className="submit-area">
                         <button className="submit-button" type="submit">Register</button>
