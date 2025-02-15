@@ -61,10 +61,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
 
     const verifyEmail = async () => {
-        console.log("I am about to send an email verification with: ", auth.currentUser);
         if (auth.currentUser) {
             try {
-                console.log("Sending email verification to:", auth.currentUser);
                 await sendEmailVerification(auth.currentUser);
             } catch (error: unknown) {
                 if (error instanceof FirebaseError) {
