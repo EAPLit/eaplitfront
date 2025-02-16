@@ -1,7 +1,10 @@
 "use client"
 import { MockProjects } from "../mockData/mockProjects";
+import { useProject } from "../context/ProjectContext";
 
 const ProjectsList = () => {
+
+    const { projects } = useProject();
 
     return (
         <div className="projects-list">
