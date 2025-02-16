@@ -1,3 +1,4 @@
+"use client"
 import ProjectTitle from "../components/ProjectTitle";
 import TextDisplay from "../components/TextDisplay";
 import UploadText from "../components/UploadText";
@@ -9,6 +10,7 @@ import TaskFlow from "../components/TaskFlow";
 import ProjectManager from "../components/ProjectManager";
 
 const ProjectDesign = () => {
+    
     return (
         <div>
             <ProjectTitle />
