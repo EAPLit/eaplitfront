@@ -1,9 +1,16 @@
 "use client"
 import { useProject } from "../context/ProjectContext";
+import { useRouter } from "next/navigation";
 
 const ProjectsList = () => {
 
-    const { projects } = useProject();
+    const { projects, selectProject } = useProject();
+    const router = useRouter();
+
+    const handleSelectProject = (projectID: string) => {
+        selectProject(projectID);
+        router.push('/projectdesign')
+    }
 
     return (
         <div className="projects-list">
@@ -12,7 +19,7 @@ const ProjectsList = () => {
                     {
                         projects?.projectsArray.map((project, i) => (
                             <div key={i}>
-                                <p>{project.projectName}</p>
+                                <p onClick={() => handleSelectProject(project.projectID)}>{project.projectName}</p>
                             </div>
                         ))
                     }

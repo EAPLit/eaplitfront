@@ -2,7 +2,8 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode} from "react";
 import { IProjects, IText, ILessons, ILessonTypes, ITaskTypes, IChosenTasks } from "../interfaces/ProjectInterfaces";
-import { MockProjects} from "../mockData/mockProjects";
+import { MockProjects } from "../mockData/mockProjects";
+import { lessons as mockLessons } from "../mockData/mockLessons";
 
 interface ProjectContextType {
     projects: IProjects | null;
@@ -17,6 +18,8 @@ interface ProjectContextType {
     setTaskTypes: (taskTypes: ITaskTypes) => void;
     chosenTasks: IChosenTasks | null;
     setChosenTasks: (chosenTasks: IChosenTasks) => void;
+    selectProject: (aProjectID: string) => void;
+    fetchLessonsForProject: () => void;
 };
 
 const ProjectContext = createContext<ProjectContextType | undefined>(undefined);
@@ -29,6 +32,9 @@ export const ProjectProvider = ({ children }: { children: ReactNode }) => {
     const [taskTypes, setTaskTypes] = useState<ITaskTypes | null>(null);
     const [chosenTasks, setChosenTasks] = useState<IChosenTasks | null>(null);
 
+    const [selectedProjectID, setSelectedProjectID] = useState<string | null>(null); // Tracks which project the user is currently viewing
+
+
     useEffect(() => {
         const fetchProjects = async () => {
             setTimeout(() => {
@@ -39,8 +45,20 @@ export const ProjectProvider = ({ children }: { children: ReactNode }) => {
         fetchProjects();
     }, []);
 
+    const selectProject = (aProjectID: string) => {
+        setSelectedProjectID(aProjectID);
+    }
+
+    const fetchLessonsForProject = () => {
+        // get lessons according to which project is currently selected
+        // using fetch request.
+        // While mocking, just set the mock data.
+        console.log("The currently selected project ID is: ", selectedProjectID);
+        setLessons(mockLessons);
+    }
+
     return (
-        <ProjectContext.Provider value={{ projects, setProjects, text, setText, lessons, setLessons, lessonTypes, setLessonTypes, taskTypes, setTaskTypes, chosenTasks, setChosenTasks }}>
+        <ProjectContext.Provider value={{ projects, setProjects, text, setText, lessons, setLessons, lessonTypes, setLessonTypes, taskTypes, setTaskTypes, chosenTasks, setChosenTasks, selectProject, fetchLessonsForProject }}>
             {children}
         </ProjectContext.Provider>
     );
