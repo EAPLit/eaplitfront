@@ -8,4 +8,4 @@ export const mockText = [
         text: "One way we hope to reach net zero by 2050 is through the development of renewable energy. Why is this important? Well, energy needs in developing countries are growing at around 5 percent each year because of economic development and population growth. But right now, you will probably not be surprised to hear that almost 1.3 billion people do not have access to electricity. And 3 billion people cook and heat their homes using wood and animal dung. These both contribute greenhouse gases and cause over 4 million deaths per year due to pollution. It’s obviously a huge challenge to provide the energy needs of so many people so renewable energy seems necessary."
     },
 
-]
+];
