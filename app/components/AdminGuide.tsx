@@ -3,8 +3,12 @@
 
 const AdminGuide = () => {
     return (
-        <div>
-
+        <div className="admin-guide">
+            <section className="ai-section">
+                <div>
+                    <p>Talk with AI here</p>
+                </div>
+            </section>
         </div>
     );
 };
