@@ -1,71 +1,99 @@
-"use client"
+"use client";
 
-import { createContext, useContext, useState, useEffect, ReactNode} from "react";
-import { IProjects, IText, ILessons, ILessonTypes, ITaskTypes, IChosenTasks } from "../interfaces/ProjectInterfaces";
-import { MockProjects } from "../mockData/mockProjects";
+import { createContext, useContext, useReducer, useEffect, ReactNode } from 'react';
+import { IProjects, IText, ILessons, ILessonTypes, ITaskTypes, IChosenTasks } from '../interfaces/ProjectInterfaces';
+import { MockProjects } from '../mockData/mockProjects';
 import { lessons as mockLessons } from "../mockData/mockLessons";
 
-interface ProjectContextType {
+// Define action types
+type ProjectAction = 
+ | { type: "SET_PROJECTS"; payload: IProjects }
+ | { type: "SELECT_PROJECT"; payload: string }
+ | { type: "SET_TEXT"; payload: IText }
+ | { type: "SET_LESSONS"; payload: ILessons }
+ | { type: "SET_LESSON_TYPES"; payload: ILessonTypes }
+ | { type: "SET_TASK_TYPES"; payload: ITaskTypes }
+ | { type: "SET_CHOSEN_TASKS"; payload: IChosenTasks }
+
+interface ProjectState {
     projects: IProjects | null;
-    setProjects: (projects: IProjects) => void;
+    selectedProjectID: string | null;
     text: IText | null;
-    setText: (text: IText) => void;
     lessons: ILessons | null;
-    setLessons: (lessons: ILessons) => void;
     lessonTypes: ILessonTypes | null;
-    setLessonTypes: (lessonTypes: ILessonTypes) => void;
     taskTypes: ITaskTypes | null;
-    setTaskTypes: (taskTypes: ITaskTypes) => void;
     chosenTasks: IChosenTasks | null;
-    setChosenTasks: (chosenTasks: IChosenTasks) => void;
+}
+
+const initialState: ProjectState = {
+    projects: null,
+    selectedProjectID: null,
+    text: null,
+    lessons: null,
+    lessonTypes: null,
+    taskTypes: null,
+    chosenTasks: null,
+}
+
+const projectReducer = (state: ProjectState, action: ProjectAction): ProjectState => {
+    switch (action.type) {
+        case "SET_PROJECTS":
+            return { ...state, projects: action.payload };
+        case "SELECT_PROJECT":
+            return { ...state, selectedProjectID: action.payload };
+        case "SET_TEXT":
+            return { ...state, text: action.payload };
+        case "SET_LESSONS":
+            return { ...state, lessons: action.payload };
+        case "SET_LESSON_TYPES":
+            return { ...state, lessonTypes: action.payload };
+        case "SET_TASK_TYPES":
+            return { ...state, taskTypes: action.payload };
+        case "SET_CHOSEN_TASKS":
+            return { ...state, chosenTasks: action.payload };
+        default:
+            return state;
+    }
+}
+
+// Create context
+interface ProjectContextType extends ProjectState {
     selectProject: (aProjectID: string) => void;
     fetchLessonsForProject: () => void;
-};
+}
 
 const ProjectContext = createContext<ProjectContextType | undefined>(undefined);
 
 export const ProjectProvider = ({ children }: { children: ReactNode }) => {
-    const [projects, setProjects] = useState<IProjects | null>(null);
-    const [text, setText] = useState<IText | null>(null);
-    const [lessons, setLessons] = useState<ILessons | null>(null);
-    const [lessonTypes, setLessonTypes] = useState<ILessonTypes | null>(null);
-    const [taskTypes, setTaskTypes] = useState<ITaskTypes | null>(null);
-    const [chosenTasks, setChosenTasks] = useState<IChosenTasks | null>(null);
+    const [state, dispatch] = useReducer(projectReducer, initialState);
 
-    const [selectedProjectID, setSelectedProjectID] = useState<string | null>(null); // Tracks which project the user is currently viewing
-
-
-    useEffect(() => {
-        const fetchProjects = async () => {
-            setTimeout(() => {
-                setProjects(MockProjects);
-            }, 1000);
-        }
-
-        fetchProjects();
+    useEffect(() =>{
+        setTimeout(() => {
+            dispatch({ type: "SET_PROJECTS", payload: MockProjects });
+        }, 1000);
     }, []);
 
+    // Select project
     const selectProject = (aProjectID: string) => {
-        setSelectedProjectID(aProjectID);
-    }
+        dispatch({ type: "SELECT_PROJECT", payload: aProjectID });
+    };
 
+    // Fetch Lessons
     const fetchLessonsForProject = () => {
-        // get lessons according to which project is currently selected
-        // using fetch request.
-        // While mocking, just set the mock data.
-        console.log("The currently selected project ID is: ", selectedProjectID);
-        setLessons(mockLessons);
-    }
+        console.log("Fetching lessons for project ID:", state.selectedProjectID);
+        dispatch({ type: "SET_LESSONS", payload: mockLessons });
+    };
 
     return (
-        <ProjectContext.Provider value={{ projects, setProjects, text, setText, lessons, setLessons, lessonTypes, setLessonTypes, taskTypes, setTaskTypes, chosenTasks, setChosenTasks, selectProject, fetchLessonsForProject }}>
+        <ProjectContext.Provider value={{ ...state, selectProject, fetchLessonsForProject }}>
             {children}
         </ProjectContext.Provider>
-    );
-};
+    )
+}
 
+// Custom hook for context access
 export const useProject = () => {
     const context = useContext(ProjectContext);
     if (!context) throw new Error("useProject must be used within a ProjectProvider");
     return context;
-};
+}
