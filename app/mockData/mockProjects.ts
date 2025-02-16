@@ -1,14 +1,14 @@
 export const MockProjects = {
-    ProjectsArray: [
+    projectsArray: [
         {
-            id: "1",
-            name: "United Nations",
-            textId: "1"
+            projectID: "1",
+            projectName: "United Nations",
+            textID: "1"
         },
         {
-            id: "2",
-            name: "Global Warming",
-            textId: "2"
+            projectID: "2",
+            projectName: "Global Warming",
+            textID: "2"
         }
     ]
 }

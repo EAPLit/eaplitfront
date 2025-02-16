@@ -1,7 +1,8 @@
 "use client"
 
-import { createContext, useContext, useState, ReactNode} from "react";
+import { createContext, useContext, useState, useEffect, ReactNode} from "react";
 import { IProjects, IText, ILessons, ILessonTypes, ITaskTypes, IChosenTasks } from "../interfaces/ProjectInterfaces";
+import { MockProjects} from "../mockData/mockProjects";
 
 interface ProjectContextType {
     projects: IProjects | null;
@@ -27,6 +28,16 @@ export const ProjectProvider = ({ children }: { children: ReactNode }) => {
     const [lessonTypes, setLessonTypes] = useState<ILessonTypes | null>(null);
     const [taskTypes, setTaskTypes] = useState<ITaskTypes | null>(null);
     const [chosenTasks, setChosenTasks] = useState<IChosenTasks | null>(null);
+
+    useEffect(() => {
+        const fetchProjects = async () => {
+            setTimeout(() => {
+                setProjects(MockProjects);
+            }, 1000);
+        }
+
+        fetchProjects();
+    }, []);
 
     return (
         <ProjectContext.Provider value={{ projects, setProjects, text, setText, lessons, setLessons, lessonTypes, setLessonTypes, taskTypes, setTaskTypes, chosenTasks, setChosenTasks }}>

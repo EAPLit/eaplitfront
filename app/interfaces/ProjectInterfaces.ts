@@ -1,6 +1,7 @@
 export interface IProject {
     projectID: string;
     projectName: string;
+    textID: string;
 }
 
 export interface IProjects {

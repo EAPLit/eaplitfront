@@ -1,5 +1,4 @@
 "use client"
-import { MockProjects } from "../mockData/mockProjects";
 import { useProject } from "../context/ProjectContext";
 
 const ProjectsList = () => {
@@ -11,8 +10,10 @@ const ProjectsList = () => {
             <section className="projects-list-section">
                 <div className="project-details">
                     {
-                        MockProjects.ProjectsArray.map((project) => (
-                            <p key={project.id}>{project.name}</p>
+                        projects?.projectsArray.map((project, i) => (
+                            <div key={i}>
+                                <p>{project.projectName}</p>
+                            </div>
                         ))
                     }
                 </div>
