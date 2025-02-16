@@ -2,7 +2,7 @@
 
 const MyLearningHead = () => {
     return (
-        <div>
+        <div className="mylearning-head">
             <section className="title-area">
                 <div>
                     <p>My Learning</p>
