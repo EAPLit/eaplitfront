@@ -1,63 +1,15 @@
 "use client"
 
 import { createContext, useContext, useState, ReactNode} from "react";
-
-interface IProject {
-    projectID: string;
-    projectName: string;
-}
-
-interface IProjects {
-    projectsArray: IProject[];
-}
-
-interface IText {
-    textID: string;
-    text: string;
-}
-
-interface ILesson {
-    lessonID: string;
-    lessonName: string;
-}
-
-interface ILessons {
-    lessonsArray: ILesson[];
-}
-
-interface ILessonType {
-    lessonTypeID: string;
-    lessonTypeName: string;
-}
-
-interface ILessonTypes {
-    lessonTypesArray: ILessonType[];
-}
-
-interface ITaskType {
-    taskTypeID: string;
-    taskTypeName: string;
-}
-
-interface ITaskTypes {
-    taskTypesArray: ITaskType[];
-}
-
-interface IChosenTask {
-    chosenTaskID: string;
-    taskTypeID: string;
-    order: number;
-}
-
-interface IChosenTasks {
-    chosenTasksArray: IChosenTask[]
-}
+import { IProjects, IText, ILessons, ILessonTypes, ITaskTypes, IChosenTasks } from "../interfaces/ProjectInterfaces";
 
 interface ProjectContextType {
     projects: IProjects | null;
     setProjects: (projects: IProjects) => void;
     text: IText | null;
     setText: (text: IText) => void;
+    lessons: ILessons | null;
+    setLessons: (lessons: ILessons) => void;
     lessonTypes: ILessonTypes | null;
     setLessonTypes: (lessonTypes: ILessonTypes) => void;
     taskTypes: ITaskTypes | null;
@@ -71,12 +23,13 @@ const ProjectContext = createContext<ProjectContextType | undefined>(undefined);
 export const ProjectProvider = ({ children }: { children: ReactNode }) => {
     const [projects, setProjects] = useState<IProjects | null>(null);
     const [text, setText] = useState<IText | null>(null);
+    const [lessons, setLessons] = useState<ILessons | null>(null);
     const [lessonTypes, setLessonTypes] = useState<ILessonTypes | null>(null);
     const [taskTypes, setTaskTypes] = useState<ITaskTypes | null>(null);
     const [chosenTasks, setChosenTasks] = useState<IChosenTasks | null>(null);
 
     return (
-        <ProjectContext.Provider value={{ projects, setProjects, text, setText, lessonTypes, setLessonTypes, taskTypes, setTaskTypes, chosenTasks, setChosenTasks }}>
+        <ProjectContext.Provider value={{ projects, setProjects, text, setText, lessons, setLessons, lessonTypes, setLessonTypes, taskTypes, setTaskTypes, chosenTasks, setChosenTasks }}>
             {children}
         </ProjectContext.Provider>
     );
