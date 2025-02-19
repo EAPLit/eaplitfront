@@ -1,15 +1,45 @@
 "use client"
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import useFetch from '../api/useFetch';
+
+interface Correction {
+    category: string,
+    student_text: string,
+    advice: string,
+    examples: string,
+    specific_correction: string,
+    explanation: string,
+}
+
+interface CorrectoBot {
+    output: Correction[]
+}
 
 const WritingCorrection = () => {
 
-    const { sendRequest } = useFetch('/');
+    const { sendRequest, success, data, loading } = useFetch<CorrectoBot>('/writingcorrection/correctobot',);
 
     const [text, setText] = useState("");
-    const handleSubmitParagraph = () => {
-
+    const handleSubmitParagraph = async (e: React.FormEvent) => {
+        e.preventDefault();
+        
+        console.log("I'm here!");
+        await sendRequest(
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ prompt: text }),
+            }
+        );
     }
+
+    useEffect(() => {
+        if (success) {
+            console.log(data);
+        } else {
+            console.log("Well, that didn't work very well did it!");
+        }
+    }, [success, data]);
 
     return (
         <div>
@@ -40,6 +70,14 @@ const WritingCorrection = () => {
                     />
                     <button type="submit">Submit</button>
                 </form>
+            </section>
+            <section className="response-section">
+                {
+                    loading ? <p>Loading your feedback! Wait a moment...</p> : null
+                }
+                {
+                    data?.output
+                }
             </section>
             
         </div>

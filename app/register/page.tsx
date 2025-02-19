@@ -90,6 +90,7 @@ const Register: React.FC = () => {
 
         // Was the sendRequest successful?
         // success comes from the useFetch hook and is true or false or null
+        // NEED TO UPDATE THIS SINCE SUCCESS IS NOT NECESSARILY UPDATED SYNCHRONOUSLY
         if (success) {
             setFullyRegistered(true);
         } else {
