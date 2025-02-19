@@ -19,7 +19,11 @@ const WritingCorrection = () => {
 
     const { sendRequest, success, data, loading } = useFetch<CorrectoBot>('/writingcorrection/correctobot',);
 
-    const [text, setText] = useState("");
+    const [text, setText] = useState<string>("");
+    const [viewing, setViewing] = useState<boolean[] | null>(null);
+    const [viewingCorrection, setViewingCorrection] = useState<boolean[] | null>(null);
+    const [viewingExplanation, setViewingExplanation] = useState<boolean[] | null>(null);
+
     const handleSubmitParagraph = async (e: React.FormEvent) => {
         e.preventDefault();
         
@@ -34,12 +38,45 @@ const WritingCorrection = () => {
     }
 
     useEffect(() => {
-        if (success) {
+        if (success && data?.output?.length) {
             console.log(data);
+            setViewing(Array(data?.output.length).fill(false));
+            setViewingExplanation(Array(data?.output.length).fill(false));
+            setViewingCorrection(Array(data?.output.length).fill(false));
         } else {
             console.log("Well, that didn't work very well did it!");
         }
     }, [success, data]);
+
+    const seeExample = (i: number) => {
+        setViewing((prev) => {
+            if (!prev) return Array(data?.output.length).fill(false);;
+
+            const newViewing = [...prev];
+            newViewing[i] = true;
+            return newViewing;
+        });
+    };
+
+    const seeCorrection = (i: number) => {
+        setViewingCorrection((prev) => {
+            if (!prev) return Array(data?.output.length).fill(false);;
+            const newViewing = [...prev];
+            newViewing[i] = true;
+            return newViewing;
+        });
+    };
+
+    const seeExplanation = (i: number) => {
+        setViewingExplanation((prev) => {
+            if (!prev) return Array(data?.output.length).fill(false);;
+            const newViewing = [...prev];
+            newViewing[i] = true;
+            return newViewing;
+        });
+    };
+
+    
 
     return (
         <div>
@@ -76,7 +113,34 @@ const WritingCorrection = () => {
                     loading ? <p>Loading your feedback! Wait a moment...</p> : null
                 }
                 {
-                    data?.output
+                    data?.output.map((out,i) => (
+                        <div key={i}>
+                            <p>{out.category}</p>
+                            <p>Your text: {out.student_text}</p>
+                            <p>Advice{out.advice}</p>
+                            <p onClick={() => seeExample(i)}>See an example</p>
+                            {
+                                viewing?.[i] ? 
+                                <div>
+                                    <p>{out.examples}</p>
+                                    <p onClick={() => seeCorrection(i)}>See correction</p>
+                                    {
+                                        viewingCorrection?.[i] ?
+                                       <div>
+                                            <p>{out.specific_correction}</p>
+                                            <p onClick={() => seeExplanation(i)}>See explanation</p>
+                                            {
+                                                viewingExplanation?.[i] ?
+                                                <div>
+                                                    <p>{out.explanation}</p>
+                                                </div> : null
+                                            }
+                                       </div> : null
+                                    }
+                                </div> : null
+                            }
+                        </div>
+                    ))
                 }
             </section>
             
