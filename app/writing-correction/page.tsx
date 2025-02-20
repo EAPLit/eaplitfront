@@ -26,6 +26,16 @@ const WritingCorrection = () => {
     const [viewingCorrection, setViewingCorrection] = useState<boolean[] | null>(null);
     const [viewingExplanation, setViewingExplanation] = useState<boolean[] | null>(null);
 
+    const [currentIndex, setCurrentIndex] = useState<number>(0);
+
+    const handlePrevIndex = () => {
+        setCurrentIndex((prev) => (prev > 0 ? prev - 1 : prev));
+    };
+
+    const handleNextIndex = () => {
+        setCurrentIndex((prev) => (prev < data?.output.length - 1 ? prev + 1 : prev));
+    }
+
     const handleSubmitParagraph = async (e: React.FormEvent) => {
         e.preventDefault();
         
@@ -153,60 +163,65 @@ const WritingCorrection = () => {
                     loading ? <p>Loading your feedback! Wait a moment...</p> : null
                 }
                 {
-                    data?.output.map((out,i) => (
-                        <div className="feedback-panel" key={i}>
+                    data?.output.length > 0 && (
+                        <div className="feedback-panel" key={currentIndex}>
+                            <div className="navigation-buttons">
+                                <button onClick={handlePrevIndex} disabled={currentIndex === 0}>⬅️</button>
+                                <button onClick={handleNextIndex} disabled={currentIndex === data.output.length - 1}>➡️</button>
+                                <p>{currentIndex + 1} / {data?.output.length}</p>
+                            </div>
                             <div className="step-one">
-                                <h2 className="step-one-title">This is about {out.category}</h2>
+                                <h2 className="step-one-title">Let's look at "{data.output[currentIndex].category}"</h2>
                                 <TypingText htmlContent={`
                                     <div className="step-one-student-text">
-                                        <p>You wrote this in your paragraph: "<i><strong>${out.student_text}</strong></i>"</p>
+                                        <p>You wrote this in your paragraph: "<i><strong>${data.output[currentIndex].student_text}</strong></i>"</p>
                                     </div>
                                     <div className="step-one-comment">
-                                        <p>Here is my comment: ${out.advice}</p>
+                                        <p>Here is my comment: ${data.output[currentIndex].advice}</p>
                                     </div>
                                 `}/>
                                 
                                 <div className="step-one-request-example">
-                                    <p onClick={() => seeExample(i)}>Want to see examples? Click here ✎</p>
-                                    <button className="reveal-next-button" onClick={() => seeExample(i)}>See examples</button>
+                                    <p onClick={() => seeExample(currentIndex)}>Want to see examples? Click here ✎</p>
+                                    <button className="reveal-next-button" onClick={() => seeExample(currentIndex)}>See examples</button>
                                     
                                 </div>
                                 
                                 
                             </div>
                             {
-                                viewing?.[i] ? 
+                                viewing?.[currentIndex] ? 
                                 <div className="step-two">
                                     <TypingText htmlContent={`
                                         <div className="step-two-examples">
                                             <p>Okay, here are some examples to help you. Think carefully about them!</p>
-                                            <p><i><strong>"${out.examples}"</strong></i></p>
+                                            <p><i><strong>"${data.output[currentIndex].examples}"</strong></i></p>
                                         </div>
                                     `}/>
                                     
                                     <div className="step-two-request-correction">
-                                        <p onClick={() => seeCorrection(i)}>Can you update your writing?</p>
-                                        <p onClick={() => seeCorrection(i)}>Do you to see my correction?</p>
-                                        <button className="reveal-next-button" onClick={() => seeCorrection(i)}>See correction</button>
+                                        <p onClick={() => seeCorrection(currentIndex)}>Can you update your writing?</p>
+                                        <p onClick={() => seeCorrection(currentIndex)}>Do you want to see my correction?</p>
+                                        <button className="reveal-next-button" onClick={() => seeCorrection(currentIndex)}>See correction</button>
                                     </div>
                                     {
-                                        viewingCorrection?.[i] ?
+                                        viewingCorrection?.[currentIndex] ?
                                         <div className="step-three">
                                             <TypingText htmlContent={`
                                                 <div className="step-three-see-corrections">
                                                     <p>No problem. Here is my correction to your text:</p>
-                                                    <p><i><strong>${out.specific_correction}</strong></i></p>
+                                                    <p><i><strong>${data.output[currentIndex].specific_correction}</strong></i></p>
                                                 </div>
                                             `} />
                                             <div className="step-three-request-explanation">
-                                                <p onClick={() => seeExplanation(i)}>Would you like to see an explanation</p>
-                                                <button className="reveal-next-button" onClick={() => seeExplanation(i)}>See explanation</button>
+                                                <p onClick={() => seeExplanation(currentIndex)}>Would you like to see an explanation</p>
+                                                <button className="reveal-next-button" onClick={() => seeExplanation(currentIndex)}>See explanation</button>
                                             </div>
                                             {
-                                                viewingExplanation?.[i] ?
+                                                viewingExplanation?.[currentIndex] ?
                                                 <div>
                                                     <TypingText htmlContent={`
-                                                        <p>${out.explanation}</p>
+                                                        <p>${data.output[currentIndex].explanation}</p>
                                                     `} />
                                                     
                                                 </div> : null
@@ -216,7 +231,7 @@ const WritingCorrection = () => {
                                 </div> : null
                             }
                         </div>
-                    ))
+                    )
                 }
             </section>
             
