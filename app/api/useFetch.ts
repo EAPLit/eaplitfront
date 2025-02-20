@@ -23,7 +23,7 @@ function useFetch<T>(url: string, options?: RequestInit) {
             // }
             setSuccess(result.success);
             setMessage(result.message);
-            setData(result.data ?? ({} as T)); // allow data to be an empty object if it is missing
+            setData(JSON.parse(result.data) ?? ({} as T)); // allow data to be an empty object if it is missing
         } catch (error) {
             setError((error as Error).message);
         } finally {

@@ -6,6 +6,7 @@ import AdminGuide from '../components/AdminGuide';
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/context/AuthContext";
+import '../styles/mylearning.scss'
 
 const MyLearning = () => {
     const { user, loading } = useAuth();

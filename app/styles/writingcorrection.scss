@@ -1,0 +1,78 @@
+.writing-correction-head {
+    @apply text-4xl text-center;
+}
+
+.w-c-instructions-title {
+    @apply text-2xl text-center;
+}
+
+.w-c-instructions-details {
+    @apply text-center p-3;
+}
+
+.submit-paragraph-form {
+    @apply flex flex-col items-center gap-4 w-full max-w-lg mx-auto;
+}
+
+.correctobot-text-area {
+    @apply w-full p-4 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none shadow-sm text-gray-800 placeholder-gray-400
+}
+
+.submit-paragraph-button {
+    @apply bg-blue-600 text-white px-6 py-3 mb-3 rounded-xl hover:bg-blue-700 transition-colors shadow-md disabled:bg-gray-400 disabled:cursor-not-allowed;
+}
+
+.navigation-buttons {
+    @apply text-3xl;
+}
+
+.feedback-panel {
+    @apply p-3 bg-slate-700 border border-red-500;;
+}
+
+.step-one {
+
+}
+
+.step-one-title {
+    @apply text-center;
+    @apply text-2xl;
+}
+
+.step-one-student-text {
+    @apply text-xl;
+}
+
+.step-one-comment {
+    @apply text-lg;
+}
+
+.step-one-request-example {
+    @apply text-right;
+    @apply hover:cursor-pointer;
+}
+
+.reveal-next-button {
+    @apply bg-teal-500 font-bold;
+    @apply p-3 rounded-lg mt-3 mb-3
+}
+
+.step-two {
+
+}
+
+.step-two-request-correction {
+    @apply text-right;
+}
+
+.step-three {
+
+}
+
+.step-three-see-corrections {
+    @apply text-lg;
+}
+
+.step-three-request-explanation {
+    @apply text-right;
+}

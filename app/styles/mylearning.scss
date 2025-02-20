@@ -1,0 +1,63 @@
+
+/* <MyLearningHead /> */
+.mylearning-head {
+    @apply flex flex-col;
+}
+
+.title-area {
+    @apply flex flex-row justify-center;
+}
+
+.title-text {
+    @apply text-3xl;
+}
+
+.buttons-panel {
+    @apply flex flex-row justify-around;
+}
+
+.button-area {
+    @apply text-center;
+}
+
+.mylearning-button {
+    @apply bg-slate-500 p-3 rounded-full w-14 h-14; 
+    @apply hover:bg-slate-200 hover:text-black active:bg-slate-500 active:text-white;
+}
+
+/* <ProjectsList /> */
+.projects-list-panel {
+    @apply justify-items-center
+}
+.projects-list {
+    @apply rounded-3xl bg-white;
+    @apply mt-3 w-11/12;
+}
+
+.projects-list-title {
+    @apply m-3 text-black text-3xl text-center pt-1;
+}
+
+.projects-list-section {
+
+}
+
+.project-details {
+    @apply flex flex-col
+}
+
+.a-project {
+    @apply h-10;
+}
+
+.a-project-light {
+    @apply bg-slate-500;
+}
+
+.a-project-dark {
+    @apply bg-slate-600;
+}
+
+.projects-list-footer {
+    @apply h-3 bg-white rounded-b-3xl;
+}
