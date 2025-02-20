@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export default function TypingText({ htmlContent, speed = 50 }) {
+export default function TypingText({ htmlContent, speed = 25 }) {
   const [displayedText, setDisplayedText] = useState("");
 
   useEffect(() => {

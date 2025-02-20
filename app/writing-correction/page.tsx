@@ -19,7 +19,7 @@ interface CorrectoBot {
 
 const WritingCorrection = () => {
 
-    const { sendRequest, loading } = useFetch<CorrectoBot>('/writingcorrection/correctobot',);
+    const { sendRequest, data, success, loading } = useFetch<CorrectoBot>('/writingcorrection/correctobot',);
 
     const [text, setText] = useState<string>("");
     const [viewing, setViewing] = useState<boolean[] | null>(null);
@@ -33,6 +33,7 @@ const WritingCorrection = () => {
     };
 
     const handleNextIndex = () => {
+        if (!data?.output) return; // Safeguard against null/undefined
         setCurrentIndex((prev) => (prev < data?.output.length - 1 ? prev + 1 : prev));
     }
 
@@ -49,54 +50,54 @@ const WritingCorrection = () => {
         );
     }
 
-    // useEffect(() => {
-    //     if (success && data?.output?.length) {
-    //         console.log(data);
-    //         setViewing(Array(data?.output.length).fill(false));
-    //         setViewingExplanation(Array(data?.output.length).fill(false));
-    //         setViewingCorrection(Array(data?.output.length).fill(false));
-    //     } else {
-    //         console.log("Well, that didn't work very well did it!");
-    //     }
-    // }, [success, data]);
+    useEffect(() => {
+        if (success && data?.output?.length) {
+            console.log(data);
+            setViewing(Array(data?.output.length).fill(false));
+            setViewingExplanation(Array(data?.output.length).fill(false));
+            setViewingCorrection(Array(data?.output.length).fill(false));
+        } else {
+            console.log("Well, that didn't work very well did it!");
+        }
+    }, [success, data]);
 
     
-      const data = { "output": 
-       [
-          {
-              "category": "giving opinions",
-              "student_text": "Of course, I have a part-time job.",
-              "advice": "Remember, in academic writing, it is better to avoid personal references like 'I'. Could you rephrase this to make it less personal and more formal?",
-              "examples": "It is common for students to have part-time jobs. - Many students often engage in part-time work.",
-              "specific_correction": "It is common for students to engage in part-time work.",
-              "explanation": "Using 'It is common for students...' makes the statement more general and suitable for academic tone, avoiding the personal pronoun 'I'."
-          },
-          {
-              "category": "basic grammar",
-              "student_text": "Many high school students are banned to have a part-time job.",
-              "advice": "Looks like there's a grammatical issue with the verb form after 'banned'. What would be the correct form here?",
-              "examples": "Many high school students are required to follow rules. - People are prohibited from smoking.",
-              "specific_correction": "Many high school students are banned from having a part-time job.",
-              "explanation": "The correct expression is 'banned from doing something'. In this case, 'having a part-time job' uses the -ing form of the verb, which is required after 'from'."
-          },
-          {
-              "category": "unnatural phrase",
-              "student_text": "People do not apt to forget things which they learned when they were young.",
-              "advice": "This sentence structure sounds a bit off. How can you rephrase it to sound more natural in English?",
-              "examples": "People often remember things they learned as children. - It is common for individuals to recall their early lessons.",
-              "specific_correction": "People tend not to forget things which they learned when they were young.",
-              "explanation": "The phrase 'tend not to' is more natural and grammatically correct than 'do not apt to' in English."
-          },
-          {
-              "category": "unnatural phrase",
-              "student_text": "My mother said It is very valuable for young people to have a trouble.",
-              "advice": "The use of 'a trouble' isn't quite right in this context. Can you think of a better way to phrase this?",
-              "examples": "Experiencing challenges is important for young people. - Facing difficulties is beneficial for youth.",
-              "specific_correction": "My mother said it is very valuable for young people to face troubles.",
-              "explanation": "Troubles are typically referred to in the plural when discussed in abstract terms, and 'to face troubles' is a more natural collocation than 'to have a trouble.'"
-          }
-        ]
-      }
+    //   const data = { "output": 
+    //    [
+    //       {
+    //           "category": "giving opinions",
+    //           "student_text": "Of course, I have a part-time job.",
+    //           "advice": "Remember, in academic writing, it is better to avoid personal references like 'I'. Could you rephrase this to make it less personal and more formal?",
+    //           "examples": "It is common for students to have part-time jobs. - Many students often engage in part-time work.",
+    //           "specific_correction": "It is common for students to engage in part-time work.",
+    //           "explanation": "Using 'It is common for students...' makes the statement more general and suitable for academic tone, avoiding the personal pronoun 'I'."
+    //       },
+    //       {
+    //           "category": "basic grammar",
+    //           "student_text": "Many high school students are banned to have a part-time job.",
+    //           "advice": "Looks like there's a grammatical issue with the verb form after 'banned'. What would be the correct form here?",
+    //           "examples": "Many high school students are required to follow rules. - People are prohibited from smoking.",
+    //           "specific_correction": "Many high school students are banned from having a part-time job.",
+    //           "explanation": "The correct expression is 'banned from doing something'. In this case, 'having a part-time job' uses the -ing form of the verb, which is required after 'from'."
+    //       },
+    //       {
+    //           "category": "unnatural phrase",
+    //           "student_text": "People do not apt to forget things which they learned when they were young.",
+    //           "advice": "This sentence structure sounds a bit off. How can you rephrase it to sound more natural in English?",
+    //           "examples": "People often remember things they learned as children. - It is common for individuals to recall their early lessons.",
+    //           "specific_correction": "People tend not to forget things which they learned when they were young.",
+    //           "explanation": "The phrase 'tend not to' is more natural and grammatically correct than 'do not apt to' in English."
+    //       },
+    //       {
+    //           "category": "unnatural phrase",
+    //           "student_text": "My mother said It is very valuable for young people to have a trouble.",
+    //           "advice": "The use of 'a trouble' isn't quite right in this context. Can you think of a better way to phrase this?",
+    //           "examples": "Experiencing challenges is important for young people. - Facing difficulties is beneficial for youth.",
+    //           "specific_correction": "My mother said it is very valuable for young people to face troubles.",
+    //           "explanation": "Troubles are typically referred to in the plural when discussed in abstract terms, and 'to face troubles' is a more natural collocation than 'to have a trouble.'"
+    //       }
+    //     ]
+    //   }
 
     const seeExample = (i: number) => {
         setViewing((prev) => {
@@ -139,14 +140,12 @@ const WritingCorrection = () => {
                 </div>
                 <div className="w-c-instructions-details">
                     <p>Copy and paste some text you are interested in getting corrections on.</p>
-                    <p>Correctobot with offer you some suggestions and hints on your writing.</p>
-                    <p>For each suggestion, you can try to write the correction and get a confirmation or you can ask for more details.</p>
-                    <p>Correctobot will guide you through the process.</p>
-                    <p>Note: Correctobot cannot respond to your requests, so only add your academic writing!</p>
+                    <p>Correctobot will comment on ways to improve your writing.</p>
+                    <p>Read the comments, see examples, and get corrections.</p>
                 </div>
             </section>
             <section className="correctobot-input">
-                <form onSubmit={handleSubmitParagraph}>
+                <form onSubmit={handleSubmitParagraph} className="submit-paragraph-form">
                     <textarea 
                         className="correctobot-text-area"
                         value={text}
@@ -155,15 +154,19 @@ const WritingCorrection = () => {
                         rows={10}
                         cols={50}
                     />
-                    <button type="submit">Submit</button>
+                    <button type="submit" className="submit-paragraph-button">Submit</button>
                 </form>
             </section>
             <section className="response-section">
                 {
-                    loading ? <p>Loading your feedback! Wait a moment...</p> : null
+                    loading ? <p>Analyzing your writing! Please wait a moment...</p> : null
                 }
                 {
-                    data?.output.length > 0 && (
+                    !data ? (
+                        null
+                    ) : (data.output?.length ?? 0) === 0 ? (
+                        <p>No feedback available</p>
+                    ) : (
                         <div className="feedback-panel" key={currentIndex}>
                             <div className="navigation-buttons">
                                 <button onClick={handlePrevIndex} disabled={currentIndex === 0}>⬅️</button>
