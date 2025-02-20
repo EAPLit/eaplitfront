@@ -1,0 +1,50 @@
+.feedback-panel {
+    @apply p-3 bg-slate-700 border border-red-500;;
+}
+
+.step-one {
+
+}
+
+.step-one-title {
+    @apply text-center;
+    @apply text-2xl;
+}
+
+.step-one-student-text {
+    @apply text-xl;
+}
+
+.step-one-comment {
+    @apply text-lg;
+}
+
+.step-one-request-example {
+    @apply text-right;
+    @apply hover:cursor-pointer;
+}
+
+.reveal-next-button {
+    @apply bg-teal-500 font-bold;
+    @apply p-3 rounded-lg mt-3 mb-3
+}
+
+.step-two {
+
+}
+
+.step-two-request-correction {
+    @apply text-right;
+}
+
+.step-three {
+
+}
+
+.step-three-see-corrections {
+    @apply text-lg;
+}
+
+.step-three-request-explanation {
+    @apply text-right;
+}

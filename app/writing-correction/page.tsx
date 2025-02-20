@@ -1,6 +1,7 @@
 "use client"
 import { useState, useEffect } from 'react';
 import useFetch from '../api/useFetch';
+import '../styles/writingcorrection.scss';
 
 interface Correction {
     category: string,
@@ -154,28 +155,52 @@ const WritingCorrection = () => {
                     data?.output.map((out,i) => (
                         <div className="feedback-panel" key={i}>
                             <div className="step-one">
-                                <h2 className="step-">{out.category}</h2>
-                                <p>Your text: {out.student_text}</p>
-                                <p>Advice{out.advice}</p>
-                                <p onClick={() => seeExample(i)}>See an example</p>
+                                <h2 className="step-one-title">This is about {out.category}</h2>
+                                <div className="step-one-student-text">
+                                    <p>You wrote this in your paragraph: "<i><strong>{out.student_text}</strong></i>"</p>
+                                </div>
+                                <div className="step-one-comment">
+                                    <p>Here is my comment: {out.advice}</p>
+                                </div>
+                                <div className="step-one-request-example">
+                                    <p onClick={() => seeExample(i)}>Want to see examples? Click here ✎</p>
+                                    <button className="reveal-next-button" onClick={() => seeExample(i)}>See examples</button>
+                                    
+                                </div>
+                                
+                                
                             </div>
                             {
                                 viewing?.[i] ? 
-                                <div>
-                                    <p>{out.examples}</p>
-                                    <p onClick={() => seeCorrection(i)}>See correction</p>
+                                <div className="step-two">
+                                    <div className="step-two-examples">
+                                        <p>Okay, here are some examples to help you. Think carefully about them!</p>
+                                        <p><i><strong>"{out.examples}"</strong></i></p>
+                                    </div>
+                                    <div className="step-two-request-correction">
+                                        <p onClick={() => seeCorrection(i)}>Can you update your writing?</p>
+                                        <p onClick={() => seeCorrection(i)}>Do you to see my correction?</p>
+                                        <button className="reveal-next-button" onClick={() => seeCorrection(i)}>See correction</button>
+                                    </div>
                                     {
                                         viewingCorrection?.[i] ?
-                                       <div>
-                                            <p>{out.specific_correction}</p>
-                                            <p onClick={() => seeExplanation(i)}>See explanation</p>
+                                        <div className="step-three">
+                                            <div className="step-three-see-corrections">
+                                                <p>No problem. Here is my correction to your text:</p>
+                                                <p><i><strong>{out.specific_correction}</strong></i></p>
+                                                
+                                            </div>
+                                            <div className="step-three-request-explanation">
+                                                <p onClick={() => seeExplanation(i)}>Would you like to see an explanation</p>
+                                                <button className="reveal-next-button" onClick={() => seeExplanation(i)}>See explanation</button>
+                                            </div>
                                             {
                                                 viewingExplanation?.[i] ?
                                                 <div>
                                                     <p>{out.explanation}</p>
                                                 </div> : null
                                             }
-                                       </div> : null
+                                        </div> : null
                                     }
                                 </div> : null
                             }
