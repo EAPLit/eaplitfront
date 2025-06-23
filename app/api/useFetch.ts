@@ -9,9 +9,10 @@ function useFetch<T>(url: string, options?: RequestInit) {
 
     const fetchData = useCallback(async (overrideOptions?: RequestInit) => {
         setLoading(true);
-        setError(null);
+        //setError(null);
         try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}${url}`, { ...options, ...overrideOptions });
+            console.log("This is the response from useFetch:", response);
             if (!response.ok) throw new Error(`Failed to fetch ${response.statusText}`);
             const result = await response.json();
 
@@ -21,9 +22,17 @@ function useFetch<T>(url: string, options?: RequestInit) {
             // if(!("data" in result)) {
             //     console.warn(`[useFetch] Warning: "data" field is missing in API response from ${url}`, result);
             // }
+            console.log("✅ API Result:", result);
+            console.log("✅ result.success:", result.success, typeof result.success);
+            console.log("✅ result.message:", result.message, typeof result.message);
             setSuccess(result.success);
             setMessage(result.message);
-            setData(JSON.parse(result.data) ?? ({} as T)); // allow data to be an empty object if it is missing
+            console.log("This is the message from the API:", result.message);
+            setData(
+                typeof result.data === 'string'
+                ? JSON.parse(result.data)
+                : (result.data ?? ({} as T))
+            ); // allow data to be an empty object if it is missing
         } catch (error) {
             setError((error as Error).message);
         } finally {

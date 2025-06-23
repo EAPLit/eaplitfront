@@ -9,7 +9,7 @@ interface AuthContextProps {
     user: User | null;
     loading: boolean;
     token: string | null;
-    login: (email: string, password: string) => Promise<void>;
+    login: (email: string, password: string) => Promise<User>;
     register: (username: string, email: string, password: string) => Promise<void>
     verifyEmail: () => Promise<void>;
     sendPasswordChangeRequestEmail: (email: string) => Promise<void>;
@@ -22,7 +22,9 @@ const AuthContext = createContext<AuthContextProps>({
     user: null,
     loading: true,
     token: null,
-    login: async () => {},
+    login: async () => {
+        throw new Error("Login function not implemented");
+    },
     register: async () => {},
     verifyEmail: async () => {},
     sendPasswordChangeRequestEmail: async () => {},
@@ -36,13 +38,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const [loading, setLoading] = useState<boolean>(true);
     const [token, setToken] = useState<string | null>(null);
 
-    const login = async (email: string, password: string) => {
+    const login = async (email: string, password: string): Promise<User> => {
         console.log("I am now logging in.")
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const token = await getIdToken(userCredential.user);
             setUser(userCredential.user);
             setToken(token);
+            return userCredential.user;
         } catch (error) {
             throw error;
         }

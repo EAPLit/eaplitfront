@@ -48,26 +48,34 @@ const Login: React.FC = () => {
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         clearError();
+        console.log("Login button clicked with email:", email, "and password:", password);
 
         // Check that the form is valid here and do nothing if not valid.
         if (!isValid) return;
 
         // First login with firebase
         try {
-            await login(email, password);
+            const firebaseUser = await login(email, password);
+            // Then get details from my database
+            if (firebaseUser?.uid) {
+                await sendRequest(
+                    {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ uid: user?.uid })
+                    }
+                );
+            } else {
+                console.warn("User UID not found. Skipping DB fetch.");
+            }
         } catch (err) {
+            console.log("Error logging in with Firebase: ", err);
             handleError(err, "Error logging in! Please try again.");
             return;
         }
 
-        // Then get details from my database
-        await sendRequest(
-            {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ uid: user?.uid })
-            }
-        )
+        
+        
     }
 
     const handleForgotPassword = () => {

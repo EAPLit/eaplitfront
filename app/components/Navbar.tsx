@@ -24,11 +24,20 @@ const Navbar = () => {
         }
     }
 
+    const handleClickDashboard = () => {
+        clearError();
+        try {
+            router.push('/mylearning');
+        } catch (error) {
+            handleError(error, "There was an error navigating to the dashboard.");
+        }
+    }
+
     return (
         <nav className="navbar">
             <h1 className="webname">EAPLY</h1>
             <ul className="links-panel">
-                <li><p className="a-link">Dashboard</p></li>
+                <li><p className="a-link" onClick={handleClickDashboard}>Dashboard</p></li>
                 <li><p className="a-link">Profile</p></li>
                 <li><p className="a-link">Settings</p></li>
                 <li><p className="a-link logout" onClick={handleLogout}>Logout</p></li>
