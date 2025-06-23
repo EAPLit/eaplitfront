@@ -1,8 +1,8 @@
 "use client"
 
-import MyLearningHead from '../components/MyLearningHead';
-import ProjectsList from '../components/ProjectsList';
-import AdminGuide from '../components/AdminGuide';
+import MyLearningHead from './components/MyLearningHead';
+import ProjectsList from './components/ProjectsList';
+import AdminGuide from './components/AdminGuide';
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/context/AuthContext";
@@ -20,7 +20,7 @@ const MyLearning = () => {
     }, [user, loading, router]);
 
     return (
-        <div>
+        <div className="mylearning-page">
             <MyLearningHead />
             <ProjectsList />
             <AdminGuide />

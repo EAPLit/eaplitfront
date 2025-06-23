@@ -16,6 +16,7 @@ const MyLearningHead = () => {
                     <p className="title-text">My Learning</p>
                 </div>
             </section>
+
             <section className="buttons-area">
                 <div className="buttons-panel">
                     <div className="button-area">

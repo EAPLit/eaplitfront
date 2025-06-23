@@ -6,6 +6,7 @@ import { AuthProvider } from "./context/AuthContext";
 import { ToastContainer } from "react-toastify";
 import { ErrorProvider } from "./context/ErrorContext";
 import { ProjectProvider } from "./context/ProjectContext";
+import AppShell from "./components/AppShell";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,8 +37,7 @@ export default function RootLayout({
           <ErrorProvider>
             <ProjectProvider>
               <ToastContainer />
-              <Navbar />
-              {children}
+              <AppShell>{children}</AppShell>
             </ProjectProvider>
           </ErrorProvider>
         </AuthProvider>
