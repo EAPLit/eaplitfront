@@ -6,6 +6,10 @@
   .header {
     @apply sm:h-20 md:h-32 lg:h-40 xl:h-48;
   }
+
+  .front-page {
+    
+  }
   
   .promo-first {
     @apply sm:h-20 md:h-32 lg:h-40 xl:h-48;
@@ -24,12 +28,17 @@
   }
   
   .auth-buttons {
-    @apply flex flex-row justify-center;
+    @apply flex flex-row justify-center items-center w-full;
+  }
+
+  .button-panel {
+    @apply flex flex-row justify-center items-center w-fit;
+    @apply h-96
   }
   
   .a-button {
     @apply w-32 sm:w-32 md:w-36 lg:w-60 xl:w-60;
     @apply p-3 m-3 rounded-md;
-    @apply bg-slate-500 hover:bg-slate-200 hover:text-black;
+    @apply bg-slate-500 text-white hover:bg-slate-700 hover:text-green-400;
   }
   

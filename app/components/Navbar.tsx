@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from '@/app/context/AuthContext';
 import { useError } from '../context/ErrorContext';
 import { useErrorHandler } from '../hooks/useErrorHandler';
+import '../styles/navbar.scss';
 
 const Navbar = () => {
 
@@ -24,10 +25,15 @@ const Navbar = () => {
     }
 
     return (
-        <div>
-            <p>Welcome to Eaply</p>
-            <p onClick={handleLogout}>Logout</p>
-        </div>
+        <nav className="navbar">
+            <h1 className="webname">EAPLY</h1>
+            <ul className="links-panel">
+                <li><p className="a-link">Dashboard</p></li>
+                <li><p className="a-link">Profile</p></li>
+                <li><p className="a-link">Settings</p></li>
+                <li><p className="a-link logout" onClick={handleLogout}>Logout</p></li>
+            </ul>
+        </nav>
     );
 };
 

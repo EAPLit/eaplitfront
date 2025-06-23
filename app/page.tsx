@@ -31,11 +31,37 @@ export default function Home() {
   }
 
   return (
-    <div>
+    <div className="front-page">
       <section 
         className="navigation"
         aria-label="navigation"
       >
+      </section>
+
+      <section
+        className="auth-buttons"
+        aria-label="auth-buttons"
+      >
+
+        <div className="button-panel">
+          <div className="button-item">
+            <button
+              className="a-button"
+              onClick={handleLoginClick}
+            >
+              Login
+            </button>
+          </div>
+          <div className="button-item">
+            <button 
+              className="a-button"
+              onClick={handleRegisterClick}
+            >
+              Register
+            </button>
+          </div>
+        </div>
+        
       </section>
 
       <section 
@@ -72,27 +98,7 @@ export default function Home() {
         
       </section>
 
-      <section
-        className="auth-buttons"
-        aria-label="auth-buttons"
-      >
-        <div className="button-item">
-          <button
-            className="a-button"
-            onClick={handleLoginClick}
-          >
-            Login
-          </button>
-        </div>
-        <div className="button-item">
-          <button 
-            className="a-button"
-            onClick={handleRegisterClick}
-          >
-            Register
-          </button>
-        </div>
-      </section>
+      
     </div>
   );
 }
