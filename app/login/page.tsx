@@ -114,7 +114,7 @@ const Login: React.FC = () => {
                     </div>
                     <div className="form-bottom">
                         <p className="to-registration" onClick={handleToRegistration}>To registration</p>
-                        <p onClick={handleForgotPassword}>Forgot password</p>
+                        <p className="forgot-password-link" onClick={handleForgotPassword}>Forgot password</p>
                     </div>
                 </section>
             </form>
