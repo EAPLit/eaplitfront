@@ -1,0 +1,19 @@
+.navbar {
+    @apply flex justify-between items-center px-6 py-4 bg-gray-300;
+}
+
+.webname {
+    @apply text-xl font-bold;
+}
+
+.links-panel {
+    @apply flex space-x-6 items-center;
+}
+
+.a-link {
+    @apply cursor-pointer;
+}
+
+.logout {
+    @apply text-red-600;
+}
