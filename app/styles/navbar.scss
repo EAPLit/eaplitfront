@@ -1,9 +1,9 @@
 .navbar {
-    @apply flex justify-between items-center px-6 py-4 bg-gray-300;
+    @apply flex justify-between items-center px-6 py-4 bg-slate-700 ;
 }
 
 .webname {
-    @apply text-xl font-bold;
+    @apply text-xl font-bold text-green-400;
 }
 
 .links-panel {
@@ -11,9 +11,9 @@
 }
 
 .a-link {
-    @apply cursor-pointer;
+    @apply cursor-pointer text-white;
 }
 
 .logout {
-    @apply text-red-600;
+    @apply text-green-300;
 }

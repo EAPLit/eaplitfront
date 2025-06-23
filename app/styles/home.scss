@@ -33,12 +33,12 @@
 
   .button-panel {
     @apply flex flex-row justify-center items-center w-fit;
-    @apply bg-red-400 rounded-lg h-96
+    @apply h-96
   }
   
   .a-button {
     @apply w-32 sm:w-32 md:w-36 lg:w-60 xl:w-60;
     @apply p-3 m-3 rounded-md;
-    @apply bg-slate-400 text-white hover:bg-slate-700 hover:text-green-400;
+    @apply bg-slate-500 text-white hover:bg-slate-700 hover:text-green-400;
   }
   
