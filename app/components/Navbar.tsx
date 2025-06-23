@@ -24,10 +24,15 @@ const Navbar = () => {
     }
 
     return (
-        <div>
-            <p>Welcome to Eaply</p>
-            <p onClick={handleLogout}>Logout</p>
-        </div>
+        <nav>
+            <h1>Eaply</h1>
+            <ul>
+                <li><p>Dashboard</p></li>
+                <li><p>Profile</p></li>
+                <li><p>Settings</p></li>
+                <p onClick={handleLogout}>Logout</p>
+            </ul>
+        </nav>
     );
 };
 
