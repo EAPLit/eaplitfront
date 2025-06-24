@@ -8,7 +8,7 @@
   }
 
   .front-page {
-    
+    @apply bg-slate-700;
   }
   
   .promo-first {
@@ -26,6 +26,29 @@
   .promo-fourth {
     @apply sm:h-20 md:h-32 lg:h-40 xl:h-48;
   }
+
+  .heading {
+    @apply flex flex-row justify-center items-center w-full;
+  }
+
+  .heading-panel {
+    @apply flex flex-col justify-center items-center w-fit;
+    @apply h-36;
+  }
+
+  .heading-item {
+    @apply items-center justify-center;
+  }
+
+  .heading-blurb {
+    @apply text-white;
+    
+  }
+
+  .heading-title {
+    @apply text-3xl items-center justify-center;
+    @apply text-green-400
+  }
   
   .auth-buttons {
     @apply flex flex-row justify-center items-center w-full;
@@ -33,7 +56,7 @@
 
   .button-panel {
     @apply flex flex-row justify-center items-center w-fit;
-    @apply h-96
+    @apply h-52
   }
   
   .a-button {

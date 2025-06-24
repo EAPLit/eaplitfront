@@ -9,6 +9,17 @@ import TaskTypes from "../components/TaskTypes";
 import TaskFlow from "../components/TaskFlow";
 import ProjectManager from "../components/ProjectManager";
 
+/**
+ * Updated
+ */
+
+import TopicSelector from "./components/TopicSelector";
+import GenreSelector from "./components/GenreSelector";
+import StyleSelector from "./components/StyleSelector";
+import PromptSelector from "./components/PromptSelector";
+import InputSelector from "./components/InputSelector";
+import ReviewSelector from "./components/ReviewSelector";
+
 const ProjectDesign = () => {
     
     return (

@@ -33,9 +33,19 @@ export default function Home() {
   return (
     <div className="front-page">
       <section 
-        className="navigation"
-        aria-label="navigation"
+        className="heading"
+        aria-label="heading"
       >
+        <div className="heading-panel">
+          <div className="heading-item">
+            <h1 className="heading-title">EAPLY</h1>
+            
+          </div>
+          <div className="heading-blurb">
+            <p>What do you want to do?</p>
+          </div>
+          
+        </div>
       </section>
 
       <section
