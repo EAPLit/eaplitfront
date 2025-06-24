@@ -2,15 +2,15 @@
 import { useRouter } from 'next/navigation';
 
 type MyLearningHeadProps = {
-    handleViewProjectDesign: (view: boolean) => void;
+    
 }
 
-const MyLearningHead = ({ handleViewProjectDesign  }: MyLearningHeadProps) => {
+const MyLearningHead = ({ }) => {
 
     const router = useRouter();
 
     const handleDesignNewProject = () => {
-        handleViewProjectDesign(true);
+        router.push('/projectdesign');
     }
 
     const handleGoToWritingCorrection = () => {

@@ -2,6 +2,7 @@
 
 import MyLearningHead from './components/MyLearningHead';
 import ProjectsList from './components/ProjectsList';
+import ProjectDesign from '../projectdesign/page';
 import AdminGuide from './components/AdminGuide';
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -21,14 +22,9 @@ const MyLearning = () => {
         }
     }, [user, loading, router]);
 
-    const handleViewProjectDesign = () => {
-        setViewProjectDesign(true);
-    }
-
     return (
         <div className="mylearning-page">
-            <MyLearningHead handleViewProjectDesign={handleViewProjectDesign} />
-            {viewProjectDesign && <div>This is where the project will be designed!</div>}
+            <MyLearningHead />
             <ProjectsList />
             <AdminGuide />
         </div>
