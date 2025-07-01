@@ -1,0 +1,31 @@
+.genre-selector-container {
+    @apply flex flex-col m-4;
+}
+
+.genre-selector-header {
+
+}
+
+.genre-selector-title {
+    @apply text-3xl text-white;
+}
+
+.genre-selector-description {
+    @apply text-lg text-gray-200;
+}
+
+.genre-selector-area {
+
+}
+
+.genre-selector-list {
+    @apply flex flex-col w-full h-full;
+}
+
+.genre-selector-item {
+    @apply text-xl py-1 text-green-400 list-none;
+}
+
+.genre-selector-label {
+    @apply text-lg text-white;
+}
