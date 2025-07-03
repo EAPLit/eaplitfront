@@ -23,3 +23,20 @@ body {
 body {
   @apply flex flex-col h-screen;
 }
+
+.main-container {
+  @apply flex flex-row;
+}
+
+.left-nav {
+  @apply w-56 bg-slate-700;
+  @apply min-h-screen;
+}
+
+.vertical-divider {
+  @apply w-px bg-green-500;
+}
+
+.central-content {
+  @apply flex-1;
+}

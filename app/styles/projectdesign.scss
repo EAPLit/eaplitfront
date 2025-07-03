@@ -1,0 +1,46 @@
+.project-design-page {
+    @apply bg-slate-800;
+    @apply min-h-screen;
+}
+
+// Project Design Header
+.project-design-header {
+    @apply flex flex-row justify-between;
+    @apply h-20;
+}
+
+.project-design-title {
+    @apply text-3xl text-white ml-5 mt-3;
+}
+
+.project-design-cancel {
+    @apply text-white text-lg mr-5 mt-3;
+    @apply cursor-pointer;
+}
+
+// Project Footer
+.project-design-footer {
+    @apply flex flex-row justify-between;
+    @apply h-20;
+}
+
+.project-design-footer-panel {
+    @apply flex flex-row justify-between items-center;
+    @apply w-full;
+}
+
+.project-design-button {
+    @apply bg-slate-400 text-white text-center p-3 rounded-lg w-36 h-10 text-xs; 
+    @apply hover:cursor-pointer;
+    @apply mr-5 ml-5;
+    @apply hover:bg-slate-700 hover:text-green-400 active:bg-slate-600 active:text-white;
+}
+
+.project-design-title-editing {
+    @apply flex flex-row justify-center;
+}
+
+.project-design-title-input {
+    @apply text-green-400;
+    @apply bg-slate-500 border-0 border-b border-gray-400 focus:border-black focus:ring-0 focus:outline-none;
+}

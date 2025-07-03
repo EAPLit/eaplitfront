@@ -34,15 +34,22 @@ const Navbar = () => {
     }
 
     return (
-        <nav className="navbar">
-            <h1 className="webname">EAPLY</h1>
-            <ul className="links-panel">
-                <li><p className="a-link" onClick={handleClickDashboard}>Dashboard</p></li>
-                <li><p className="a-link">Profile</p></li>
-                <li><p className="a-link">Settings</p></li>
-                <li><p className="a-link logout" onClick={handleLogout}>Logout</p></li>
-            </ul>
-        </nav>
+        <div className="navbar">
+            <div className="website-title-area">
+                <h1 className="webname">EAPLY</h1>
+            </div>
+            <div className="links-panel">
+                <ul className="links-list">
+                    <li><p className="a-link">Home</p></li>
+                    <li><p className="a-link" onClick={handleClickDashboard}>Dashboard</p></li>
+                    <li><p className="a-link">Library</p></li>
+                    <li><p className="a-link">Profile</p></li>
+                    <li><p className="a-link">Settings</p></li>
+                    <li><p className="a-link logout" onClick={handleLogout}>Logout</p></li>
+                </ul>
+                
+            </div>
+        </div>
     );
 };
 

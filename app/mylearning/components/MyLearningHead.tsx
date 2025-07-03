@@ -1,9 +1,17 @@
 "use client"
 import { useRouter } from 'next/navigation';
 
-const MyLearningHead = () => {
+type MyLearningHeadProps = {
+    
+}
+
+const MyLearningHead = ({ }) => {
 
     const router = useRouter();
+
+    const handleDesignNewProject = () => {
+        router.push('/projectdesign');
+    }
 
     const handleGoToWritingCorrection = () => {
         router.push('/writing-correction');
@@ -16,23 +24,24 @@ const MyLearningHead = () => {
                     <p className="title-text">My Learning</p>
                 </div>
             </section>
+
             <section className="buttons-area">
                 <div className="buttons-panel">
                     <div className="button-area">
-                        <button type="button" className="mylearning-button"></button>
-                        <p>New Project</p>
+                        <button 
+                            type="button" 
+                            className="mylearning-button"
+                            onClick={handleDesignNewProject}
+                        >New Project</button>
                     </div>
                     <div className="button-area">
-                        <button type="button" className="mylearning-button"></button>
-                        <p>Choose from library</p>
+                        <button type="button" className="mylearning-button">Library</button>
                     </div>
                     <div className="button-area">
-                        <button onClick={handleGoToWritingCorrection} type="button" className="mylearning-button"></button>
-                        <p onClick={handleGoToWritingCorrection}>Writing Correction</p>
+                        <button onClick={handleGoToWritingCorrection} type="button" className="mylearning-button">Writing correction</button>
                     </div>
                     <div className="button-area">
-                        <button type="button" className="mylearning-button"></button>
-                        <p>My learning stats</p>
+                        <button type="button" className="mylearning-button">Learning stats</button>
                     </div>
                 </div>
             </section>

@@ -1,5 +1,5 @@
 "use client"
-import { useProject } from "../context/ProjectContext";
+import { useProject } from "../../context/ProjectContext";
 import { useRouter } from "next/navigation";
 
 const ProjectsList = () => {
