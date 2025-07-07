@@ -4,6 +4,8 @@ import { useState, useMemo } from 'react';
 import { mockTopics } from './mockdata/mockTopics';
 import "./styles/topicselector.scss";
 
+import TextAnimate from '@/app/components/textanimate/TextAnimate';
+
 type Topic = {
     topicId: string;
     topic: string;
@@ -59,7 +61,11 @@ const TopicSelector = ({  }) => {
                                 )
                             ) : (
                                 <span className="search-results-count">
-                                    Type a letter to get ideas
+                                    <TextAnimate 
+                                        text="Type a letter to search for topics"
+                                        speed={5}
+                                        className="text-animate-placeholder"
+                                    />
                                 </span>
                             )
                         }
