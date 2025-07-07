@@ -15,18 +15,16 @@ const TopicSelector = ({  }) => {
 
     const filteredTopics = useMemo(() => {
         return mockTopics.filter((item: Topic ) =>
-            item.topic.toLowerCase().includes(searchTerm.toLowerCase())
+            item.topic.toLowerCase().startsWith(searchTerm.toLowerCase())
         );
     }, [searchTerm]);
 
     return (
         <>
             <div className="topic-search-header">
-                <h2 className="topic-search-title">Brainstorm a topic</h2>
+                <h2 className="topic-search-title">Topic Idea</h2>
                 <p className="topic-search-description">
-                    Use the list below to brainstorm a topic for your writing project.
-                    You can also search for specific ideas using the search bar.
-                    Or, use AI to help you brainstorm a topic idea.
+                    
                 </p>
             </div>
             <div className="topic-selector-container">
