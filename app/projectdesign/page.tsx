@@ -112,17 +112,25 @@ const ProjectDesign = () => {
                         tabs={[
                             {
                                 title: "Topic",
-                                content: <TopicSelector />
+                                content: <TopicSelector />,
+                                buttonClass: 'tab-button',
+                                tabContainerClass: 'tab-container'
                             },
                             {
                                 title: "Genre",
-                                content: <GenreSelector />
+                                content: <GenreSelector />,
+                                buttonClass:'tab-button',
+                                tabContainerClass: 'tab-container'
                             },
                             {
                                 title: "Activities",
-                                content: <InputSelector />
+                                content: <InputSelector />,
+                                buttonClass:'tab-button',
+                                tabContainerClass: 'tab-container'
                             }
                         ]}
+                        tabsContainerClass="tabs-container"
+                        tabContentContainer="tab-content-container"
                     />
                 </div>
             </section>

@@ -6,14 +6,15 @@ interface TabProps {
     tabNum: number;
     handleSetActiveTab: (tabNum: number) => void;
     activeTab: number;
+    buttonClass?: string;
 }
 
-const Tab: React.FC<TabProps> = ({ title, tabNum, handleSetActiveTab, activeTab }) => {
+const Tab: React.FC<TabProps> = ({ title, tabNum, handleSetActiveTab, activeTab, buttonClass }) => {
     const isActive = tabNum === activeTab;
 
     return(
         <button
-            className={`tab-button ${isActive ? 'active' : ''}`}
+            className={`${buttonClass} ${isActive ? 'active' : ''}`}
             onClick={() => handleSetActiveTab(tabNum)}
             aria-label={`Switch to ${title} tab`}
         >
