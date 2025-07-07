@@ -1,5 +1,6 @@
 .login-form {
     @apply flex flex-col flex-grow justify-center items-center;
+    @apply bg-slate-800 min-h-screen w-full;
 }
 
 .form {
@@ -26,7 +27,7 @@
 }
 
 .to-registration {
-    @apply hover:underline hover:cursor-pointer;
+    @apply text-yellow-200 hover:underline hover:cursor-pointer;
 }
 
 .forgot-password-link {

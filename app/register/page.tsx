@@ -114,7 +114,7 @@ const Register: React.FC = () => {
                 aria-labelledby="register-heading"
                 onSubmit={handleRegister}
             >
-                <h1 className="register-heading" id="register-heading">Register</h1>
+                <h1 className="register-heading" id="register-heading">EAPLY Register</h1>
                 <section aria-label="Register Panel">
                     <FormField 
                         id="your-name"

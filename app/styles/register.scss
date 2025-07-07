@@ -1,5 +1,6 @@
 .register-form {
     @apply flex flex-col flex-grow justify-center items-center;
+    @apply bg-slate-800 min-h-screen w-full
 }
 
 .form {
@@ -18,7 +19,7 @@
 }
 
 .submit-button {
-    @apply border p-3 rounded-lg hover:bg-slate-50 hover:text-black;
+    @apply border p-3 rounded-lg text-green-400 hover:bg-slate-50 hover:text-black;
 }
 
 .form-bottom {
@@ -26,5 +27,5 @@
 }
 
 .to-login {
-    @apply hover:underline hover:cursor-pointer;
+    @apply text-yellow-200 hover:underline hover:cursor-pointer;
 }

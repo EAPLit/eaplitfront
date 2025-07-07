@@ -21,8 +21,12 @@ body {
 }
 
 body {
-  @apply flex flex-col h-screen;
+  @apply flex flex-col;
 }
+
+/*
+* Describes the main layout of the application in AppShell.tsx
+*/
 
 .main-container {
   @apply flex flex-row;
