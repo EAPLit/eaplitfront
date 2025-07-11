@@ -37,12 +37,13 @@ export default function Home() {
         aria-label="heading"
       >
         <div className="heading-panel">
+          
           <div className="heading-item">
             <h1 className="heading-title">EAPLY</h1>
-            
           </div>
+          
           <div className="heading-blurb">
-            <p>What do you want to do?</p>
+            <p>Write. EAPLY style.</p>
           </div>
           
         </div>
@@ -74,14 +75,9 @@ export default function Home() {
         
       </section>
 
-      <section 
-        className="header"
-        aria-label="header"
-      >
-        
-      </section>
+      
 
-      <section 
+      {/* <section 
         className="promo-first"
         aria-label="promo-first"
       >
@@ -106,7 +102,7 @@ export default function Home() {
         aria-label="promo-fourth"
       >
         
-      </section>
+      </section> */}
 
       
     </div>

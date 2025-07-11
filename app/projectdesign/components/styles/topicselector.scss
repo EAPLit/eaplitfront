@@ -15,7 +15,7 @@
 }
 
 .topic-search-area {
-    @apply flex flex-col w-full;
+    @apply flex flex-col w-full mr-4;
 }
 
 .search-results-area {
@@ -31,7 +31,7 @@
 }
 
 .topic-selector-search-input {
-    @apply border border-gray-400 rounded-lg px-3 py-2 mb-4 w-full;
+    @apply text-lg text-white bg-slate-700 border border-gray-400 rounded-lg px-3 py-2 w-full;
 }
 
 .topic-selector-topic-item {
@@ -45,7 +45,7 @@
 }
 
 .topic-selector-topic-list {
-    animation: scrollBounce 60s ease-in-out infinite;
+    animation: scrollBounce 30s ease-in-out infinite;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -59,7 +59,7 @@
     }
     
     80% {
-        transform: translateY(-250%);
+        transform: translateY(-650%);
     }
 
     90% {

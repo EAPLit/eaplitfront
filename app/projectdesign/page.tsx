@@ -8,6 +8,7 @@ import StyleSelector from "./components/StyleSelector";
 import PromptSelector from "./components/PromptSelector";
 import InputSelector from "./components/InputSelector";
 import ReviewSelector from "./components/ReviewSelector";
+import TabsContainer from '../components/tabs/TabsContainer';
 import { useRouter } from "next/navigation";
 
 import "../styles/projectdesign.scss";
@@ -103,48 +104,37 @@ const ProjectDesign = () => {
                     <h1 onClick={handleCancelNewProject}>X</h1>
                 </div>
             </section>
-
-            {/* This is the area where the user selects a writing topic */}
-            <section className="select-writing-topic">
-                <div className="select-writing-topic-panel">
-                    <TopicSelector />
+            
+            {/* This is the tabs section */}
+            <section className="tabs-section">
+                <div className="tabs-section-panel">
+                    <TabsContainer
+                        tabs={[
+                            {
+                                title: "Topic",
+                                content: <TopicSelector />,
+                                buttonClass: 'tab-button',
+                                tabContainerClass: 'tab-container'
+                            },
+                            {
+                                title: "Genre",
+                                content: <GenreSelector />,
+                                buttonClass:'tab-button',
+                                tabContainerClass: 'tab-container'
+                            },
+                            {
+                                title: "Activities",
+                                content: <InputSelector />,
+                                buttonClass:'tab-button',
+                                tabContainerClass: 'tab-container'
+                            }
+                        ]}
+                        tabsContainerClass="tabs-container"
+                        tabContentContainer="tab-content-container"
+                    />
                 </div>
             </section>
 
-            {/* This is the area where the user selects a writing genre */}
-            <section className="select-writing-genre">
-                <div className="select-writing-genre-panel">
-                    <GenreSelector />
-                </div>
-            </section>
-
-            {/* This is the area where the user selects a writing style */}
-            <section className="select-writing-style">
-                <div className="select-writing-style-panel">
-                    <StyleSelector />
-                </div>
-            </section>
-
-            {/* This is the area where the user selects a writing prompt */}
-            <section className="select-writing-prompt">
-                <div className="select-writing-prompt-panel">
-                    <PromptSelector />
-                </div>
-            </section>
-
-            {/* This is the area where the user selects a writing input */}
-            <section className="select-writing-input">
-                <div className="select-writing-input-panel">
-                    <InputSelector />
-                </div>
-            </section>
-
-            {/* This is the area where the user selects a writing review */}
-            <section className="select-writing-review">
-                <div className="select-writing-review-panel">
-                    <ReviewSelector />
-                </div>
-            </section>
             <section className="project-design-footer">
                 <div className="project-design-footer-panel">
                     <div className="project-design-footer-buttons">

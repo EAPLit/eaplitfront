@@ -1,0 +1,28 @@
+// Sets default styles for the tab containers and tab buttons
+// These styles can be over-ridden by setting your own classes on the Tab.tsx and TabsContainer.tsx props
+// Tab
+.tab-button {
+    @apply text-lg font-semibold text-green-400 px-4 py-2 cursor-pointer;
+    @apply border-t-2 rounded-t border-gray-400 hover:border-gray-300 transition-colors duration-200;
+    @apply flex items-center justify-center;
+}
+
+.tab-button.active {
+    @apply border-green-400 bg-gray-700;
+}
+
+// Tab container
+.tab-container {
+    @apply flex flex-col w-full h-full;
+    @apply overflow-hidden;
+}
+
+.tabs-container {
+    @apply flex flex-row w-full h-full;
+    @apply bg-gray-800 rounded-lg shadow-lg;
+    @apply overflow-hidden;
+}
+
+.tab-content-container {
+    @apply w-full;
+}

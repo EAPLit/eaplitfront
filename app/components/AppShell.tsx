@@ -3,6 +3,8 @@
 import { useAuth } from "@/app/context/AuthContext";
 import Navbar from "./Navbar";
 
+// classNames for styles found in globals.css
+
 export default function AppShell({ children }: { children: React.ReactNode }) {
     const  { user } = useAuth();
 

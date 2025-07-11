@@ -4,6 +4,9 @@ import { useState, useMemo } from 'react';
 import { mockTopics } from './mockdata/mockTopics';
 import "./styles/topicselector.scss";
 
+import TextAnimate from '@/app/components/textanimate/TextAnimate';
+import TextArrayAnimate from '@/app/components/textanimate/TextArrayAnimate';
+
 type Topic = {
     topicId: string;
     topic: string;
@@ -15,18 +18,16 @@ const TopicSelector = ({  }) => {
 
     const filteredTopics = useMemo(() => {
         return mockTopics.filter((item: Topic ) =>
-            item.topic.toLowerCase().includes(searchTerm.toLowerCase())
+            item.topic.toLowerCase().startsWith(searchTerm.toLowerCase())
         );
     }, [searchTerm]);
 
     return (
         <>
             <div className="topic-search-header">
-                <h2 className="topic-search-title">Brainstorm a topic</h2>
+                <h2 className="topic-search-title">Topic Idea</h2>
                 <p className="topic-search-description">
-                    Use the list below to brainstorm a topic for your writing project.
-                    You can also search for specific ideas using the search bar.
-                    Or, use AI to help you brainstorm a topic idea.
+                    
                 </p>
             </div>
             <div className="topic-selector-container">
@@ -42,27 +43,34 @@ const TopicSelector = ({  }) => {
                         {
                             searchTerm.length > 0 ? (
                                 filteredTopics.length > 0 ? (
-                                    <span className="search-results-count">
-                                        {filteredTopics.length} ideas found
-                                        {
-                                            filteredTopics.filter((item: Topic) => {
-                                                return item.topic.toLowerCase().startsWith(searchTerm[0].toLowerCase());
-                                            }).map((item: Topic) => (
-                                                <li key={item.topicId} className="topic-selector-topic-item">
-                                                    <span className="topic-selector-topic-text">{item.topic}</span>
-                                                </li>
-                                            ))
-                                        }
-                                    </span>
+                                    <>
+                                        <span className="search-results-count">
+                                            {filteredTopics.length} ideas found: 
+                                            <TextArrayAnimate 
+                                                texts={filteredTopics.map((item: Topic) => item.topic)}
+                                                speed={50}
+                                                className="search-results-topics"
+                                                animate={true}
+                                                orientation="vertical"
+                                                maxLines={10}
+                                            />
+                                        </span>
+                                    </>
                                 ) : (
-                                    <span className="search-results-count">
-                                        No results found
-                                    </span>
+                                    <TextAnimate 
+                                        text="No results found"
+                                        speed={50}
+                                        className="search-results-count"
+                                        animate={true}
+                                    />
                                 )
                             ) : (
-                                <span className="search-results-count">
-                                    Type a letter to get ideas
-                                </span>
+                                <TextAnimate 
+                                    text="Type a letter to search for topics"
+                                    speed={5}
+                                    className="search-results-count"
+                                    animate={true}
+                                />
                             )
                         }
                     </div>

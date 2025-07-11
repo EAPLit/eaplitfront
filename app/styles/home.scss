@@ -8,27 +8,27 @@
   }
 
   .front-page {
-    @apply bg-slate-700;
+    @apply bg-slate-800 h-screen;
   }
   
-  .promo-first {
-    @apply sm:h-20 md:h-32 lg:h-40 xl:h-48;
-  }
+  // .promo-first {
+  //   @apply sm:h-20 md:h-32 lg:h-40 xl:h-48;
+  // }
   
-  .promo-second {
-    @apply sm:h-20 md:h-32 lg:h-40 xl:h-48;
-  }
+  // .promo-second {
+  //   @apply sm:h-20 md:h-32 lg:h-40 xl:h-48;
+  // }
   
-  .promo-third {
-    @apply sm:h-20 md:h-32 lg:h-40 xl:h-48;
-  }
+  // .promo-third {
+  //   @apply sm:h-20 md:h-32 lg:h-40 xl:h-48;
+  // }
   
-  .promo-fourth {
-    @apply sm:h-20 md:h-32 lg:h-40 xl:h-48;
-  }
+  // .promo-fourth {
+  //   @apply sm:h-20 md:h-32 lg:h-40 xl:h-48;
+  // }
 
   .heading {
-    @apply flex flex-row justify-center items-center w-full;
+    @apply flex flex-row justify-center w-full;
   }
 
   .heading-panel {
@@ -37,7 +37,7 @@
   }
 
   .heading-item {
-    @apply items-center justify-center;
+    
   }
 
   .heading-blurb {

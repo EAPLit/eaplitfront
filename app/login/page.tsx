@@ -93,7 +93,7 @@ const Login: React.FC = () => {
     return (
         <div className="login-form">
             <form className="form" aria-labelledby="login-heading" onSubmit={handleLogin}>
-                <h1 className="login-heading" id="login-heading">Login</h1>
+                <h1 className="login-heading" id="login-heading">EAPLY Login</h1>
                 <section aria-label="Login Panel">
                     <FormField
                         id="email"
