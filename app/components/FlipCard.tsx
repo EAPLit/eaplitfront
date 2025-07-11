@@ -2,6 +2,7 @@
 // Creates a card with a large title that, when clicked, will flip over to reveal information behind it.
 
 import { useState, useEffect } from 'react';
+import "../styles/flipcard.scss";
 
 type FlipCardProps = {
     title: string;
@@ -22,7 +23,7 @@ const FlipCard: React.FC<FlipCardProps> = ({ title, listAndDetails }) => {
                 <div className="flipcard-front">
                     <div className="flipcard-header">
                         <div className="flipcard-title">
-
+                            {title}
                         </div>
                         <div className="flipcard-title-underline">
 
@@ -37,7 +38,7 @@ const FlipCard: React.FC<FlipCardProps> = ({ title, listAndDetails }) => {
                 </div>
                 {/* Back of the card */}
                 <div className="flipcard-back">
-
+                    <p>I'm the back, can you believe it?</p>
                 </div>
             </div>
             

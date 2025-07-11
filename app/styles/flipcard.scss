@@ -1,0 +1,27 @@
+.flipcard-container {
+    @apply w-64 h-40 cursor-pointer;
+    perspective: 1000px
+}
+
+.flipcard-inner {
+    @apply relative w-full h-full transition-transform duration-700;
+    transform-style: preserve-3d;
+}
+
+.flipped {
+    transform: rotateY(180deg);
+}
+
+.flipcard-front,
+.flipcard-back {
+    @apply absolute w-full h-full rounded-xl shadow-lg bg-white flex items-center justify-center;
+    backface-visibility: hidden;
+}
+
+.flipcard-front {
+    @apply z-10;
+}
+
+.flipcard-back {
+    transform: rotateY(180deg);
+}

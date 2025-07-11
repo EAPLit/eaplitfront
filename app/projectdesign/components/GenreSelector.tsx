@@ -4,11 +4,12 @@ import { useState, useEffect } from 'react';
 import { mockGenres } from './mockdata/mockGenres';
 import "./styles/genreselector.scss";
 import Discover from '@/app/components/Discover';
+import FlipCard from '@/app/components/FlipCard';
 
 type SkillGenres = {
     skill: string;
     genres_and_descriptions: {
-        genre: string;
+        item: string;
         description: string;
     }[];
 }
@@ -30,7 +31,7 @@ const GenreSelector = ({  }) => {
                 genres_and_descriptions: mockGenres
                     .filter(genre => genre.skills === skill)
                     .map(genre => ({
-                        genre: genre.genre,
+                        item: genre.genre,
                         description: genre.description
                     }))
             }
@@ -54,7 +55,8 @@ const GenreSelector = ({  }) => {
                         {
                             skillsList?.map((skill, index) => (
                                 <div key={index} className="genre-selector-item">
-                                    <Discover title={skill.skill} toDiscover={skill.genres_and_descriptions} />
+                                    {/* <Discover title={skill.skill} toDiscover={skill.genres_and_descriptions} /> */}
+                                    <FlipCard title={skill.skill} listAndDetails={skill.genres_and_descriptions} />
                                 </div>
                             ))
                         }
