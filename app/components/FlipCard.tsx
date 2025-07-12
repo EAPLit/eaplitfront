@@ -14,13 +14,15 @@ type FlipCardProps = {
 
 const FlipCard: React.FC<FlipCardProps> = ({ title, listAndDetails }) => {
 
-    const [showFront, setShowFront] = useState(true);
+    const [showFront, setShowFront] = useState<boolean>(true);
+    const [description, setDescription] = useState<string>("");
+    const [item, setItem] = useState<string>("");
 
     return (
-        <div className="flipcard-container" onClick={() => setShowFront(!showFront)}>
+        <div className="flipcard-container">
             <div className={`flipcard-inner ${showFront ? '' : 'flipped'}`}>
                 {/* Front of the card */}
-                <div className="flipcard-front">
+                <div className="flipcard-front" onClick={() => setShowFront(!showFront)}>
                     <div className="flipcard-header">
                         <div className="flipcard-title">
                             {title}
@@ -36,12 +38,36 @@ const FlipCard: React.FC<FlipCardProps> = ({ title, listAndDetails }) => {
 
                     </div>
                 </div>
+                
                 {/* Back of the card */}
                 <div className="flipcard-back">
-                    <p>I'm the back, can you believe it?</p>
+                    <div className="flipcard-close" 
+                        onClick={() => {
+                            setDescription(""); 
+                            setItem(""); 
+                            setTimeout(() => {
+                             setShowFront(prev => !prev);
+                            }, 500);
+                        }}
+                    >X
+                    </div>
+                    <div className="flipcard-items">
+                        {
+                            listAndDetails.map((item, index) => (
+                                <div className="flipcard-item" key={index}>
+                                    <h3 onMouseEnter={()=>{setDescription(item.description); setItem(item.item)}}>{item.item}</h3>
+
+                                </div>
+                            ))
+                        }
+                    </div>
+                    <div className={`flipcard-description ${description === "" ? '' : 'animate'}`}>
+                        <p onClick={()=>{setDescription(""); setItem("")}}>X</p>
+                        <p>{item}</p>
+                        <p>{description}</p>
+                    </div>
                 </div>
             </div>
-            
         </div>
     )
 }

@@ -1,5 +1,5 @@
 .flipcard-container {
-    @apply w-64 h-40 cursor-pointer;
+    @apply w-96 h-96 cursor-pointer;
     perspective: 1000px
 }
 
@@ -24,4 +24,28 @@
 
 .flipcard-back {
     transform: rotateY(180deg);
+    @apply z-10 relative;
+}
+
+.flipcard-items {
+
+}
+
+.flipcard-item {
+
+}
+
+.flipcard-description {
+    @apply absolute top-0 h-full bg-gray-100 p-4 shadow-md rounded-xl transition-all duration-500 ease-in-out;
+    @apply z-0;
+    width: 24rem;
+    transform: translateX(0%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.animate {
+    transform: translateX(100%);
+    opacity: 1;
+    pointer-events: auto;
 }
