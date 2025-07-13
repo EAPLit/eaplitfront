@@ -5,8 +5,13 @@ import './styles/inputselector.scss';
 
 import Draggable from '@/app/components/dragndrop/draggable';
 import Droppable from '@/app/components/dragndrop/droppable';
+import CircleDroppable from '@/app/components/dragndrop/circleDroppagle';
 
 const InputSelector = ({  }) => {
+
+    const handleDrop = () => {
+
+    }
 
     return (
         <div className="input-selector-container">
@@ -16,12 +21,13 @@ const InputSelector = ({  }) => {
             <section className="learning-path-area">
                 <svg className="learning-path-svg" viewBox="0 0 200 800" xmlns="http://www.w3.org/2000/svg">
                     {[0, 1, 2, 3, 4].map((j, i) => (
-                        <circle 
-                            key={i}
+                        <CircleDroppable
+                            id={i}
                             className="learning-node"
                             cx={100}
                             cy={100 + i * 100}
-                            r="40"
+                            r={40}
+                            onDrop={() => handleDrop()}
                         />
                     ))}
 

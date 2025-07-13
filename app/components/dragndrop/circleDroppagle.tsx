@@ -1,14 +1,15 @@
 "use client"
 
-type DroppableCircleProps = {
+type pCircleDropableProps = {
     cx: number;
     cy: number;
     r?: number;
-    id: string;
-    onDrop: (e: React.DragEvent<SVGCircleElement>, id: string) => void;
+    id: number;
+    className: string;
+    onDrop: (e: React.DragEvent<SVGCircleElement>, id: number) => void;
 };
 
-const DroppableCircle: React.FC<DroppableCircleProps> = ({
+const CircleDroppable: React.FC<pCircleDropableProps> = ({
     cx,
     cy,
     r = 40,
@@ -51,4 +52,4 @@ const DroppableCircle: React.FC<DroppableCircleProps> = ({
     );
 };
 
-export default DroppableCircle;
+export default CircleDroppable;
