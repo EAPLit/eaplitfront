@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import './styles/inputselector.scss';
 
 import Draggable from '@/app/components/dragndrop/draggable';
-import Droppable from '@/app/components/dragndrop/droppable';
 import CircleDroppable from '@/app/components/dragndrop/circleDroppagle';
 
 const InputSelector = ({  }) => {
