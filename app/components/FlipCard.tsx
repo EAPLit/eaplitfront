@@ -38,7 +38,7 @@ const FlipCard: React.FC<FlipCardProps> = ({ title, listAndDetails }) => {
 
                     </div>
                 </div>
-                
+
                 {/* Back of the card */}
                 <div className="flipcard-back">
                     <div className="flipcard-close" 
@@ -55,14 +55,23 @@ const FlipCard: React.FC<FlipCardProps> = ({ title, listAndDetails }) => {
                         {
                             listAndDetails.map((item, index) => (
                                 <div className="flipcard-item" key={index}>
-                                    <h3 onMouseEnter={()=>{setDescription(item.description); setItem(item.item)}}>{item.item}</h3>
-
+                                    <h3 onMouseEnter={()=>{
+                                        setDescription(item.description);
+                                        setItem(item.item)}}
+                                    >
+                                        {item.item}
+                                    </h3>
                                 </div>
                             ))
                         }
                     </div>
                     <div className={`flipcard-description ${description === "" ? '' : 'animate'}`}>
-                        <p onClick={()=>{setDescription(""); setItem("")}}>X</p>
+                        <p onClick={()=>{
+                            setDescription(""); 
+                            setItem("")}}
+                        >
+                            X
+                        </p>
                         <p>{item}</p>
                         <p>{description}</p>
                     </div>

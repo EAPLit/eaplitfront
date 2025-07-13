@@ -1,0 +1,23 @@
+.input-selector-container {
+    @apply flex flex-col md:flex-row w-full h-full;
+}
+
+.activity-selector-area {
+    @apply w-full md:w-1/2 bg-white p-4;
+}
+
+.learning-path-area {
+    @apply w-full md:w-1/2 bg-gray-50 relative flex justify-center items-start;
+}
+
+.learning-path-svg {
+    @apply w-full h-full;
+}
+
+.learning-node {
+    @apply fill-gray-200 stroke-slate-800;
+}
+
+.learning-connector {
+    @apply stroke-blue-400 stroke-[0.5]
+}
