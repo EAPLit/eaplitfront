@@ -4,10 +4,11 @@ type CircleDropableProps = {
     cx: number;
     cy: number;
     r?: number;
-    id: number;
+    id: string;
     className: string;
-    onDrop: (e: React.DragEvent<SVGCircleElement>, id: number) => void;
+    onDrop: (e: React.DragEvent<SVGCircleElement>, id: string) => void;
     label?: string;
+    setRef: (el: SVGCircleElement | null) => void;
 };
 
 const CircleDroppable: React.FC<CircleDropableProps> = ({
@@ -16,7 +17,8 @@ const CircleDroppable: React.FC<CircleDropableProps> = ({
     r = 40,
     id,
     onDrop,
-    label=""
+    label="",
+    setRef
 }) => {
     const handleDragEnter = (e: React.DragEvent<SVGCircleElement>) => {
         e.preventDefault();
@@ -43,6 +45,7 @@ const CircleDroppable: React.FC<CircleDropableProps> = ({
     return (
         <>
             <circle
+                ref={setRef}
                 cx={cx}
                 cy={cy}
                 r={r}

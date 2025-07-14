@@ -8,17 +8,18 @@ type DraggableDataType = {
 }
 
 type DraggableProps = {
-    id: number;
-    onDragStart: (e:React.DragEvent<HTMLDivElement>, id:number, draggableData:DraggableDataType) => void;
+    id: string;
+    onDragStart: (e:React.DragEvent<HTMLDivElement>, id:string, draggableData:DraggableDataType) => void;
     onDelete: () => void;
     draggableData: DraggableDataType;
+    setRef: (el: HTMLDivElement | null) => void;
 }
 
-const Draggable: React.FC<DraggableProps> = ({ id, onDragStart, onDelete, draggableData }) => {
+const Draggable: React.FC<DraggableProps> = ({ id, onDragStart, onDelete, draggableData, setRef }) => {
 
     return (
         <div
-            key={id}
+            ref={setRef}
             className="draggable"
             draggable
             onDragStart={(e) => onDragStart(e, id, draggableData)}
