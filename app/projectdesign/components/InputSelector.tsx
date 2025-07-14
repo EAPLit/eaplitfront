@@ -6,15 +6,46 @@ import './styles/inputselector.scss';
 import Draggable from '@/app/components/dragndrop/draggable';
 import CircleDroppable from '@/app/components/dragndrop/circleDroppagle';
 
+type ActivityType = {
+    id: number;
+    type: string;
+}
+
 const InputSelector = ({  }) => {
 
+    const handleOnDragStart = (e: React.DragEvent<HTMLDivElement>, id: number, draggableData: ActivityType) => {
+        console.log("I am now dragging a draggable with id: ", id);
+        const target = e.target as HTMLDivElement;
+
+        // Set the data to be transferred by the drag and drop
+        e.dataTransfer.setData('targetId', id.toString());
+        e.dataTransfer.setData('activityData', JSON.stringify(draggableData));
+
+        // Pass the parent node classname to allow us to track
+        // whether the draggable is coming OUT of a droppable or not
+    }
+
     const handleDrop = () => {
+
+    }
+
+    const handleDeleteDraggable = () => {
 
     }
 
     return (
         <div className="input-selector-container">
             <section className="activity-selector-area">
+                {
+                    [0, 1, 2, 3, 4].map((j, i) => (
+                        <Draggable
+                            id={j}
+                            onDragStart={handleOnDragStart}
+                            onDelete={handleDeleteDraggable}
+                            draggableData={{id:j, type: "hi"}}
+                        />
+                    ))
+                }
 
             </section>
             <section className="learning-path-area">

@@ -7,6 +7,7 @@ type CircleDropableProps = {
     id: number;
     className: string;
     onDrop: (e: React.DragEvent<SVGCircleElement>, id: number) => void;
+    label?: string;
 };
 
 const CircleDroppable: React.FC<CircleDropableProps> = ({
@@ -14,7 +15,8 @@ const CircleDroppable: React.FC<CircleDropableProps> = ({
     cy,
     r = 40,
     id,
-    onDrop
+    onDrop,
+    label=""
 }) => {
     const handleDragEnter = (e: React.DragEvent<SVGCircleElement>) => {
         e.preventDefault();
@@ -39,16 +41,33 @@ const CircleDroppable: React.FC<CircleDropableProps> = ({
     };
 
     return (
-        <circle
-            cx={cx}
-            cy={cy}
-            r={r}
-            className="learning-node"
-            onDragEnter={handleDragEnter}
-            onDragOver={handleDragOver}
-            onDragLeave={handleDragLeave}
-            onDrop={handleDrop}
-        />
+        <>
+            <circle
+                cx={cx}
+                cy={cy}
+                r={r}
+                className="learning-node"
+                onDragEnter={handleDragEnter}
+                onDragOver={handleDragOver}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+            />
+            {
+                label && (
+                    <text
+                        x={cx}
+                        y={cy + 5}
+                        textAnchor="middle"
+                        fontSize="16"
+                        fill="black"
+                        pointerEvents="none"
+                    >
+                        {label}
+                    </text>
+                )
+            }
+        </>
+        
     );
 };
 
